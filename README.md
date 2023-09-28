@@ -13,4 +13,11 @@ For practice, input lines below.
 
 
 
+Hi team, this is Yana. Just checking in to make sure everything works well on my end.
 
+This
+is
+practice
+
+What is your favorite color?
+Mine is probably purple.
