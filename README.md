@@ -19,3 +19,5 @@ This is practice
 What is your favorite color? Mine is probably purple.
 
 Hello, I have two favorite colors, black and blood red. Purple is a top pick for me as well.
+
+What is your favorite food to eat?
