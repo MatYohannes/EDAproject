@@ -19,3 +19,6 @@ What is your favorite color? Mine is probably purple.
 Hello, I have two favorite colors, black and blood red. Purple is a top pick for me as well.
 
 What is your favorite food to eat?
+I like rice, potatoes, pasta, and chicken. There are specific dishes I have in mind. I also like sushi and caesar salad with shrimps (I hate when restaurants replace shrimps with chicken).
+
+What about you?
