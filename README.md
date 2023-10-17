@@ -25,4 +25,11 @@ What about you?
 I like a wide range of food, but tend to like bold flavors. I try to eat more meat and veggies than carbs. Looking at your list I like the same options you selected. Regarding rice, I don't like jasmine rice but love medium and short grain rice. I make sushi at home once a week in the form of nigiri and maki rolls.
 
 Do you have genre for books and movies?
+
+Mat
 I love fantasy and sci-fi. I am not a fan of real life shows like the Sopranos despite knowing it is an amazing show.
+
+Yana
+
+Jason
+
