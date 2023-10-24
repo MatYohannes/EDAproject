@@ -32,8 +32,9 @@ I love fantasy and sci-fi. I am not a fan of real life shows like the Sopranos d
 Yana
 Hi again. Here's my comment.
 
-Jason
+Jason trying out the vin commands 
 
 What do you want to be when you grow up?
 
 Mat - I want to be a Data Scientist. My plan is to work with big data using AI as an aid tool.
+jason- I want to be a Software Developer, I want to know the ins and outs of the tech world then become my own boss. That is also why I am getting an Econ degree as well fothe buisness side of it.
