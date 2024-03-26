@@ -5,6 +5,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 public class categoriesTable {
@@ -121,14 +122,22 @@ public class categoriesTable {
             }
 
             // Accessing and printing the table
-            printTable(table);
+//            printTable(table);
+            JDBC dbConnector = new JDBC();
+            dbConnector.insertCategories(table);
 
-        } catch (FileNotFoundException e) {
+
+
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

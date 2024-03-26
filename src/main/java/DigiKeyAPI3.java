@@ -7,8 +7,18 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONTokener;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class DigiKeyAPI3 {
 
@@ -17,7 +27,7 @@ public class DigiKeyAPI3 {
         To change the item to search for, search for KEYWORD
      */
 
-    private static final String KEYWORD = "Mica and PTFE Capacitors";
+    private static final String KEYWORD = "Resistor Networks, Arrays";
 
     // OAuth 2.0 client credentials
     private static final String CLIENT_ID = "wNGv9df3Jw9hZt6DasTMOjKYN4PZz1Fi";
@@ -29,6 +39,21 @@ public class DigiKeyAPI3 {
 
     // API endpoint
     private static final String API_URL = "https://api.digikey.com/products/v4/search/keyword";
+
+
+    public static int arrayCount(String filePath) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray products = null;
+        Object obj = parser.parse(new FileReader(filePath));
+        org.json.simple.JSONObject jsonObject = (JSONObject) obj;
+
+        products = (JSONArray) jsonObject.get("Products");
+        Iterator iteratorProducts = products.iterator();
+        int arrayCount = products.size();
+
+        return arrayCount;
+    }
+
 
     public static void main(String[] args) {
         try {
@@ -139,6 +164,28 @@ public class DigiKeyAPI3 {
                 case "VCOs (Voltage Controlled Oscillators)":
                     fileName = "VCOs (Voltage Controlled Oscillators)";
                     break;
+                // Resistors Subcategories
+                case "Resistor Accessories":
+                    fileName = "Resistor Accessories";
+                    break;
+                case "Chassis Mount Resistors":
+                    fileName = "Chassis Mount Resistors";
+                    break;
+                case "Chip Resistor - Surface Mount":
+                    fileName = "Chip Resistor - Surface Mount";
+                    break;
+                case "Precision Trimmed Resistors":
+                    fileName = "Precision Trimmed Resistors";
+                    break;
+                case "Resistor Networks, Arrays":
+                    fileName = "Resistor Networks, Arrays";
+                    break;
+                case "Specialized Resistors":
+                    fileName = "Specialized Resistors";
+                    break;
+                case "Through Hole Resistors":
+                    fileName = "Through Hole Resistors";
+                    break;
 
                 default:
                     System.out.println("Keyword selected for search does not match expected category name. Default file name will be provided.");
@@ -175,22 +222,49 @@ public class DigiKeyAPI3 {
                 case "VCOs (Voltage Controlled Oscillators)":
                     fileFolder = "Crystals-Oscillators-Resonators/";
                     break;
+                case "Resistor Accessories":
+                case "Chassis Mount Resistors":
+                case "Chip Resistor - Surface Mount":
+                case "Precision Trimmed Resistors":
+                case "Resistor Networks, Arrays":
+                case "Specialized Resistors":
+                case "Through Hole Resistors":
+                case "Accessories":
+                    fileFolder = "Resistors/";
+                    break;
                 default:
                     fileFolder = "";
             }
 
             String filePath = "Postman Exports/" + fileFolder + fileName + ".json";
+            File fileCheck = new File(filePath);
+            int productIndex = 1;
+
+
+            int startIndex = 0;
             try {
-                // Insert template into the file
-                insertTemplate(filePath);
+                if (fileCheck.exists()) {
+                    System.out.println("File exists");
+                 // Locating the last response body inputted and get the offset value
+                    productIndex = arrayCount(filePath) + 1;
+//                    System.out.println(arrayCount(filePath));
+                    // update the offset value for new entries
+                    offset = (productIndex * 50) - 50;
+
+
+                }
+                else {
+                    // Insert template into the file
+                    System.out.println("File does not exist. Creating new file.");
+                    insertTemplate(filePath);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            int productIndex = 1;
-
             while (true) {
-                // Send API request with current offset
+                // Send API requests with current offset
                 String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD);
 
                 String prefix = responseBody.substring(0, 10);
@@ -202,11 +276,11 @@ public class DigiKeyAPI3 {
                     break;
                 }
                 if (prefix.substring(0,8).equals("{\"fault\"")) {
-                    System.out.println("Execution of ServiceCallout SC-Quota failed\n\n" + "Resource Limitations:" +
-                            " Your system or the API server may" +
-                            " have resource limitations that are exceeded when handling a large amount of data.\n" +
-                            "Rate Limiting: Some APIs impose rate limits to prevent abuse. If you exceed the " +
-                            "allowed rate, you might encounter rate-limiting errors");
+                    System.out.println("""
+                            Execution of ServiceCallout SC-Quota failed
+
+                            Resource Limitations: Your system or the API server may have resource limitations that are exceeded when handling a large amount of data.
+                            Rate Limiting: Some APIs impose rate limits to prevent abuse. If you exceed the allowed rate, you might encounter rate-limiting errors.""");
                     break;
                 }
                 if (!prefix.equals("{\"Products")) {

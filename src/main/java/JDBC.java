@@ -8,8 +8,11 @@ import java.util.Map;
 
 public class JDBC {
     private static final String USERNAME = "edadb";
-    private static final String PASSWORD = "";
-    private static final String URL = "jdbc:mysql://localhost:3306/EDAProject";
+    private static final String PASSWORD = "3d@db";
+    private static final String IPADDRESS = "130.166.160.20";
+    private static final int PORT = 3306;
+    private static final String DATABASENAME = "EDAProject";
+    private static final String URL = "jdbc:mysql://" + IPADDRESS + ":" + PORT + "/" + DATABASENAME;
     public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     private static Connection connection = null;
@@ -51,7 +54,7 @@ public class JDBC {
 
 
     public void insertMembership(Object[][] table) throws SQLException {
-        String command = "INSERT INTO `membership` (`custom_id`, `category_id`, `manufacturer`," +
+        String command = "INSERT INTO `edadb`.`membership` (`custom_id`, `category_id`, `manufacturer`," +
                 " `manufacturer_part_num`) VALUES (?, ?, ?, ?);";
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Object[] row: table) {
@@ -70,7 +73,7 @@ public class JDBC {
     }
 
     public void insertCharacteristics(Object[][] table) throws SQLException {
-        String command = "INSERT INTO `characteristics` (`custom_id`, `attribute_name`, `value`) VALUES (?, ?, ?);";
+        String command = "INSERT INTO `edadb`.`characteristics` (`custom_id`, `attribute_name`, `value`) VALUES (?, ?, ?);";
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Object[] row: table) {
                 addstmt.setObject(1, row[0]);

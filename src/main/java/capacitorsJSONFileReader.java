@@ -584,21 +584,6 @@ public class capacitorsJSONFileReader {
                     table[i][j] = rowData[j];
                 }
             }
-            // Printing out full table
-            // Printing header
-            for (int j = 0; j < tableColumns; j++) {
-                System.out.printf("%-40s", header[j]);
-            }
-            System.out.println();
-
-            // Printing table content
-            for (Object[] objects : table) {
-                for (int j = 0; j < tableColumns; j++) {
-                    System.out.printf("%-40s", objects[j]);
-                }
-                System.out.println();
-            }
-
 
             Object[][] membershipTableTemp = membershipTable.createCustomTable(table);
             Arrays.sort(membershipTableTemp, Comparator.comparing(row -> (Comparable) row[0]));
@@ -617,10 +602,28 @@ public class capacitorsJSONFileReader {
                     "resistance", "composition", "currentMax", "features", "ratings",
                     "applications", "mountingType", "packageCase", "sizeDimension",
                     "heightSeatedMax", "leadSpacing", "capacitanceVrF", "resistanceIfF", "powerDissipationMax");
-            List<String> characteristicsHeader = Arrays.asList("Custom ID", "Attribute Name", "Value");
 
-//            Object[][] characteristicsTableTemp = characteristicsTable.createCustomTable(membershipTableTemp, table, membershipHeader, tableHeader);
-//            // Printing characteristics table
+            // Printing out full table
+
+            // Printing header
+//            for (int j = 0; j < tableColumns; j++) {
+//                System.out.printf("%-40s", header[j]);
+//            }
+//            System.out.println();
+//
+//            // Printing table content
+//            for (Object[] objects : table) {
+//                for (int j = 0; j < tableColumns; j++) {
+//                    System.out.printf("%-40s", objects[j]);
+//                }
+//                System.out.println();
+//            }
+
+
+            // Printing characteristics table
+
+            List<String> characteristicsHeader = Arrays.asList("Custom ID", "Attribute Name", "Value");
+            Object[][] characteristicsTableTemp = characteristicsTable.createCustomTable(membershipTableTemp, table, membershipHeader, tableHeader);
 //            for (int i = 0; i < 3; i++) {
 //                System.out.printf("%-20s", characteristicsHeader.get(i));
 //            }
@@ -633,8 +636,10 @@ public class capacitorsJSONFileReader {
 //                System.out.println();
 //            }
 
-//            // Printing membership table
-//            // Printing header
+
+
+            // Printing membership table
+            // Printing header
 //            for (int i = 0; i < 4; i++) {
 //                System.out.printf("%-20s", membershipHeader.get(i));
 //            }
@@ -646,6 +651,10 @@ public class capacitorsJSONFileReader {
 //                }
 //                System.out.println();
 //            }
+
+
+
+
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
