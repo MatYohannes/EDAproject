@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class JDBC {
     private static final String USERNAME = "edadb";
-    private static final String PASSWORD = "3d@db";
-    private static final String IPADDRESS = "130.166.160.20";
+    private static final String PASSWORD = ""; // 3d@db
+    private static final String IPADDRESS = ""; //130.166.160.20
     private static final int PORT = 3306;
-    private static final String DATABASENAME = "EDAProject";
+    private static final String DATABASENAME = "edadb";
     private static final String URL = "jdbc:mysql://" + IPADDRESS + ":" + PORT + "/" + DATABASENAME;
     public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
@@ -30,6 +30,10 @@ public class JDBC {
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            if (connection == null) {
+                System.out.println("Database Connection is null.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,13 +94,14 @@ public class JDBC {
     }
 
     public void insertCategories(Map<Long, Object[]> table) throws SQLException {
-        String command = "INSERT INTO `edadb`.`categories` (`custom_id`, `category_name`, `parent_id`) VALUES (?, ?, ?);";
+
+        String command = "INSERT INTO `edadb`.`categories` (`category_id`,`category_name`, `parent_id`) VALUES (?, ?, ?);";
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Map.Entry<Long, Object[]> entry : table.entrySet()) {
-                Long customID = entry.getKey();
+                Long cateogryID = entry.getKey();
 
                 try {
-                    int intValue = Math.toIntExact(customID); // Convert long to int safely
+                    int intValue = Math.toIntExact(cateogryID); // Convert long to int safely
                     // Use intValue
                 } catch (ArithmeticException e) {
                     // Handle overflow
@@ -104,15 +109,14 @@ public class JDBC {
                 }
 
                 String categoryName = entry.getValue()[0].toString();
-                int parentID = (int) entry.getValue()[1];
+                Long parentID = (Long) entry.getValue()[1];
 
-                addstmt.setObject(1, customID);
+                addstmt.setObject(1, cateogryID);
                 addstmt.setObject(2, categoryName);
                 addstmt.setObject(3, parentID);
                 addstmt.addBatch(); // Add the current row to the batch
             }
-
-            addstmt.executeUpdate();
+            addstmt.executeBatch();
             System.out.println("Insertion to Categories SQL table.");
         } catch (Exception err) {
             System.out.println("An error has occurred when inserting to Categories sql table.");
