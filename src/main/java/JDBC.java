@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -16,16 +14,8 @@ public class JDBC {
     public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     private static Connection connection = null;
-    private static Statement statement = null;
-    private static ResultSet resultSet = null;
-    private static PreparedStatement preparedStatement = null;
 
 
-    /**
-     * constructor for the Java DataBase connector with nor parameters
-     * @throws FileNotFoundException
-     * @throws ParseException
-     */
     public JDBC() throws FileNotFoundException, ParseException {
         try {
             Class.forName(JDBC_DRIVER);
@@ -98,20 +88,12 @@ public class JDBC {
         String command = "INSERT INTO `edadb`.`categories` (`category_id`,`category_name`, `parent_id`) VALUES (?, ?, ?);";
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Map.Entry<Long, Object[]> entry : table.entrySet()) {
-                Long cateogryID = entry.getKey();
-
-                try {
-                    int intValue = Math.toIntExact(cateogryID); // Convert long to int safely
-                    // Use intValue
-                } catch (ArithmeticException e) {
-                    // Handle overflow
-                    System.out.println("Overflow occurred when converting long to int.");
-                }
+                Long categoryID = entry.getKey();
 
                 String categoryName = entry.getValue()[0].toString();
                 Long parentID = (Long) entry.getValue()[1];
 
-                addstmt.setObject(1, cateogryID);
+                addstmt.setObject(1, categoryID);
                 addstmt.setObject(2, categoryName);
                 addstmt.setObject(3, parentID);
                 addstmt.addBatch(); // Add the current row to the batch

@@ -122,9 +122,13 @@ public class categoriesTable {
             }
 
             // Accessing and printing the table
-//            printTable(table);
-            JDBC dbConnector = new JDBC();
-            dbConnector.insertCategories(table);
+            printTable(table);
+            System.out.println(table.size());
+
+            // Code below to upload to MYSQL
+//            JDBC dbConnector = new JDBC();
+//            dbConnector.insertCategories(table);
+//            dbConnector.closeConnection();
 
 
 
@@ -134,10 +138,11 @@ public class categoriesTable {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
+//        catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
     }
 }

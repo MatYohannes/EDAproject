@@ -20,8 +20,8 @@ public class characteristicsTable {
 
         // Generate the third table
         List<Object[]> thirdTableList = new ArrayList<>();
-        String value= null;
-        String attribute = null;
+        String value;
+        String attribute;
         String customID = null;
 
         for (int row = 0; row < originalTable.length; row++) {
