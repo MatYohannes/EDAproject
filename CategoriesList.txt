@@ -1,0 +1,123 @@
+Capacitor Accessories | X
+Aluminum - Polymer Capacitors | X
+Aluminum Electrolytic Capacitors | X
+Capacitor Networks, Arrays | X
+Ceramic Capacitors | X
+Electric Double Layer Capacitors (EDLC), Supercapacitors | X
+Film Capacitors | X
+Mica and PTFE Capacitors | X
+Niobium Oxide Capacitors | X
+Silicon Capacitors | X
+Tantalum - Polymer Capacitors | X
+Tantalum Capacitors | X
+Thin Film Capacitors | X
+Trimmers, Variable Capacitors | X
+Plugs and Receptacles | X
+Power Entry Connector Accessories | X
+Power Entry Modules (PEM) | X
+ARINC Inserts | X
+Backplane Connector Accessories | X
+Backplane Connector Contacts | X
+Backplane Connector Housings | X
+DIN 41612 | X
+Hard Metric, Standard | X
+Backplane Connectors Specialized | X
+Banana and Tip Connector Accessories | X
+Banana and Tip Connector Adapters | X
+Binding Posts | X
+Jacks, Plugs | X
+Audio Connectors | X
+Barrel Connector Accessories | X
+Barrel Connector Adapters | X
+Power Connectors | X
+Blade Type Power Connector Accessories | X
+Blade Type Power Connector Assemblies | X
+Blade Type Power Connector Contacts | X
+Blade Type Power Connector Housings | X
+Card Edge Connector Accessories | X
+Card Edge Connector Adapters | X
+Card Edge Connector Contacts | X
+Card Edge Connector Housings | X
+Edgeboard Connectors | X
+Backshells and Cable Clamps | X
+Circular Connector Accessories | X
+Circular Connector Adapters | X
+Circular Connector Assemblies | X
+Circular Connector Contacts | X
+Circular Connector Housings | X
+Coaxial Connector (RF) Accessories | X
+Coaxial Connector (RF) Adapters | X
+Coaxial Connector (RF) Assemblies | X
+Coaxial Connector (RF) Contacts | X
+Coaxial Connector (RF) Terminators | X
+Contacts, Spring Loaded (Pogo Pins), and Pressure | X
+Leadframe | X
+Multi Purpose | X
+Centronics Connectors | X
+D-Sub Connector Assemblies | X
+D-Sub, D-Shaped Connector Accessories | X
+D-Sub, D-Shaped Connector Adapters | X
+D-Sub, D-Shaped Connector Backshells, Hoods | X
+D-Sub, D-Shaped Connector Contacts | X
+D-Sub, D-Shaped Connector Housings | X
+D-Sub, D-Shaped Connector Jackscrews | X
+D-Sub, D-Shaped Connector Terminators | X
+FFC, FPC (Flat Flexible) Connector Accessories | X
+FFC, FPC (Flat Flexible) Connector Assemblies | X
+FFC, FPC (Flat Flexible) Connector Contacts | X
+FFC, FPC (Flat Flexible) Connector Housings | X
+Fiber Optic Connector Accessories | X
+Fiber Optic Connector Adapters | X
+Fiber Optic Connector Assemblies | X
+Fiber Optic Connector Housings | X
+Heavy Duty Connector Accessories | X
+Heavy Duty Connector Assemblies | X
+Heavy Duty Connector Contacts | X
+Heavy Duty Connector Frames | X
+Heavy Duty Connector Housings, Hoods, Bases | X
+Heavy Duty Connector Inserts, Modules | X
+Keystone Connector Accessories | X
+Keystone Faceplates, Frames | X
+Keystone Inserts | X
+Inline Module Sockets | X
+Memory Connector Accessories | X
+PC Card Sockets | X
+PC Cards - Adapters | X
+Modular Connector Accessories | X
+Modular Connector Adapters | X
+Modular Connector Jacks | X
+Modular Connector Jacks With Magnetics | X
+Modular Connector Plug Housings | X
+Modular Connector Plugs | X
+Modular Connector Wiring Blocks | X
+Modular Connector Wiring Blocks Accessories | X
+Photovoltaic (Solar Panel) Connector Accessories | X
+Photovoltaic (Solar Panel) Connector Assemblies | X
+Photovoltaic (Solar Panel) Connector Contacts | X
+Pluggable Connector Accessories | X
+Pluggable Connector Assemblies | X
+Rectangular Connector Accessories | X
+Rectangular Connector Adapters | X
+Rectangular Connector Contacts | X
+Rectangular Connector Housings | X
+Spring Loaded | X
+IC Sockets | X
+Socket Accessories | X
+Socket Adapters | X
+Solid State Lighting Connector Accessories | X
+Solid State Lighting Connector Assemblies | X
+Solid State Lighting Connector Contacts | X
+Barrier Blocks | X
+Din Rail, Channel | X
+Headers, Plugs and Sockets | X
+Interface Modules | X
+Panel Mount | X
+Power Distribution | X
+Terminal Blocks Specialized | X
+Terminal Block Accessories | X
+Terminal Block Adapters | X
+Terminal Block Contacts | X
+Wire to Board | X
+USB, DVI, HDMI Connector Accessories | X
+USB, DVI, HDMI Connector Adapters | X
+USB, DVI, HDMI Connector Assemblies | X
