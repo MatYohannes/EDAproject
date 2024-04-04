@@ -1,13 +1,13 @@
-Capacitor Accessories | X
-Aluminum - Polymer Capacitors | X
-Aluminum Electrolytic Capacitors | X
-Capacitor Networks, Arrays | X
-Ceramic Capacitors | X
-Electric Double Layer Capacitors (EDLC), Supercapacitors | X
-Film Capacitors | X
-Mica and PTFE Capacitors | X
-Niobium Oxide Capacitors | X
-Silicon Capacitors | X
+Capacitor Accessories | O
+Aluminum - Polymer Capacitors | O
+Aluminum Electrolytic Capacitors | O
+Capacitor Networks, Arrays | O
+Ceramic Capacitors | O
+Electric Double Layer Capacitors (EDLC), Supercapacitors | O
+Film Capacitors | O
+Mica and PTFE Capacitors | O
+Niobium Oxide Capacitors | O
+Silicon Capacitors | O
 Tantalum - Polymer Capacitors | X
 Tantalum Capacitors | X
 Thin Film Capacitors | X
