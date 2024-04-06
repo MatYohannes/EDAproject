@@ -593,9 +593,19 @@ public class DigiKeyAPI3 {
                         String[] returnedArray2 = checkingFile(fileName, fileFolder, offset);
 
                         filePath = returnedArray2[0];
-                        productIndex = Integer.parseInt(returnedArray2[2]);
-                        offset = Integer.parseInt(returnedArray2[1]);
 
+                        if (returnedArray2[2] == null) {
+                            productIndex = 0;
+                        }
+                        else {
+                            productIndex = Integer.parseInt(returnedArray2[2]);
+                        }
+                        if(returnedArray2[1] == null) {
+                            offset = 0;
+                        }
+                        else {
+                            offset = Integer.parseInt(returnedArray2[1]);
+                        }
                         break;
                     }
                     if (prefix.startsWith("{\"fault\"")) {
