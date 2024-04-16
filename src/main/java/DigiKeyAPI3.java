@@ -12,20 +12,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
+import java.util.Arrays;
 
 
 public class DigiKeyAPI3 {
-
-    /*
-    !!!!!!!!!!!!!!!!NEW USER
-    !!!!!!!!!!!!!!!!!!!!!!!!!
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        When updating client id and client secret, search for CLIENT_ID and CLIENT_SECRET
-     */
-
-    // OAuth 2.0 client credentials
-    private static final String CLIENT_ID = "wNGv9df3Jw9hZt6DasTMOjKYN4PZz1Fi";
-    private static final String CLIENT_SECRET = "R4hJSM1YzaLGOjfq";
 
     // OAuth 2.0 authorization endpoints
     //private static final String AUTH_URL = "https://api.digikey.com/v1/oauth2/authorize"; // Not needed
@@ -34,15 +24,14 @@ public class DigiKeyAPI3 {
     // API endpoint
     private static final String API_URL = "https://api.digikey.com/products/v4/search/keyword";
 
+    private static final String CLIENTLIST = "ClientList.txt";
+
     private static String selectingFileName(String keyword) {
         String fileName;
 
         switch (keyword) {
             // Capacitor Subcategories
             case "Capacitor Accessories" -> fileName = "Capacitor Accessories";
-            case "Resistors" -> fileName = "Resistors";
-            case "Capacitors" -> fileName = "Capacitors";
-            case "Switches" -> fileName = "Switches";
             case "Aluminum - Polymer Capacitors" -> fileName = "Aluminum - Polymer Capacitors";
             case "Aluminum Electrolytic Capacitors" -> fileName = "Aluminum Electrolytic Capacitors";
             case "Capacitor Networks, Arrays" -> fileName = "Capacitor Networks, Arrays";
@@ -61,6 +50,7 @@ public class DigiKeyAPI3 {
             case "Plugs and Receptacles" -> fileName = "Plugs and Receptacles";
             case "Power Entry Connector Accessories" -> fileName = "Power Entry Connector Accessories";
             case "Power Entry Modules (PEM)" -> fileName = "Power Entry Modules (PEM)";
+            case "ARINC" -> fileName = "ARINC";
             case "ARINC Inserts" -> fileName = "ARINC Inserts";
             case "Backplane Connector Accessories" -> fileName = "Backplane Connector Accessories";
             case "Backplane Connector Contacts" -> fileName = "Backplane Connector Contacts";
@@ -68,13 +58,17 @@ public class DigiKeyAPI3 {
             case "DIN 41612" -> fileName = "DIN 41612";
             case "Hard Metric, Standard" -> fileName = "Hard Metric, Standard";
             case "Backplane Connectors Specialized" -> fileName = "Backplane Connectors Specialized";
+            case "Banana and Tip Connector Accessories" -> fileName = "Banana and Tip Connector Accessories";
             case "Banana and Tip Connector Adapters" -> fileName = "Banana and Tip Connector Adapters";
             case "Binding Posts" -> fileName = "Binding Posts";
             case "Jacks, Plugs" -> fileName = "Jacks, Plugs";
             case "Audio Connectors" -> fileName = "Audio Connectors";
+            case "Barrel Connector Accessories" -> fileName = "Barrel Connector Accessories";
             case "Barrel Connector Adapters" -> fileName = "Barrel Connector Adapters";
             case "Power Connectors" -> fileName = "Power Connectors";
+            case "Between Series Adapters" -> fileName = "Between Series Adapters";
             case "Blade Type Power Connector Accessories" -> fileName = "Blade Type Power Connector Accessories";
+            case "Blade Type Power Connector Assemblies" -> fileName = "Blade Type Power Connector Assemblies";
             case "Blade Type Power Connector Contacts" -> fileName = "Blade Type Power Connector Contacts";
             case "Blade Type Power Connector Housings" -> fileName = "Blade Type Power Connector Housings";
             case "Card Edge Connector Accessories" -> fileName = "Card Edge Connector Accessories";
@@ -96,6 +90,7 @@ public class DigiKeyAPI3 {
             case "Contacts, Spring Loaded (Pogo Pins), and Pressure" -> fileName = "Contacts, Spring Loaded (Pogo Pins), and Pressure";
             case "Leadframe" -> fileName = "Leadframe";
             case "Multi Purpose" -> fileName = "Multi Purpose";
+            case "Centronics Connectors" -> fileName = "Centronics Connectors";
             case "D-Sub Connector Assemblies" -> fileName = "D-Sub Connector Assemblies";
             case "D-Sub, D-Shaped Connector Accessories" -> fileName = "D-Sub, D-Shaped Connector Accessories";
             case "D-Sub, D-Shaped Connector Adapters" -> fileName = "D-Sub, D-Shaped Connector Adapters";
@@ -121,6 +116,11 @@ public class DigiKeyAPI3 {
             case "Keystone Connector Accessories" -> fileName = "Keystone Connector Accessories";
             case "Keystone Faceplates, Frames" -> fileName = "Keystone Faceplates, Frames";
             case "Keystone Inserts" -> fileName = "Keystone Inserts";
+            case "LGH Connectors" -> fileName = "LGH Connectors";
+            case "Inline Module Sockets" -> fileName = "Inline Module Sockets";
+            case "Memory Connector Accessories" -> fileName = "Memory Connector Accessories";
+            case "PC Card Sockets" -> fileName = "PC Card Sockets";
+            case "PC Cards - Adapters" -> fileName = "PC Cards - Adapters";
             case "Modular Connector Accessories" -> fileName = "Modular Connector Accessories";
             case "Modular Connector Adapters" -> fileName = "Modular Connector Adapters";
             case "Modular Connector Jacks" -> fileName = "Modular Connector Jacks";
@@ -134,6 +134,13 @@ public class DigiKeyAPI3 {
             case "Photovoltaic (Solar Panel) Connector Contacts" -> fileName = "Photovoltaic (Solar Panel) Connector Contacts";
             case "Pluggable Connector Accessories" -> fileName = "Pluggable Connector Accessories";
             case "Pluggable Connector Assemblies" -> fileName = "Pluggable Connector Assemblies";
+            case "Arrays, Edge Type, Mezzanine (Board to Board)" -> fileName = "Arrays, Edge Type, Mezzanine (Board to Board)";
+            case "Board In, Direct Wire to Board" -> fileName = "Board In, Direct Wire to Board";
+            case "Board Spacers, Stackers (Board to Board)" -> fileName = "Board Spacers, Stackers (Board to Board)";
+            case "Free Hanging, Panel Mount" -> fileName = "Free Hanging, Panel Mount";
+            case "Headers, Male Pins" -> fileName = "Headers, Male Pins";
+            case "Headers, Receptacles, Female Sockets" -> fileName = "Headers, Receptacles, Female Sockets";
+            case "Headers, Specialty Pin" -> fileName = "Headers, Specialty Pin";
             case "Rectangular Connector Accessories" -> fileName = "Rectangular Connector Accessories";
             case "Rectangular Connector Adapters" -> fileName = "Rectangular Connector Adapters";
             case "Rectangular Connector Contacts" -> fileName = "Rectangular Connector Contacts";
@@ -156,6 +163,28 @@ public class DigiKeyAPI3 {
             case "Terminal Block Adapters" -> fileName = "Terminal Block Adapters";
             case "Terminal Block Contacts" -> fileName = "Terminal Block Contacts";
             case "Wire to Board" -> fileName = "Wire to Board";
+            case "Terminal Junction Systems" -> fileName = "Terminal Junction Systems";
+            case "Terminal Strips and Turret Boards" -> fileName = "Terminal Strips and Turret Boards";
+            case "Barrel, Bullet Connectors" -> fileName = "Barrel, Bullet Connectors";
+            case "Foil Connectors" -> fileName = "Foil Connectors";
+            case "Housings, Boots" -> fileName = "Housings, Boots";
+            case "Knife Connectors" -> fileName = "Knife Connectors";
+            case "Lugs" -> fileName = "Lugs";
+            case "Magnetic Wire Connectors" -> fileName = "Magnetic Wire Connectors";
+            case "PC Pin Receptacles, Socket Connectors" -> fileName = "PC Pin Receptacles, Socket Connectors";
+            case "PC Pin, Single Post Connectors" -> fileName = "PC Pin, Single Post Connectors";
+            case "Quick Connects, Quick Disconnect Connectors" -> fileName = "Quick Connects, Quick Disconnect Connectors";
+            case "Ring Connectors" -> fileName = "Ring Connectors";
+            case "Screw Connectors" -> fileName = "Screw Connectors";
+            case "Solder Lug Connectors" -> fileName = "Solder Lug Connectors";
+            case "Spade Connectors" -> fileName = "Spade Connectors";
+            case "Specialized Connectors" -> fileName = "Specialized Connectors";
+            case "Terminal Accessories" -> fileName = "Terminal Accessories";
+            case "Terminal Adapters" -> fileName = "Terminal Adapters";
+            case "Turret Connectors" -> fileName = "Turret Connectors";
+            case "Wire Pin Connectors" -> fileName = "Wire Pin Connectors";
+            case "Wire Splice Connectors" -> fileName = "Wire Splice Connectors";
+            case "Wire to Board Connectors" -> fileName = "Wire to Board Connectors";
             case "USB, DVI, HDMI Connector Accessories" -> fileName = "USB, DVI, HDMI Connector Accessories";
             case "USB, DVI, HDMI Connector Adapters" -> fileName = "USB, DVI, HDMI Connector Adapters";
             case "USB, DVI, HDMI Connector Assemblies" -> fileName = "USB, DVI, HDMI Connector Assemblies";
@@ -164,7 +193,7 @@ public class DigiKeyAPI3 {
             case "Crystal, Oscillator, Resonator Accessories" -> fileName = "Crystal, Oscillator, Resonator Accessories";
             case "Crystals" -> fileName = "Crystals";
             case "Oscillators" -> fileName = "Oscillators";
-            case "Pin Configurable/Selectable Oscillators" -> fileName = "Pin Configurable-Selectable Oscillators";
+            case "Pin Configurable/Selectable Oscillators" -> fileName = "Pin Configurable/Selectable Oscillators";
             case "Programmable Oscillators" -> fileName = "Programmable Oscillators";
             case "Resonators" -> fileName = "Resonators";
             case "Stand Alone Programmers" -> fileName = "Stand Alone Programmers";
@@ -173,108 +202,108 @@ public class DigiKeyAPI3 {
             // Inductors, Coils, Chokes Subcategories
             case "Adjustable Inductors" -> fileName = "Adjustable Inductors";
             case "Arrays, Signal Transformers" -> fileName = "Arrays, Signal Transformers";
-            case "Inductors, Coils, Chokes Delay Lines" -> fileName = "Inductors, Coils, Chokes Delay Lines Delay Lines";
+            case "Inductors, Coils, Chokes Delay Lines" -> fileName = "Delay Lines";
             case "Fixed Inductors" -> fileName = "Fixed Inductors";
             case "Wireless Charging Coils" -> fileName = "Wireless Charging Coils";
 
             // Integrated Circuits (ICs) Subcategories
-            case "Audio Special Purpose" -> fileName = "Audio_Special_Purpose";
-            case "Application Specific Clock/Timing" -> fileName = "Application_Specific_Clock_Timing";
-            case "Clock Buffers, Drivers" -> fileName = "Clock_Buffers_Drivers";
-            case "Clock Generators, PLLs, Frequency Synthesizers" -> fileName = "Clock_Generators_PLLs_Frequency_Synthesizers";
-            case "Inductors, Coils, Chokes Delay Lines Delay Lines" -> fileName = "Inductors, Coils, Chokes Delay Lines";
-            case "IC Batteries" -> fileName = "IC_Batteries";
-            case "Programmable Timers and Oscillators" -> fileName = "Programmable_Timers_and_Oscillators";
-            case "Real Time Clocks" -> fileName = "Real_Time_Clocks";
-            case "ADCs/DACs - Special Purpose" -> fileName = "ADCs_DACs_Special_Purpose";
-            case "Analog Front End (AFE)" -> fileName = "Analog_Front_End_AFE";
-            case "Analog to Digital Converters (ADC)" -> fileName = "Analog_to_Digital_Converters_ADC";
-            case "Digital Potentiometers" -> fileName = "Digital_Potentiometers";
-            case "Digital to Analog Converters (DAC)" -> fileName = "Digital_to_Analog_Converters_DAC";
-            case "Touch Screen Controllers" -> fileName = "Touch_Screen_Controllers";
-            case "Application Specific Microcontrollers" -> fileName = "Application_Specific_Microcontrollers";
-            case "CPLDs (Complex Programmable Logic Devices)" -> fileName = "CPLDs_Complex_Programmable_Logic_Devices";
-            case "DSP (Digital Signal Processors)" -> fileName = "DSP_Digital_Signal_Processors";
-            case "FPGAs (Field Programmable Gate Array)" -> fileName = "FPGAs_Field_Programmable_Gate_Array";
-            case "FPGAs (Field Programmable Gate Array) with Microcontrollers" -> fileName = "FPGAs_Field_Programmable_Gate_Array_with_Microcontrollers";
+            case "Audio Special Purpose" -> fileName = "Audio Special Purpose";
+            case "Application Specific Clock/Timing" -> fileName = "Application Specific Clock/Timing";
+            case "Clock Buffers, Drivers" -> fileName = "Clock Buffers, Drivers";
+            case "Clock Generators, PLLs, Frequency Synthesizers" -> fileName = "Clock Generators, PLLs, Frequency Synthesizers";
+            case "Clock/Timing Delay Lines" -> fileName = "Clock/Timing Delay Lines";
+            case "IC Batteries" -> fileName = "IC Batteries";
+            case "Programmable Timers and Oscillators" -> fileName = "Programmable Timers and Oscillators";
+            case "Real Time Clocks" -> fileName = "Real Time Clocks";
+            case "ADCs/DACs - Special Purpose" -> fileName = "ADCs/DACs - Special Purpose";
+            case "Analog Front End (AFE)" -> fileName = "Analog Front End (AFE)";
+            case "Analog to Digital Converters (ADC)" -> fileName = "Analog to Digital Converters (ADC)";
+            case "Digital Potentiometers" -> fileName = "Digital Potentiometers";
+            case "Digital to Analog Converters (DAC)" -> fileName = "Digital to Analog Converters (DAC)";
+            case "Touch Screen Controllers" -> fileName = "Touch Screen Controllers";
+            case "Application Specific Microcontrollers" -> fileName = "Application Specific Microcontrollers";
+            case "CPLDs (Complex Programmable Logic Devices)" -> fileName = "CPLDs (Complex Programmable Logic Devices)";
+            case "DSP (Digital Signal Processors)" -> fileName = "DSP (Digital Signal Processors)";
+            case "FPGAs (Field Programmable Gate Array)" -> fileName = "FPGAs (Field Programmable Gate Array)";
+            case "FPGAs (Field Programmable Gate Array) with Microcontrollers" -> fileName = "FPGAs (Field Programmable Gate Array) with Microcontrollers";
             case "Microcontrollers" -> fileName = "Microcontrollers";
-            case "Microcontrollers, Microprocessor, FPGA Modules" -> fileName = "Microcontrollers_Microprocessor_FPGA_Modules";
+            case "Microcontrollers, Microprocessor, FPGA Modules" -> fileName = "Microcontrollers, Microprocessor, FPGA Modules";
             case "Microprocessors" -> fileName = "Microprocessors";
-            case "PLDs (Programmable Logic Device)" -> fileName = "PLDs_Programmable_Logic_Device";
-            case "System On Chip (SoC)" -> fileName = "System_On_Chip_SoC";
-            case "Analog Switches - Special Purpose" -> fileName = "Analog_Switches_Special_Purpose";
-            case "Analog Switches, Multiplexers, Demultiplexers" -> fileName = "Analog_Switches_Multiplexers_Demultiplexers";
+            case "PLDs (Programmable Logic Device)" -> fileName = "PLDs (Programmable Logic Device)";
+            case "System On Chip (SoC)" -> fileName = "System On Chip (SoC)";
+            case "Analog Switches - Special Purpose" -> fileName = "Analog Switches - Special Purpose";
+            case "Analog Switches, Multiplexers, Demultiplexers" -> fileName = "Analog Switches, Multiplexers, Demultiplexers";
             case "CODECS" -> fileName = "CODECS";
             case "Interface Controllers" -> fileName = "Interface Controllers";
-            case "Direct Digital Synthesis (DDS)" -> fileName = "Direct_Digital_Synthesis_DDS";
-            case "Drivers, Receivers, Transceivers" -> fileName = "Drivers_Receivers_Transceivers";
-            case "Encoders, Decoders, Converters" -> fileName = "Encoders_Decoders_Converters";
-            case "Filters - Active" -> fileName = "Filters_Active";
-            case "I/O Expanders" -> fileName = "I_O_Expanders";
-            case "Modems - ICs and Modules" -> fileName = "Modems_ICs_and_Modules";
+            case "Direct Digital Synthesis (DDS)" -> fileName = "Direct Digital Synthesis (DDS)";
+            case "Drivers, Receivers, Transceivers" -> fileName = "Drivers, Receivers, Transceivers";
+            case "Encoders, Decoders, Converters" -> fileName = "Encoders, Decoders, Converters";
+            case "Filters - Active" -> fileName = "Filters - Active";
+            case "I/O Expanders" -> fileName = "I/O Expanders";
+            case "Modems - ICs and Modules" -> fileName = "Modems - ICs and Modules";
             case "Modules" -> fileName = "Modules";
-            case "Sensor and Detector Interfaces" -> fileName = "Sensor_and_Detector_Interfaces";
-            case "Sensor, Capacitive Touch" -> fileName = "Sensor_Capacitive_Touch";
-            case "Serializers, Deserializers" -> fileName = "Serializers_Deserializers";
-            case "Signal Buffers, Repeaters, Splitters" -> fileName = "Signal_Buffers_Repeaters_Splitters";
-            case "Signal Terminators" -> fileName = "Signal_Terminators";
-            case "Specialized" -> fileName = "Specialized";
+            case "Sensor and Detector Interfaces" -> fileName = "Sensor and Detector Interfaces";
+            case "Sensor, Capacitive Touch" -> fileName = "Sensor, Capacitive Touch";
+            case "Serializers, Deserializers" -> fileName = "Serializers, Deserializers";
+            case "Signal Buffers, Repeaters, Splitters" -> fileName = "Signal Buffers, Repeaters, Splitters";
+            case "Signal Terminators" -> fileName = "Signal Terminators";
+            case "Interface Specialized" -> fileName = "Interface Specialized";
             case "Telecom" -> fileName = "Telecom";
-            case "UARTs (Universal Asynchronous Receiver Transmitter)" -> fileName = "UARTs_Universal_Asynchronous_Receiver_Transmitter";
-            case "Voice Record and Playback" -> fileName = "Voice_Record_and_Playback";
+            case "UARTs (Universal Asynchronous Receiver Transmitter)" -> fileName = "UARTs (Universal Asynchronous Receiver Transmitter)";
+            case "Voice Record and Playback" -> fileName = "Voice Record and Playback";
             case "Amplifiers" -> fileName = "Amplifiers";
-            case "Analog Multipliers, Dividers" -> fileName = "Analog_Multipliers_Dividers";
+            case "Analog Multipliers, Dividers" -> fileName = "Analog Multipliers, Dividers";
             case "Comparators" -> fileName = "Comparators";
-            case "Video Processing" -> fileName = "Video_Processing";
-            case "Buffers, Drivers, Receivers, Transceivers" -> fileName = "Buffers_Drivers_Receivers_Transceivers";
-            case "Counters, Dividers" -> fileName = "Counters_Dividers";
-            case "FIFOs Memory" -> fileName = "FIFOs_Memory";
-            case "Flip Flops" -> fileName = "Flip_Flops";
-            case "Gates and Inverters" -> fileName = "Gates_and_Inverters";
-            case "Gates and Inverters - Multi-Function, Configurable" -> fileName = "Gates_and_Inverters_Multi_Function_Configurable";
+            case "Video Processing" -> fileName = "Video Processing";
+            case "Buffers, Drivers, Receivers, Transceivers" -> fileName = "Buffers, Drivers, Receivers, Transceivers";
+            case "Counters, Dividers" -> fileName = "Counters, Dividers";
+            case "FIFOs Memory" -> fileName = "FIFOs Memory";
+            case "Flip Flops" -> fileName = "Flip Flops";
+            case "Gates and Inverters" -> fileName = "Gates and Inverters";
+            case "Gates and Inverters - Multi-Function, Configurable" -> fileName = "Gates and Inverters - Multi-Function, Configurable";
             case "Latches" -> fileName = "Latches";
             case "Multivibrators" -> fileName = "Multivibrators";
-            case "Parity Generators and Checkers" -> fileName = "Parity_Generators_and_Checkers";
-            case "Shift Registers" -> fileName = "Shift_Registers";
-            case "Signal Switches, Multiplexers, Decoders" -> fileName = "Signal_Switches_Multiplexers_Decoders";
-            case "Specialty Logic" -> fileName = "Specialty_Logic";
-            case "Translators, Level Shifters" -> fileName = "Translators_Level_Shifters";
-            case "Universal Bus Functions" -> fileName = "Universal_Bus_Functions";
+            case "Parity Generators and Checkers" -> fileName = "Parity Generators and Checkers";
+            case "Shift Registers" -> fileName = "Shift Registers";
+            case "Signal Switches, Multiplexers, Decoders" -> fileName = "Signal Switches, Multiplexers, Decoders";
+            case "Specialty Logic" -> fileName = "Specialty Logic";
+            case "Translators, Level Shifters" -> fileName = "Translators, Level Shifters";
+            case "Universal Bus Functions" -> fileName = "Universal Bus Functions";
             case "Batteries" -> fileName = "Batteries";
-            case "Configuration PROMs for FPGAs" -> fileName = "Configuration_PROMs_for_FPGAs";
+            case "Configuration PROMs for FPGAs" -> fileName = "Configuration PROMs for FPGAs";
             case "Memory Controllers" -> fileName = "Memory Controllers";
             case "Memory" -> fileName = "Memory";
-            case "AC DC Converters, Offline Switches" -> fileName = "AC_DC_Converters_Offline_Switches";
-            case "Battery Chargers" -> fileName = "Battery_Chargers";
-            case "Battery Management" -> fileName = "Battery_Management";
-            case "Current Regulation/Management" -> fileName = "Current_Regulation_Management";
-            case "DC DC Switching Controllers" -> fileName = "DC_DC_Switching_Controllers";
-            case "Display Drivers" -> fileName = "Display_Drivers";
-            case "Energy Metering" -> fileName = "Energy_Metering";
-            case "Full Half-Bridge (H Bridge) Drivers" -> fileName = "Full_Half_Bridge_H_Bridge_Drivers";
-            case "Gate Drivers" -> fileName = "Gate_Drivers";
-            case "Hot Swap Controllers" -> fileName = "Hot_Swap_Controllers";
-            case "Laser Drivers" -> fileName = "Laser_Drivers";
-            case "LED Drivers" -> fileName = "LED_Drivers";
-            case "Lighting, Ballast Controllers" -> fileName = "Lighting_Ballast_Controllers";
-            case "Motor Drivers, Controllers" -> fileName = "Motor_Drivers_Controllers";
-            case "OR Controllers, Ideal Diodes" -> fileName = "OR_Controllers_Ideal_Diodes";
-            case "PFC (Power Factor Correction)" -> fileName = "PFC_Power_Factor_Correction";
-            case "Power Distribution Switches, Load Drivers" -> fileName = "Power_Distribution_Switches_Load_Drivers";
-            case "Power Management - Specialized" -> fileName = "Power_Management_Specialized";
-            case "Power Over Ethernet (PoE) Controllers" -> fileName = "Power_Over_Ethernet_PoE_Controllers";
-            case "Power Supply Controllers, Monitors" -> fileName = "Power_Supply_Controllers_Monitors";
-            case "RMS to DC Converters" -> fileName = "RMS_to_DC_Converters";
-            case "Special Purpose Regulators" -> fileName = "Special_Purpose_Regulators";
+            case "AC DC Converters, Offline Switches" -> fileName = "AC DC Converters, Offline Switches";
+            case "Battery Chargers" -> fileName = "Battery Chargers";
+            case "Battery Management" -> fileName = "Battery Management";
+            case "Current Regulation/Management" -> fileName = "Current Regulation/Management";
+            case "DC DC Switching Controllers" -> fileName = "DC DC Switching Controllers";
+            case "Display Drivers" -> fileName = "Display Drivers";
+            case "Energy Metering" -> fileName = "Energy Metering";
+            case "Full Half-Bridge (H Bridge) Drivers" -> fileName = "Full Half-Bridge (H Bridge) Drivers";
+            case "Gate Drivers" -> fileName = "Gate Drivers";
+            case "Hot Swap Controllers" -> fileName = "Hot Swap Controllers";
+            case "Laser Drivers" -> fileName = "Laser Drivers";
+            case "LED Drivers" -> fileName = "LED Drivers";
+            case "Lighting, Ballast Controllers" -> fileName = "Lighting, Ballast Controllers";
+            case "Motor Drivers, Controllers" -> fileName = "Motor Drivers, Controllers";
+            case "OR Controllers, Ideal Diodes" -> fileName = "OR Controllers, Ideal Diodes";
+            case "PFC (Power Factor Correction)" -> fileName = "PFC (Power Factor Correction)";
+            case "Power Distribution Switches, Load Drivers" -> fileName = "Power Distribution Switches, Load Drivers";
+            case "Power Management - Specialized" -> fileName = "Power Management - Specialized";
+            case "Power Over Ethernet (PoE) Controllers" -> fileName = "Power Over Ethernet (PoE) Controllers";
+            case "Power Supply Controllers, Monitors" -> fileName = "Power Supply Controllers, Monitors";
+            case "RMS to DC Converters" -> fileName = "RMS to DC Converters";
+            case "Special Purpose Regulators" -> fileName = "Special Purpose Regulators";
             case "Supervisors" -> fileName = "Supervisors";
-            case "Thermal Management" -> fileName = "Thermal_Management";
-            case "V/F and F/V Converters" -> fileName = "V_F_and_F_V_Converters";
-            case "Voltage Reference" -> fileName = "Voltage_Reference";
-            case "Voltage Regulators - DC DC Switching Regulators" -> fileName = "Voltage_Regulators_DC_DC_Switching_Regulators";
-            case "Voltage Regulators - Linear + Switching" -> fileName = "Voltage_Regulators_Linear_Switching";
-            case "Voltage Regulators - Linear Regulator Controllers" -> fileName = "Voltage_Regulators_Linear_Regulator_Controllers";
-            case "Voltage Regulators - Linear, Low Drop Out (LDO) Regulators" -> fileName = "Voltage_Regulators_Linear_Low_Drop_Out_LDO_Regulators";
-            case "Specialized ICs" -> fileName = "Specialized_ICs";
+            case "Thermal Management" -> fileName = "Thermal Management";
+            case "V/F and F/V Converters" -> fileName = "V/F and F/V Converters";
+            case "Voltage Reference" -> fileName = "Voltage Reference";
+            case "Voltage Regulators - DC DC Switching Regulators" -> fileName = "Voltage Regulators - DC DC Switching Regulators";
+            case "Voltage Regulators - Linear + Switching" -> fileName = "Voltage Regulators - Linear + Switching";
+            case "Voltage Regulators - Linear Regulator Controllers" -> fileName = "Voltage Regulators - Linear Regulator Controllers";
+            case "Voltage Regulators - Linear, Low Drop Out (LDO) Regulators" -> fileName = "Voltage Regulators - Linear, Low Drop Out (LDO) Regulators";
+            case "Specialized ICs" -> fileName = "Specialized ICs";
 
             // Potentiometers, Variable Resistors Subcategories
             case "Potentiometers, Variable Resistors Accessories" -> fileName = "Potentiometers, Variable Resistors Accessories";
@@ -293,8 +322,8 @@ public class DigiKeyAPI3 {
             case "Contactors (Electromechanical)" -> fileName = "Contactors (Electromechanical)";
             case "Contactors (Solid State)" -> fileName = "Contactors (Solid State)";
             case "High Frequency (RF) Relays" -> fileName = "High Frequency (RF) Relays";
-            case "I/O Relay Module Racks" -> fileName = "IO Relay Module Racks";
-            case "I/O Relay Modules" -> fileName = "IO Relay Modules";
+            case "I/O Relay Module Racks" -> fileName = "I/O Relay Module Racks";
+            case "I/O Relay Modules" -> fileName = "I/O Relay Modules";
             case "Power Relays, Over 2 Amps" -> fileName = "Power Relays, Over 2 Amps";
             case "Reed Relays" -> fileName = "Reed Relays";
             case "Relay Sockets" -> fileName = "Relay Sockets";
@@ -303,7 +332,7 @@ public class DigiKeyAPI3 {
             case "Solid State Relays" -> fileName = "Solid State Relays";
 
             // Resistors Subcategories
-            case "Resistor Accessories" -> fileName = "Resistor Accessories";
+            case "Resistors Accessories" -> fileName = "Resistors Accessories";
             case "Chassis Mount Resistors" -> fileName = "Chassis Mount Resistors";
             case "Chip Resistor - Surface Mount" -> fileName = "Chip Resistor - Surface Mount";
             case "Precision Trimmed Resistors" -> fileName = "Precision Trimmed Resistors";
@@ -315,6 +344,7 @@ public class DigiKeyAPI3 {
             case "Switches Accessories" -> fileName = "Switches Accessories";
             case "Accessories - Boots, Seals" -> fileName = "Accessories - Boots, Seals";
             case "Accessories - Caps" -> fileName = "Accessories - Caps";
+            case "Cable Pull Switches" -> fileName = "Cable Pull Switches";
             case "Configurable Switch Bodies" -> fileName = "Configurable Switch Bodies";
             case "Configurable Switch Contact Blocks" -> fileName = "Configurable Switch Contact Blocks";
             case "Configurable Switch Illumination Sources" -> fileName = "Configurable Switch Illumination Sources";
@@ -351,120 +381,101 @@ public class DigiKeyAPI3 {
 
         String fileFolder = switch (keyword) {
             // Capacitors subcategories
-            case "Capacitor Accessories", "Aluminum - Polymer Capacitors", "Aluminum Electrolytic Capacitors",
-                    "Capacitor Networks, Arrays", "Ceramic Capacitors", "Electric Double Layer Capacitors (EDLC), Supercapacitors",
-                    "Film Capacitors", "Mica and PTFE Capacitors", "Niobium Oxide Capacitors", "Silicon Capacitors",
-                    "Tantalum - Polymer Capacitors", "Tantalum Capacitors", "Thin Film Capacitors",
-                    "Trimmers, Variable Capacitors" -> "Capacitors/";
+            case "Capacitor Accessories", "Aluminum - Polymer Capacitors", "Aluminum Electrolytic Capacitors", "Capacitor Networks, Arrays", "Ceramic Capacitors",
+                    "Electric Double Layer Capacitors (EDLC), Supercapacitors", "Film Capacitors", "Mica and PTFE Capacitors", "Niobium Oxide Capacitors", "Silicon Capacitors",
+                    "Tantalum - Polymer Capacitors", "Tantalum Capacitors", "Thin Film Capacitors", "Trimmers, Variable Capacitors" -> "Capacitors/";
 
             // Connectors, Interconnects subcategories
-            case "Plugs and Receptacles", "Power Entry Connector Accessories", "Power Entry Modules (PEM)",
-                    "ARINC Inserts", "Backplane Connector Accessories", "Backplane Connector Contacts",
-                    "Backplane Connector Housings", "DIN 41612", "Hard Metric, Standard", "Backplane Connectors Specialized",
-                    "Banana and Tip Connector Accessories", "Banana and Tip Connector Adapters", "Binding Posts",
-                    "Jacks, Plugs", "Audio Connectors", "Barrel Connector Accessories", "Barrel Connector Adapters",
-                    "Power Connectors", "Blade Type Power Connector Accessories", "Blade Type Power Connector Assemblies",
-                    "Blade Type Power Connector Contacts", "Blade Type Power Connector Housings",
-                    "Card Edge Connector Accessories", "Card Edge Connector Adapters", "Card Edge Connector Contacts",
-                    "Card Edge Connector Housings", "Edgeboard Connectors", "Backshells and Cable Clamps",
-                    "Circular Connector Accessories", "Circular Connector Adapters", "Circular Connector Assemblies",
-                    "Circular Connector Contacts", "Circular Connector Housings", "Coaxial Connector (RF) Accessories",
-                    "Coaxial Connector (RF) Adapters", "Coaxial Connector (RF) Assemblies", "Coaxial Connector (RF) Contacts",
-                    "Coaxial Connector (RF) Terminators", "Contacts, Spring Loaded (Pogo Pins), and Pressure", "Leadframe",
-                    "Multi Purpose", "Centronics Connectors", "D-Sub Connector Assemblies", "D-Sub, D-Shaped Connector Accessories",
-                    "D-Sub, D-Shaped Connector Adapters", "D-Sub, D-Shaped Connector Backshells, Hoods",
-                    "D-Sub, D-Shaped Connector Contacts", "D-Sub, D-Shaped Connector Housings", "D-Sub, D-Shaped Connector Jackscrews",
-                    "D-Sub, D-Shaped Connector Terminators", "FFC, FPC (Flat Flexible) Connector Accessories",
-                    "FFC, FPC (Flat Flexible) Connector Assemblies", "FFC, FPC (Flat Flexible) Connector Contacts",
-                    "FFC, FPC (Flat Flexible) Connector Housings", "Fiber Optic Connector Accessories",
-                    "Fiber Optic Connector Adapters", "Fiber Optic Connector Assemblies", "Fiber Optic Connector Housings",
-                    "Heavy Duty Connector Accessories", "Heavy Duty Connector Assemblies", "Heavy Duty Connector Contacts",
-                    "Heavy Duty Connector Frames", "Heavy Duty Connector Housings, Hoods, Bases",
-                    "Heavy Duty Connector Inserts, Modules", "Keystone Connector Accessories", "Keystone Faceplates, Frames",
-                    "Keystone Inserts", "Inline Module Sockets", "Memory Connector Accessories", "PC Card Sockets",
-                    "PC Cards - Adapters", "Modular Connector Accessories", "Modular Connector Adapters", "Modular Connector Jacks",
-                    "Modular Connector Jacks With Magnetics", "Modular Connector Plug Housings", "Modular Connector Plugs",
-                    "Modular Connector Wiring Blocks", "Modular Connector Wiring Blocks Accessories",
-                    "Photovoltaic (Solar Panel) Connector Accessories", "Photovoltaic (Solar Panel) Connector Assemblies",
-                    "Photovoltaic (Solar Panel) Connector Contacts", "Pluggable Connector Accessories",
-                    "Pluggable Connector Assemblies", "Rectangular Connector Accessories", "Rectangular Connector Adapters",
-                    "Rectangular Connector Contacts", "Rectangular Connector Housings", "Spring Loaded", "IC Sockets",
-                    "Socket Accessories", "Socket Adapters", "Solid State Lighting Connector Accessories",
-                    "Solid State Lighting Connector Assemblies", "Solid State Lighting Connector Contacts", "Barrier Blocks",
-                    "Din Rail, Channel", "Headers, Plugs and Sockets", "Interface Modules", "Panel Mount", "Power Distribution",
-                    "Terminal Blocks Specialized", "Terminal Block Accessories", "Terminal Block Adapters", "Terminal Block Contacts",
-                    "Wire to Board", "USB, DVI, HDMI Connector Accessories", "USB, DVI, HDMI Connector Adapters",
+            case "Plugs and Receptacles", "Power Entry Connector Accessories", "Power Entry Modules (PEM)", "ARINC", "ARINC Inserts",
+                    "Backplane Connector Accessories", "Backplane Connector Contacts", "Backplane Connector Housings", "DIN 41612", "Hard Metric, Standard",
+                    "Backplane Connectors Specialized", "Banana and Tip Connector Accessories", "Banana and Tip Connector Adapters", "Binding Posts", "Jacks, Plugs",
+                    "Audio Connectors", "Barrel Connector Accessories", "Barrel Connector Adapters", "Power Connectors", "Between Series Adapters",
+                    "Blade Type Power Connector Accessories", "Blade Type Power Connector Assemblies", "Blade Type Power Connector Contacts", "Blade Type Power Connector Housings", "Card Edge Connector Accessories",
+                    "Card Edge Connector Adapters", "Card Edge Connector Contacts", "Card Edge Connector Housings", "Edgeboard Connectors",
+                    "Backshells and Cable Clamps", "Circular Connector Accessories", "Circular Connector Adapters", "Circular Connector Assemblies", "Circular Connector Contacts",
+                    "Circular Connector Housings", "Coaxial Connector (RF) Accessories", "Coaxial Connector (RF) Adapters", "Coaxial Connector (RF) Assemblies", "Coaxial Connector (RF) Contacts",
+                    "Coaxial Connector (RF) Terminators", "Contacts, Spring Loaded (Pogo Pins), and Pressure", "Leadframe", "Multi Purpose", "Centronics Connectors",
+                    "D-Sub Connector Assemblies", "D-Sub, D-Shaped Connector Accessories", "D-Sub, D-Shaped Connector Adapters", "D-Sub, D-Shaped Connector Backshells, Hoods",
+                    "D-Sub, D-Shaped Connector Contacts", "D-Sub, D-Shaped Connector Housings", "D-Sub, D-Shaped Connector Jackscrews", "D-Sub, D-Shaped Connector Terminators", "FFC, FPC (Flat Flexible) Connector Accessories",
+                    "FFC, FPC (Flat Flexible) Connector Assemblies", "FFC, FPC (Flat Flexible) Connector Contacts", "FFC, FPC (Flat Flexible) Connector Housings", "Fiber Optic Connector Accessories",
+                    "Fiber Optic Connector Adapters", "Fiber Optic Connector Assemblies", "Fiber Optic Connector Housings", "Heavy Duty Connector Accessories", "Heavy Duty Connector Assemblies",
+                    "Heavy Duty Connector Contacts", "Heavy Duty Connector Frames", "Heavy Duty Connector Housings, Hoods, Bases", "Heavy Duty Connector Inserts, Modules", "Keystone Connector Accessories",
+                    "Keystone Faceplates, Frames", "Keystone Inserts", "LGH Connectors", "Inline Module Sockets", "Memory Connector Accessories", "PC Card Sockets",
+                    "PC Cards - Adapters", "Modular Connector Accessories", "Modular Connector Adapters", "Modular Connector Jacks", "Modular Connector Jacks With Magnetics",
+                    "Modular Connector Plug Housings", "Modular Connector Plugs", "Modular Connector Wiring Blocks", "Modular Connector Wiring Blocks Accessories", "Photovoltaic (Solar Panel) Connector Accessories",
+                    "Photovoltaic (Solar Panel) Connector Assemblies", "Photovoltaic (Solar Panel) Connector Contacts", "Pluggable Connector Accessories", "Pluggable Connector Assemblies", "Arrays, Edge Type, Mezzanine (Board to Board)",
+                    "Board In, Direct Wire to Board", "Board Spacers, Stackers (Board to Board)", "Free Hanging, Panel Mount", "Headers, Male Pins", "Headers, Receptacles, Female Sockets",
+                    "Headers, Specialty Pin", "Rectangular Connector Accessories", "Rectangular Connector Adapters", "Rectangular Connector Contacts", "Rectangular Connector Housings", "Spring Loaded",
+                    "IC Sockets", "Socket Accessories", "Socket Adapters", "Solid State Lighting Connector Accessories", "Solid State Lighting Connector Assemblies",
+                    "Solid State Lighting Connector Contacts", "Barrier Blocks", "Din Rail, Channel", "Headers, Plugs and Sockets", "Interface Modules", "Panel Mount",
+                    "Power Distribution", "Terminal Blocks Specialized", "Terminal Block Accessories", "Terminal Block Adapters", "Terminal Block Contacts", "Wire to Board",
+                    "Terminal Junction Systems", "Terminal Strips and Turret Boards", "Barrel, Bullet Connectors", "Foil Connectors", "Housings, Boots", "Knife Connectors", "Lugs",
+                    "Magnetic Wire Connectors", "PC Pin Receptacles, Socket Connectors", "PC Pin, Single Post Connectors", "Quick Connects, Quick Disconnect Connectors", "Ring Connectors",
+                    "Screw Connectors", "Solder Lug Connectors", "Spade Connectors", "Specialized Connectors", "Terminal Accessories", "Terminal Adapters", "Turret Connectors",
+                    "Wire Pin Connectors", "Wire Splice Connectors", "Wire to Board Connectors", "USB, DVI, HDMI Connector Accessories", "USB, DVI, HDMI Connector Adapters",
                     "USB, DVI, HDMI Connector Assemblies" -> "Connectors, Interconnects/";
 
             // Crystal, Oscillators, Resonators subcategories
-            case "Crystal, Oscillator, Resonator Accessories", "Crystals", "Oscillators", "Pin Configurable-Selectable Oscillators",
-                    "Programmable Oscillators", "Resonators", "Stand Alone Programmers",
-                    "VCOs (Voltage Controlled Oscillators)" -> "Crystals, Oscillators, Resonators/";
+            case
+                    "Crystal, Oscillator, Resonator Accessories", "Crystals", "Oscillators", "Pin Configurable/Selectable Oscillators", "Programmable Oscillators",
+                            "Resonators", "Stand Alone Programmers", "VCOs (Voltage Controlled Oscillators)" -> "Crystals, Oscillators, Resonators/";
 
             // Inductors, Coil, Chokes subcategories
 
-            case "Adjustable Inductors", "Arrays, Signal Transformers", "Inductors, Coils, Chokes Delay Lines", "Fixed Inductors",
-                    "Wireless Charging Coils" -> "Inductors, Coils, Chokes/";
+            case "Adjustable Inductors", "Arrays, Signal Transformers", "Delay Lines", "Fixed Inductors", "Wireless Charging Coils" -> "Inductors, Coils, Chokes/";
 
             // Integrated Circuits (ICs) subcategories
-            case "Audio Special Purpose", "Application Specific Clock/Timing", "Clock Buffers, Drivers",
-                    "Clock Generators, PLLs, Frequency Synthesizers", "Delay Lines", "IC Batteries",
-                    "Programmable Timers and Oscillators", "Real Time Clocks", "ADCs/DACs - Special Purpose", "Analog Front End (AFE)",
-                    "Analog to Digital Converters (ADC)", "Digital Potentiometers", "Digital to Analog Converters (DAC)",
-                    "Touch Screen Controllers", "Application Specific Microcontrollers", "CPLDs (Complex Programmable Logic Devices)",
-                    "DSP (Digital Signal Processors)", "FPGAs (Field Programmable Gate Array)",
-                    "FPGAs (Field Programmable Gate Array) with Microcontrollers", "Microcontrollers",
-                    "Microcontrollers, Microprocessor, FPGA Modules", "Microprocessors", "PLDs (Programmable Logic Device)",
-                    "System On Chip (SoC)", "Analog Switches - Special Purpose", "Analog Switches, Multiplexers, Demultiplexers",
-                    "CODECS", "Interface Controllers", "Direct Digital Synthesis (DDS)", "Drivers, Receivers, Transceivers",
-                    "Encoders, Decoders, Converters", "Filters - Active", "I/O Expanders", "Modems - ICs and Modules", "Modules",
-                    "Sensor and Detector Interfaces", "Sensor, Capacitive Touch", "Serializers, Deserializers",
-                    "Signal Buffers, Repeaters, Splitters", "Signal Terminators", "Specialized", "Telecom",
-                    "UARTs (Universal Asynchronous Receiver Transmitter)", "Voice Record and Playback", "Amplifiers",
-                    "Analog Multipliers, Dividers", "Comparators", "Video Processing", "Buffers, Drivers, Receivers, Transceivers",
-                    "Counters, Dividers", "FIFOs Memory", "Flip Flops", "Gates and Inverters",
-                    "Gates and Inverters - Multi-Function, Configurable", "Latches", "Multivibrators",
-                    "Parity Generators and Checkers", "Shift Registers", "Signal Switches, Multiplexers, Decoders", "Specialty Logic",
-                    "Translators, Level Shifters", "Universal Bus Functions", "Batteries", "Configuration PROMs for FPGAs",
-                    "Memory Controllers", "Memory", "AC DC Converters, Offline Switches", "Battery Chargers", "Battery Management",
-                    "Current Regulation/Management", "DC DC Switching Controllers", "Display Drivers", "Energy Metering",
-                    "Full Half-Bridge (H Bridge) Drivers", "Gate Drivers", "Hot Swap Controllers", "Laser Drivers", "LED Drivers",
-                    "Lighting, Ballast Controllers", "Motor Drivers, Controllers", "OR Controllers, Ideal Diodes",
-                    "PFC (Power Factor Correction)", "Power Distribution Switches, Load Drivers", "Power Management - Specialized",
-                    "Power Over Ethernet (PoE) Controllers", "Power Supply Controllers, Monitors", "RMS to DC Converters",
+            case "Audio Special Purpose", "Application Specific Clock/Timing", "Clock Buffers, Drivers", "Clock Generators, PLLs, Frequency Synthesizers", "Clock/Timing Delay Lines",
+                    "IC Batteries", "Programmable Timers and Oscillators", "Real Time Clocks", "ADCs/DACs - Special Purpose", "Analog Front End (AFE)",
+                    "Analog to Digital Converters (ADC)", "Digital Potentiometers", "Digital to Analog Converters (DAC)", "Touch Screen Controllers",
+                    "Application Specific Microcontrollers", "CPLDs (Complex Programmable Logic Devices)", "DSP (Digital Signal Processors)", "FPGAs (Field Programmable Gate Array)", "FPGAs (Field Programmable Gate Array) with Microcontrollers",
+                    "Microcontrollers", "Microcontrollers, Microprocessor, FPGA Modules", "Microprocessors", "PLDs (Programmable Logic Device)", "System On Chip (SoC)",
+                    "Analog Switches - Special Purpose", "Analog Switches, Multiplexers, Demultiplexers", "CODECS", "Interface Controllers", "Direct Digital Synthesis (DDS)",
+                    "Drivers, Receivers, Transceivers", "Encoders, Decoders, Converters", "Filters - Active", "I/O Expanders",
+                    "Modems - ICs and Modules", "Modules", "Sensor and Detector Interfaces", "Sensor, Capacitive Touch", "Serializers, Deserializers",
+                    "Signal Buffers, Repeaters, Splitters", "Signal Terminators", "Interface Specialized", "Telecom", "UARTs (Universal Asynchronous Receiver Transmitter)",
+                    "Voice Record and Playback", "Amplifiers", "Analog Multipliers, Dividers", "Comparators", "Video Processing",
+                    "Buffers, Drivers, Receivers, Transceivers", "Counters, Dividers", "FIFOs Memory", "Flip Flops", "Gates and Inverters",
+                    "Gates and Inverters - Multi-Function, Configurable", "Latches", "Multivibrators", "Parity Generators and Checkers", "Shift Registers",
+                    "Signal Switches, Multiplexers, Decoders", "Specialty Logic", "Translators, Level Shifters", "Universal Bus Functions", "Batteries",
+                    "Configuration PROMs for FPGAs", "Memory Controllers", "Memory", "AC DC Converters, Offline Switches", "Battery Chargers",
+                    "Battery Management", "Current Regulation/Management", "DC DC Switching Controllers", "Display Drivers",
+                    "Energy Metering", "Full Half-Bridge (H Bridge) Drivers", "Gate Drivers", "Hot Swap Controllers", "Laser Drivers",
+                    "LED Drivers", "Lighting, Ballast Controllers", "Motor Drivers, Controllers", "OR Controllers, Ideal Diodes", "PFC (Power Factor Correction)",
+                    "Power Distribution Switches, Load Drivers", "Power Management - Specialized", "Power Over Ethernet (PoE) Controllers", "Power Supply Controllers, Monitors", "RMS to DC Converters",
                     "Special Purpose Regulators", "Supervisors", "Thermal Management", "V/F and F/V Converters", "Voltage Reference",
                     "Voltage Regulators - DC DC Switching Regulators", "Voltage Regulators - Linear + Switching",
                     "Voltage Regulators - Linear Regulator Controllers", "Voltage Regulators - Linear, Low Drop Out (LDO) Regulators",
                     "Specialized ICs" -> "Integrated Circuits (ICs)/";
 
             // Potentiometers, Variable Resistors subcategories
-            case "Potentiometers, Variable Resistors Accessories", "Adjustable Power Resistor", "Joystick Potentiometers",
-                    "Rotary Potentiometers, Rheostats", "Scale Dials", "Slide Potentiometers", "Thumbwheel Potentiometers",
-                    "Trimmer Potentiometers", "Value Display Potentiometers" -> "Potentiometers, Variable Resistors/";
+            case
+                    "Potentiometers, Variable Resistors Accessories", "Adjustable Power Resistor", "Joystick Potentiometers", "Rotary Potentiometers, Rheostats", "Scale Dials",
+                            "Slide Potentiometers", "Thumbwheel Potentiometers", "Trimmer Potentiometers", "Value Display Potentiometers" -> "Potentiometers, Variable Resistors/";
 
             // Relays subcategories
-            case "Relays Accessories", "Automotive Relays", "Contactors (Electromechanical)", "Contactors (Solid State)",
-                    "High Frequency (RF) Relays", "I/O Relay Module Racks", "I/O Relay Modules", "Power Relays, Over 2 Amps",
-                    "Reed Relays", "Relay Sockets", "Safety Relays", "Signal Relays, Up to 2 Amps", "Solid State Relays" -> "Relays/";
+            case
+                    "Relays Accessories", "Automotive Relays", "Contactors (Electromechanical)", "Contactors (Solid State)", "High Frequency (RF) Relays",
+                            "I/O Relay Module Racks", "I/O Relay Modules", "Power Relays, Over 2 Amps", "Reed Relays", "Relay Sockets",
+                            "Safety Relays", "Signal Relays, Up to 2 Amps", "Solid State Relays" -> "Relays/";
 
             // Resistor subcategories
-            case "Resistor Accessories", "Chassis Mount Resistors", "Chip Resistor - Surface Mount", "Precision Trimmed Resistors",
-                    "Resistor Networks, Arrays", "Specialized Resistors", "Through Hole Resistors", "Accessories" -> "Resistors/";
+            case "Resistors Accessories", "Chassis Mount Resistors", "Chip Resistor - Surface Mount", "Precision Trimmed Resistors", "Resistor Networks, Arrays",
+                    "Specialized Resistors", "Through Hole Resistors" -> "Resistors/";
 
             // Switches subcategories
-            case "Switches Accessories", "Accessories - Boots, Seals", "Accessories - Caps", "Cable Pull Switches",
-                    "Configurable Switch Bodies", "Configurable Switch Contact Blocks", "Configurable Switch Illumination Sources",
-                    "Configurable Switch Lens", "DIP Switches", "Disconnect Switch Components", "Emergency Stop (E-Stop) Switches",
-                    "Interlock Switches", "Keylock Switches", "Keypad Switches", "Limit Switches", "Magnetic, Reed Switches",
-                    "Navigation Switches, Joystick", "Programmable Display Switches", "Pushbutton Switches",
-                    "Pushbutton Switches - Hall Effect", "Rocker Switches", "Rotary Switches", "Selector Switches", "Slide Switches",
-                    "Tactile Switches", "Thumbwheel Switches", "Toggle Switches" -> "Switches/";
+            case "Switches Accessories", "Accessories - Boots, Seals", "Accessories - Caps", "Cable Pull Switches", "Configurable Switch Bodies",
+                    "Configurable Switch Contact Blocks", "Configurable Switch Illumination Sources", "Configurable Switch Lens", "DIP Switches", "Disconnect Switch Components",
+                    "Emergency Stop (E-Stop) Switches", "Interlock Switches", "Keylock Switches", "Keypad Switches", "Limit Switches",
+                    "Magnetic, Reed Switches", "Navigation Switches, Joystick", "Programmable Display Switches", "Pushbutton Switches", "Pushbutton Switches - Hall Effect",
+                    "Rocker Switches", "Rotary Switches", "Selector Switches", "Slide Switches", "Tactile Switches",
+                    "Thumbwheel Switches", "Toggle Switches" -> "Switches/";
             default -> "";
         };
         return fileFolder;
     }
 
-    private static String[] checkingFile(String fileName, String fileFolder, int offset) {
+    private static String[] checkingFile(String fileName, String fileFolder, int offset, String keyword) {
 
         int productIndex = 1;
 
@@ -486,6 +497,9 @@ public class DigiKeyAPI3 {
 //                    System.out.println(arrayCount(filePath));
                 // update the offset value for new entries
                 offset = (productIndex * 50) - 50;
+
+//                System.out.println("Checking: " + filePath);
+
                 tempArray[1] = Integer.toString(offset);
             }
             else {
@@ -500,53 +514,138 @@ public class DigiKeyAPI3 {
         return tempArray;
     }
 
+    public static void clientListUsedUp() {
+        // Define the file name
+        String fileName = "ClientList.txt";
+
+        try {
+            // Open the file for reading
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+
+            // Create a StringBuilder to store modified lines
+            StringBuilder modifiedContent = new StringBuilder();
+
+            // Read each line from the file
+            String line;
+            boolean allEndWithO = true;
+            while ((line = reader.readLine()) != null) {
+                // Check if the last character of the line is "O"
+                if (!line.endsWith("O")) {
+                    allEndWithO = false;
+                    break;
+                }
+                // Append the modified line (replace "O" with "X")
+                modifiedContent.append(line.substring(0, line.length() - 1)).append("X").append("\n");
+            }
+
+            // Close the reader
+            reader.close();
+
+            // If all lines end with "O", update the file
+            if (allEndWithO) {
+                // Open the file for writing
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+
+                // Write the modified content to the file
+                writer.write(modifiedContent.toString());
+                System.out.println("Client List has been reset.");
+
+                // Close the writer
+                writer.close();
+            } else {
+                System.out.println("Client List still has open Client ID and Client Secret.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
     public static void main(String[] args) {
         try {
-            // offset is used to keep track of placement when get API response
-            // limit of rows per response is 50
-            int offset = 0;
-            int limit = 50;
-
             /*
                 GUI team can create a window with a drop-down or a write-in opinion for the
                 client to select which keyword to pull.
                 Action listener?
              */
 
+            String[] clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+            // OAuth 2.0 client credentials
+            String CLIENT_ID = clientKey[0];
+            String CLIENT_SECRET = clientKey[1];
+            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+
+            // Checking if client list is exhausted, method below resets the "ClientList.txt" file
+            // else print out status and continue to the next code
+            clientListUsedUp();
+
             // CategoriesCheckList reads CategoriesList.txt for the next category to pull
             String KEYWORD = CategoriesCheckList.findCategory("CategoriesList.txt");
             System.out.println("Pulling from subcategory: " + KEYWORD);
 
-            // Assigning file name with KEYWORD match
-            String fileName = selectingFileName(KEYWORD);
-
             // Assigning file folder with KEYWORD match
             String fileFolder = selectingFileFolder(KEYWORD);
 
+            String fileName = null;
+
+            /*
+                - Check the folder to see if fileName exists
+                - If fileName exist, count how many files with KEYWORD as prefix
+                - If there is only one, have the fileName unchanged
+                - If there are a # of files, then concat " #" to fileName
+                - That fileName will be used
+             */
+
+            // offset is used to keep track of placement when get API response
+            // limit of rows per response is 50
+            int offset = 0;
+            int limit = 50;
+
+            int filePrefixCount = 1;
+            int directoryFileCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
+
+            if (directoryFileCount > 1) {
+                filePrefixCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
+                fileName = selectingFileName(KEYWORD) + " " + filePrefixCount;
+                offset = filePrefixCount * 200;
+            }
+            else {
+                // Assigning file name with KEYWORD match
+                fileName = selectingFileName(KEYWORD);
+            }
+
             // Assigning to the correct parent category
-            int productIndex = 1;
-
-            // Assigning file Path after checking file status
-
-            String[] returnedArray = checkingFile(fileName, fileFolder, offset);
-            String filePath = returnedArray[0];
-            if (returnedArray[1] == null) {
-                offset = 0;
-            }
-            else {
-                offset = Integer.parseInt(returnedArray[1]);
-            }
-            if (returnedArray[2] == null) {
-                productIndex = 1;
-            }
-            else {
-                productIndex = Integer.parseInt(returnedArray[2]);
-            }
-
-
+            int productIndex;
             int apiCount = 0;
+            boolean offsetLoopAdjust = false;
 
             do {
+//                System.out.println("OffsetTracker1: " + offsetTracker);
+                String filePath = null;
+
+                // Assigning file Path after checking file status
+
+                String[] returnedArray = checkingFile(fileName, fileFolder, offset, KEYWORD);
+                filePath = returnedArray[0];
+                if (returnedArray[1] == null && filePrefixCount != 0) {
+                    offset = 0;
+                }
+//                else {
+//                    // Add + 50 below
+//                    offset = Integer.parseInt(returnedArray[1]) + offsetTracker;
+////                    System.out.println("Offset: " + offset);
+//                    System.out.println("Section 2");
+//
+//                }
+
+                if (returnedArray[2] == null) {
+                    productIndex = 1;
+                }
+                else {
+                    productIndex = Integer.parseInt(returnedArray[2]);
+                }
+
                 // Step 1: Obtain OAuth 2.0 access token
                 String accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
             /*
@@ -558,13 +657,23 @@ public class DigiKeyAPI3 {
                             "token_type":"Bearer"
                             }
              */
-
                 // The variable below extracts the access_token value
                 String newAccessToken = accessToken.substring(43, 71);
 
+
                 while (true) {
+
+                    // offsetLoopAdjust is used to loop out of the comparison using MODULE against the offset.
+                    // With the offsetLoopAdjust, we make sure that the program is not stuck on the offset, to
+                    // prevent creating a new file, setting the offset to the offset limit, and being stuck in an infinite loop
+                    if (offsetLoopAdjust) {
+                        offset += 50;
+                        offsetLoopAdjust = false;
+                    }
                     // Send API requests with current offset
-                    String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD);
+//                    System.out.println("Used Offset: " + offset);
+//                    System.out.println("OffsetTracker2: " + offsetTracker);
+                    String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD, CLIENT_ID);
 
                     apiCount++;
 
@@ -590,7 +699,7 @@ public class DigiKeyAPI3 {
 //                        productIndex = 1;
 
                         // Assigning file Path after checking file status
-                        String[] returnedArray2 = checkingFile(fileName, fileFolder, offset);
+                        String[] returnedArray2 = checkingFile(fileName, fileFolder, offset, KEYWORD);
 
                         filePath = returnedArray2[0];
 
@@ -637,18 +746,43 @@ public class DigiKeyAPI3 {
                         System.out.println("Re-requesting response body.");
                         offset -= limit;
                     }
+                    else if (responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
+                        System.out.println("clientId used to get Bearer token does not match the X-DIGIKEY-Client-Id");
+                        offset -= limit;
+                    }
                     else if (responseBody.contains("Internal Server Error")) {
                         System.out.println("Internal Server Error");
                         System.out.println("Reached API daily limit.");
-                        apiCount = 1000;
-                        break;
+
+                        System.out.println("\nClient Key used up.");
+                        ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
+
+                        if (!ClientScanner.clientListComplete(CLIENTLIST)) {
+                            System.out.println("\nGetting new Client Key.");
+
+                            clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+                            CLIENT_ID = clientKey[0];
+                            CLIENT_SECRET = clientKey[1];
+
+                            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+                            accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+                            newAccessToken = accessToken.substring(43, 71);
+                            apiCount = 0;
+//                            break;
+                        }
+                        else {
+                            apiCount = 1000;
+                        }
+
+
                     }
                     if (!responseBody.contains("Description") && !responseBody.contains("Internal Server Error") &&
                             !responseBody.contains("Bad Gateway") && !responseBody.contains("Bearer token is expired." +
                             " Please use your refresh token to obtain a new Bearer token, or acquire a new set " +
                             "of tokens from the OAuth endpoint.") &&
-                            !responseBody.contains("An error occurred while processing your request.")) {
-                        System.out.println(indexedResponseBody);
+                            !responseBody.contains("An error occurred while processing your request.") ||
+                    !responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
+//                        System.out.println(indexedResponseBody);
                     }
 
                     insertNewLines(filePath, indexedResponseBody);
@@ -657,6 +791,15 @@ public class DigiKeyAPI3 {
                     // Process the current page of results
                     System.out.println("API Response (Offset: " + offset + "):");
                     System.out.println("API Count: " + apiCount);
+
+                    if (offset % 25000 == 0 && offset != 0) {
+                        fileName = DirectoryFiler.createJSONFileWithPrefix("Postman Exports/" + fileFolder, KEYWORD);
+                        filePath = "Postman Exports/" + fileFolder + fileName + ".json";
+                        insertTemplate(filePath);
+                        offsetLoopAdjust = true;
+
+                        break;
+                    }
 
                     // Increment offset for the next page
                     offset += limit;
@@ -679,7 +822,6 @@ public class DigiKeyAPI3 {
 
         return innerArray.size();
     }
-
 
     private static void insertNewLines(String filePath, String newLine) throws IOException {
         // Reading existing content from the file
@@ -757,14 +899,14 @@ public class DigiKeyAPI3 {
         return accessToken;
     }
 
-    private static String sendPostRequest(String apiUrl, String accessToken, int offset, int limit, String keyword) throws Exception {
+    private static String sendPostRequest(String apiUrl, String accessToken, int offset, int limit, String keyword, String clientID) throws Exception {
         // Create HTTP client
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         // Create HTTP request to API endpoint
         HttpPost apiRequest = new HttpPost(apiUrl);
         apiRequest.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
-        apiRequest.addHeader("X-DIGIKEY-Client-Id", "wNGv9df3Jw9hZt6DasTMOjKYN4PZz1Fi");
+        apiRequest.addHeader("X-DIGIKEY-Client-Id", clientID);
 
         // Set request body with current offset and limit
         String requestBody = "{\"Keywords\": \""+ keyword + "\", \"limit\": " + limit + ", \"offset\":" + offset + "}";
