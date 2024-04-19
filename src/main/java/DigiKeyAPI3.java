@@ -23,8 +23,8 @@ public class DigiKeyAPI3 {
 
     // API endpoint
     private static final String API_URL = "https://api.digikey.com/products/v4/search/keyword";
-
     private static final String CLIENTLIST = "ClientList.txt";
+    private static final String CATEGORYLIST = "CategoriesList.txt";
 
     private static String selectingFileName(String keyword) {
         String fileName;
@@ -561,257 +561,22 @@ public class DigiKeyAPI3 {
         }
     }
 
-
-    public static void main(String[] args) {
-        try {
-            /*
-                GUI team can create a window with a drop-down or a write-in opinion for the
-                client to select which keyword to pull.
-                Action listener?
-             */
-
-            String[] clientKey = ClientScanner.findFreeClient(CLIENTLIST);
-            // OAuth 2.0 client credentials
-            String CLIENT_ID = clientKey[0];
-            String CLIENT_SECRET = clientKey[1];
-            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
-
-            // Checking if client list is exhausted, method below resets the "ClientList.txt" file
-            // else print out status and continue to the next code
-            clientListUsedUp();
-
-            // CategoriesCheckList reads CategoriesList.txt for the next category to pull
-            String KEYWORD = CategoriesCheckList.findCategory("CategoriesList.txt");
-            System.out.println("Pulling from subcategory: " + KEYWORD);
-
-            // Assigning file folder with KEYWORD match
-            String fileFolder = selectingFileFolder(KEYWORD);
-
-            String fileName = null;
-
-            /*
-                - Check the folder to see if fileName exists
-                - If fileName exist, count how many files with KEYWORD as prefix
-                - If there is only one, have the fileName unchanged
-                - If there are a # of files, then concat " #" to fileName
-                - That fileName will be used
-             */
-
-            // offset is used to keep track of placement when get API response
-            // limit of rows per response is 50
-            int offset = 0;
-            int limit = 50;
-
-            int filePrefixCount = 1;
-            int directoryFileCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
-
-            if (directoryFileCount > 1) {
-                filePrefixCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
-                fileName = selectingFileName(KEYWORD) + " " + filePrefixCount;
-                offset = filePrefixCount * 200;
+    public static boolean categoryListComplete(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Check if the line ends with "O"
+                if (!line.endsWith("O")) {
+                    return false; // If any line doesn't end with "O", return false
+                }
             }
-            else {
-                // Assigning file name with KEYWORD match
-                fileName = selectingFileName(KEYWORD);
-            }
-
-            // Assigning to the correct parent category
-            int productIndex;
-            int apiCount = 0;
-            boolean offsetLoopAdjust = false;
-
-            do {
-//                System.out.println("OffsetTracker1: " + offsetTracker);
-                String filePath = null;
-
-                // Assigning file Path after checking file status
-
-                String[] returnedArray = checkingFile(fileName, fileFolder, offset, KEYWORD);
-                filePath = returnedArray[0];
-                if (returnedArray[1] == null && filePrefixCount != 0) {
-                    offset = 0;
-                }
-//                else {
-//                    // Add + 50 below
-//                    offset = Integer.parseInt(returnedArray[1]) + offsetTracker;
-////                    System.out.println("Offset: " + offset);
-//                    System.out.println("Section 2");
-//
-//                }
-
-                if (returnedArray[2] == null) {
-                    productIndex = 1;
-                }
-                else {
-                    productIndex = Integer.parseInt(returnedArray[2]);
-                }
-
-                // Step 1: Obtain OAuth 2.0 access token
-                String accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
-            /*
-                The accessToken above provides a dictionary in the following format:
-                Access Token:
-                            {
-                            "access_token":"MVOSd7RVyfid6zgiB9A7PNIUPxYL",
-                            "expires_in":599,
-                            "token_type":"Bearer"
-                            }
-             */
-                // The variable below extracts the access_token value
-                String newAccessToken = accessToken.substring(43, 71);
-
-
-                while (true) {
-
-                    // offsetLoopAdjust is used to loop out of the comparison using MODULE against the offset.
-                    // With the offsetLoopAdjust, we make sure that the program is not stuck on the offset, to
-                    // prevent creating a new file, setting the offset to the offset limit, and being stuck in an infinite loop
-                    if (offsetLoopAdjust) {
-                        offset += 50;
-                        offsetLoopAdjust = false;
-                    }
-                    // Send API requests with current offset
-//                    System.out.println("Used Offset: " + offset);
-//                    System.out.println("OffsetTracker2: " + offsetTracker);
-                    String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD, CLIENT_ID);
-
-                    apiCount++;
-
-                    String prefix = responseBody.substring(0, 10);
-                    String suffix = responseBody.substring(10);
-                    String indexedResponseBody = prefix + productIndex + suffix;
-
-                    // When responseBody has no more content, break while loop
-                    if (suffix.startsWith("\":[]")) {
-                        CategoriesCheckList.categoryComplete("CategoriesList.txt", KEYWORD);
-                        System.out.println(KEYWORD + " file is complete.");
-                        System.out.println("Checking next subcategory.");
-                        KEYWORD = CategoriesCheckList.findCategory("CategoriesList.txt");
-                        System.out.println("Pull from subcategory: " + KEYWORD);
-
-                        // Assigning file name with KEYWORD match
-                        fileName = selectingFileName(KEYWORD);
-
-                        // Assigning file folder with KEYWORD match
-                        fileFolder = selectingFileFolder(KEYWORD);
-
-                        // Assigning to the correct parent category
-//                        productIndex = 1;
-
-                        // Assigning file Path after checking file status
-                        String[] returnedArray2 = checkingFile(fileName, fileFolder, offset, KEYWORD);
-
-                        filePath = returnedArray2[0];
-
-                        if (returnedArray2[2] == null) {
-                            productIndex = 0;
-                        }
-                        else {
-                            productIndex = Integer.parseInt(returnedArray2[2]);
-                        }
-                        if(returnedArray2[1] == null) {
-                            offset = 0;
-                        }
-                        else {
-                            offset = Integer.parseInt(returnedArray2[1]);
-                        }
-                        break;
-                    }
-                    if (prefix.startsWith("{\"fault\"")) {
-                        System.out.println("""
-                            Execution of ServiceCallout SC-Quota failed
-
-                            Resource Limitations: Your system or the API server may have resource limitations that are exceeded when handling a large amount of data.
-                            Rate Limiting: Some APIs impose rate limits to prevent abuse. If you exceed the allowed rate, you might encounter rate-limiting errors.""");
-                    offset -= limit;
-                    }
-                    if (responseBody.contains("An error occurred while processing your request.")) {
-                        // Decrementing offset to re-request Error Request
-
-                        System.out.println("An error occurred while processing your request.");
-                        System.out.println("Re-requesting response body.");
-                        offset -= limit;
-                    }
-                    else if (responseBody.contains("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.")) {
-                        System.out.println("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.");
-                        System.out.println("Refreshing access token.");
-                        accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
-                        newAccessToken = accessToken.substring(43, 71);
-
-                        System.out.println("Re-requesting response body.");
-                        offset -= limit;
-                    }
-                    else if (responseBody.contains("Bad Gateway")) {
-                        System.out.println("Bad Gateway");
-                        System.out.println("Re-requesting response body.");
-                        offset -= limit;
-                    }
-                    else if (responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
-                        System.out.println("clientId used to get Bearer token does not match the X-DIGIKEY-Client-Id");
-                        offset -= limit;
-                    }
-                    else if (responseBody.contains("Internal Server Error")) {
-                        System.out.println("Internal Server Error");
-                        System.out.println("Reached API daily limit.");
-
-                        System.out.println("\nClient Key used up.");
-                        ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
-
-                        if (!ClientScanner.clientListComplete(CLIENTLIST)) {
-                            System.out.println("\nGetting new Client Key.");
-
-                            clientKey = ClientScanner.findFreeClient(CLIENTLIST);
-                            CLIENT_ID = clientKey[0];
-                            CLIENT_SECRET = clientKey[1];
-
-                            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
-                            accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
-                            newAccessToken = accessToken.substring(43, 71);
-                            apiCount = 0;
-//                            break;
-                        }
-                        else {
-                            apiCount = 1000;
-                        }
-
-
-                    }
-                    if (!responseBody.contains("Description") && !responseBody.contains("Internal Server Error") &&
-                            !responseBody.contains("Bad Gateway") && !responseBody.contains("Bearer token is expired." +
-                            " Please use your refresh token to obtain a new Bearer token, or acquire a new set " +
-                            "of tokens from the OAuth endpoint.") &&
-                            !responseBody.contains("An error occurred while processing your request.") ||
-                    !responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
-//                        System.out.println(indexedResponseBody);
-                    }
-
-                    insertNewLines(filePath, indexedResponseBody);
-                    productIndex++;
-
-                    // Process the current page of results
-                    System.out.println("API Response (Offset: " + offset + "):");
-                    System.out.println("API Count: " + apiCount);
-
-                    if (offset % 25000 == 0 && offset != 0) {
-                        fileName = DirectoryFiler.createJSONFileWithPrefix("Postman Exports/" + fileFolder, KEYWORD);
-                        filePath = "Postman Exports/" + fileFolder + fileName + ".json";
-                        insertTemplate(filePath);
-                        offsetLoopAdjust = true;
-
-                        break;
-                    }
-
-                    // Increment offset for the next page
-                    offset += limit;
-                }
-
-            } while (apiCount < 999);
-
-        } catch (Exception e) {
+            // If all lines end with "O", return true
+            return true;
+        } catch (IOException e) {
             e.printStackTrace();
+            return false; // Return false in case of any exception
         }
     }
-
 
     public static int arrayCount(String filePath) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
@@ -922,4 +687,308 @@ public class DigiKeyAPI3 {
 
         return responseBody;
     }
+
+    public static void main(String[] args) {
+        try {
+            /*
+                GUI team can create a window with a drop-down or a write-in opinion for the
+                client to select which keyword to pull.
+                Action listener?
+             */
+
+            // Checking if CategoriesList.txt is complete
+            if (categoryListComplete(CATEGORYLIST)) {
+                System.out.println("CategoriesList.txt file is complete.");
+                System.out.println("Reset CategoriesList.txt file to recollect data.");
+                System.out.println("Ending program.");
+                System.exit(0); // Terminate the program with status code 0 (indicating successful termination)
+            }
+
+
+            // Checking if client list is exhausted, method below resets the "ClientList.txt" file
+            // else print out status and continue to the next code
+            clientListUsedUp();
+
+            String[] clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+            // OAuth 2.0 client credentials
+            String CLIENT_ID = clientKey[0];
+            String CLIENT_SECRET = clientKey[1];
+            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+
+
+
+            // CategoriesCheckList reads CategoriesList.txt for the next category to pull
+            String KEYWORD = CategoriesCheckList.findCategory(CATEGORYLIST);
+            System.out.println("Pulling from subcategory: " + KEYWORD);
+
+            // Assigning file folder with KEYWORD match
+            String fileFolder = selectingFileFolder(KEYWORD);
+
+            String fileName = null;
+
+            /*
+                - Check the folder to see if fileName exists
+                - If fileName exist, count how many files with KEYWORD as prefix
+                - If there is only one, have the fileName unchanged
+                - If there are a # of files, then concat " #" to fileName
+                - That fileName will be used
+             */
+
+            // offset is used to keep track of placement when get API response
+            // limit of rows per response is 50
+            int offset = 0;
+            int limit = 50;
+
+            int filePrefixCount = 1;
+            int directoryFileCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
+
+            if (directoryFileCount > 1) {
+                filePrefixCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
+                fileName = selectingFileName(KEYWORD) + " " + filePrefixCount;
+
+
+                ////////////////////////////////////////
+                ///////////////////////////////////////
+
+                // Reading existing content from the file
+                BufferedReader reader = new BufferedReader(new FileReader("Postman Exports/" + fileFolder + "/" + fileName));
+                StringBuilder content = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append(System.lineSeparator());
+                }
+                reader.close();
+
+                // Insert the new line into the second to last position
+                int totalLines = content.toString().split(System.lineSeparator()).length;
+
+                // insertLineNumber will contain the latest numbered file item count
+                // It is contained since it is not a complete file with 25000 items
+                // It will be added to the offset below
+                int insertLineNumber = Math.max(totalLines - 1, 0); // Ensure it's at least 0
+
+                offset = (filePrefixCount - 1) * 25000 + insertLineNumber;
+
+                ////////////////////////////////////////
+                ///////////////////////////////////////
+
+
+            }
+            else {
+                // Assigning file name with KEYWORD match
+                fileName = selectingFileName(KEYWORD);
+            }
+
+
+
+
+
+            // Assigning to the correct parent category
+            int productIndex;
+            int apiCount = 0;
+            boolean offsetLoopAdjust = false;
+
+            do {
+//                System.out.println("OffsetTracker1: " + offsetTracker);
+                String filePath = null;
+
+                // Assigning file Path after checking file status
+
+                String[] returnedArray = checkingFile(fileName, fileFolder, offset, KEYWORD);
+                filePath = returnedArray[0];
+                if (returnedArray[1] == null && filePrefixCount != 0) {
+                    offset = 0;
+                }
+//                else {
+//                    // Add + 50 below
+//                    offset = Integer.parseInt(returnedArray[1]) + offsetTracker;
+////                    System.out.println("Offset: " + offset);
+//                    System.out.println("Section 2");
+//
+//                }
+
+                if (returnedArray[2] == null) {
+                    productIndex = 1;
+                }
+                else {
+                    productIndex = Integer.parseInt(returnedArray[2]);
+                }
+
+                // Step 1: Obtain OAuth 2.0 access token
+                String accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+            /*
+                The accessToken above provides a dictionary in the following format:
+                Access Token:
+                            {
+                            "access_token":"MVOSd7RVyfid6zgiB9A7PNIUPxYL",
+                            "expires_in":599,
+                            "token_type":"Bearer"
+                            }
+             */
+                // The variable below extracts the access_token value
+                String newAccessToken = accessToken.substring(43, 71);
+
+
+                while (true) {
+
+                    // offsetLoopAdjust is used to loop out of the comparison using MODULE against the offset.
+                    // With the offsetLoopAdjust, we make sure that the program is not stuck on the offset, to
+                    // prevent creating a new file, setting the offset to the offset limit, and being stuck in an infinite loop
+                    if (offsetLoopAdjust) {
+                        offset += 50;
+                        offsetLoopAdjust = false;
+                    }
+                    // Send API requests with current offset
+//                    System.out.println("Used Offset: " + offset);
+//                    System.out.println("OffsetTracker2: " + offsetTracker);
+                    String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD, CLIENT_ID);
+
+                    apiCount++;
+
+                    String prefix = responseBody.substring(0, 10);
+                    String suffix = responseBody.substring(10);
+                    String indexedResponseBody = prefix + productIndex + suffix;
+
+                    // When responseBody has no more content, break while loop
+                    if (suffix.startsWith("\":[]")) {
+                        CategoriesCheckList.categoryComplete(CATEGORYLIST, KEYWORD);
+                        System.out.println(KEYWORD + " file is complete.");
+                        System.out.println("Checking next subcategory.");
+
+                        if (categoryListComplete(CATEGORYLIST)) {
+                            System.out.println("CategoriesList.txt file is complete.");
+                            System.out.println("Ending program.");
+                            System.exit(0); // Terminate the program with status code 0 (indicating successful termination)
+                        }
+
+                        KEYWORD = CategoriesCheckList.findCategory(CATEGORYLIST);
+                        System.out.println("Pull from subcategory: " + KEYWORD);
+
+                        // Assigning file name with KEYWORD match
+                        fileName = selectingFileName(KEYWORD);
+
+                        // Assigning file folder with KEYWORD match
+                        fileFolder = selectingFileFolder(KEYWORD);
+
+                        // Assigning to the correct parent category
+//                        productIndex = 1;
+
+                        // Assigning file Path after checking file status
+                        String[] returnedArray2 = checkingFile(fileName, fileFolder, offset, KEYWORD);
+
+                        filePath = returnedArray2[0];
+
+                        if (returnedArray2[2] == null) {
+                            productIndex = 0;
+                        }
+                        else {
+                            productIndex = Integer.parseInt(returnedArray2[2]);
+                        }
+                        if(returnedArray2[1] == null) {
+                            offset = 0;
+                        }
+                        else {
+                            offset = Integer.parseInt(returnedArray2[1]);
+                        }
+                        break;
+                    }
+                    if (prefix.startsWith("{\"fault\"")) {
+                        System.out.println("""
+                            Execution of ServiceCallout SC-Quota failed
+
+                            Resource Limitations: Your system or the API server may have resource limitations that are exceeded when handling a large amount of data.
+                            Rate Limiting: Some APIs impose rate limits to prevent abuse. If you exceed the allowed rate, you might encounter rate-limiting errors.""");
+                    offset -= limit;
+                    }
+                    if (responseBody.contains("An error occurred while processing your request.")) {
+                        // Decrementing offset to re-request Error Request
+
+                        System.out.println("An error occurred while processing your request.");
+                        System.out.println("Re-requesting response body.");
+                        offset -= limit;
+                    }
+                    else if (responseBody.contains("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.")) {
+                        System.out.println("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.");
+                        System.out.println("Refreshing access token.");
+                        accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+                        newAccessToken = accessToken.substring(43, 71);
+
+                        System.out.println("Re-requesting response body.");
+                        offset -= limit;
+                    }
+                    else if (responseBody.contains("Bad Gateway")) {
+                        System.out.println("Bad Gateway");
+                        System.out.println("Re-requesting response body.");
+                        offset -= limit;
+                    }
+                    else if (responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
+                        System.out.println("clientId used to get Bearer token does not match the X-DIGIKEY-Client-Id");
+                        offset -= limit;
+                    }
+                    else if (responseBody.contains("Internal Server Error")) {
+                        System.out.println("Internal Server Error");
+                        System.out.println("Reached API daily limit.");
+
+                        System.out.println("\nClient Key used up.");
+                        ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
+
+                        if (!ClientScanner.clientListComplete(CLIENTLIST)) {
+                            System.out.println("\nGetting new Client Key.");
+
+                            clientListUsedUp();
+
+                            clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+                            CLIENT_ID = clientKey[0];
+                            CLIENT_SECRET = clientKey[1];
+
+                            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+                            accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+                            newAccessToken = accessToken.substring(43, 71);
+                            apiCount = 0;
+//                            break;
+                        }
+                        else {
+                            apiCount = 1000;
+                        }
+
+
+                    }
+                    if (!responseBody.contains("Description") && !responseBody.contains("Internal Server Error") &&
+                            !responseBody.contains("Bad Gateway") && !responseBody.contains("Bearer token is expired." +
+                            " Please use your refresh token to obtain a new Bearer token, or acquire a new set " +
+                            "of tokens from the OAuth endpoint.") &&
+                            !responseBody.contains("An error occurred while processing your request.") ||
+                    !responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
+//                        System.out.println(indexedResponseBody);
+                    }
+
+                    insertNewLines(filePath, indexedResponseBody);
+                    productIndex++;
+
+                    // Process the current page of results
+                    System.out.println("API Response (Offset: " + offset + "):");
+                    System.out.println("API Count: " + apiCount);
+
+                    if (offset % 25000 == 0 && offset != 0) {
+                        fileName = DirectoryFiler.createJSONFileWithPrefix("Postman Exports/" + fileFolder, KEYWORD);
+                        filePath = "Postman Exports/" + fileFolder + fileName + ".json";
+                        insertTemplate(filePath);
+                        offsetLoopAdjust = true;
+
+                        break;
+                    }
+
+                    // Increment offset for the next page
+                    offset += limit;
+                }
+
+            } while (apiCount < 999);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

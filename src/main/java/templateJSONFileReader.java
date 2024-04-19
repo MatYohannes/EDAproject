@@ -33,8 +33,8 @@ public class templateJSONFileReader {
 
     public static void main(String[] args) {
 
-//        String categoryFolder = args[0];
-        String categoryFolder = "Connectors, Interconnects";
+        String categoryFolder = args[0];
+//        String categoryFolder = "Connectors, Interconnects";
 
         List<String> filesInDirectory = DirectoryFiler.getFileNamesInDirectory("Postman Exports/" + categoryFolder);
 
