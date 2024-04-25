@@ -574,7 +574,7 @@ public class capacitorsJSONFileReader {
                 }
             }
 
-            int tableColumns = 69;
+            int tableColumns = header.length;
 
             // Converting list to a 2D array for easy printing
             Object[][] table = new Object[capacitorTable.size()][tableColumns];
@@ -624,6 +624,7 @@ public class capacitorsJSONFileReader {
 
             List<String> characteristicsHeader = Arrays.asList("Custom ID", "Attribute Name", "Value");
             Object[][] characteristicsTableTemp = characteristicsTable.createCustomTable(membershipTableTemp, table, membershipHeader, tableHeader);
+
 //            for (int i = 0; i < 3; i++) {
 //                System.out.printf("%-20s", characteristicsHeader.get(i));
 //            }

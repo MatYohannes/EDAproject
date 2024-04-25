@@ -33,8 +33,8 @@ public class templateJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = args[0];
-//        String categoryFolder = "Connectors, Interconnects";
+//        String categoryFolder = args[0];
+        String categoryFolder = "Capacitors";
 
         List<String> filesInDirectory = DirectoryFiler.getFileNamesInDirectory("Postman Exports/" + categoryFolder);
 
@@ -120,7 +120,7 @@ public class templateJSONFileReader {
                     do {
                         if (temp22 == null) {
                             productIndexing++;
-                            if (productIndexing == 1000) {
+                            if (productIndexing == 2000) {
                                 break;
                             }
                             productsTempName = "Products" + Integer.toString(productIndexing);

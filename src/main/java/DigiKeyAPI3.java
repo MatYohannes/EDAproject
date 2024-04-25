@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -193,7 +194,7 @@ public class DigiKeyAPI3 {
             case "Crystal, Oscillator, Resonator Accessories" -> fileName = "Crystal, Oscillator, Resonator Accessories";
             case "Crystals" -> fileName = "Crystals";
             case "Oscillators" -> fileName = "Oscillators";
-            case "Pin Configurable/Selectable Oscillators" -> fileName = "Pin Configurable/Selectable Oscillators";
+            case "Pin Configurable/Selectable Oscillators" -> fileName = "Pin Configurable-Selectable Oscillators";
             case "Programmable Oscillators" -> fileName = "Programmable Oscillators";
             case "Resonators" -> fileName = "Resonators";
             case "Stand Alone Programmers" -> fileName = "Stand Alone Programmers";
@@ -208,14 +209,14 @@ public class DigiKeyAPI3 {
 
             // Integrated Circuits (ICs) Subcategories
             case "Audio Special Purpose" -> fileName = "Audio Special Purpose";
-            case "Application Specific Clock/Timing" -> fileName = "Application Specific Clock/Timing";
+            case "Application Specific Clock/Timing" -> fileName = "Application Specific Clock-Timing";
             case "Clock Buffers, Drivers" -> fileName = "Clock Buffers, Drivers";
             case "Clock Generators, PLLs, Frequency Synthesizers" -> fileName = "Clock Generators, PLLs, Frequency Synthesizers";
-            case "Clock/Timing Delay Lines" -> fileName = "Clock/Timing Delay Lines";
+            case "Clock/Timing Delay Lines" -> fileName = "Clock-Timing Delay Lines";
             case "IC Batteries" -> fileName = "IC Batteries";
             case "Programmable Timers and Oscillators" -> fileName = "Programmable Timers and Oscillators";
             case "Real Time Clocks" -> fileName = "Real Time Clocks";
-            case "ADCs/DACs - Special Purpose" -> fileName = "ADCs/DACs - Special Purpose";
+            case "ADCs/DACs - Special Purpose" -> fileName = "ADCs-DACs - Special Purpose";
             case "Analog Front End (AFE)" -> fileName = "Analog Front End (AFE)";
             case "Analog to Digital Converters (ADC)" -> fileName = "Analog to Digital Converters (ADC)";
             case "Digital Potentiometers" -> fileName = "Digital Potentiometers";
@@ -239,7 +240,7 @@ public class DigiKeyAPI3 {
             case "Drivers, Receivers, Transceivers" -> fileName = "Drivers, Receivers, Transceivers";
             case "Encoders, Decoders, Converters" -> fileName = "Encoders, Decoders, Converters";
             case "Filters - Active" -> fileName = "Filters - Active";
-            case "I/O Expanders" -> fileName = "I/O Expanders";
+            case "I/O Expanders" -> fileName = "I-O Expanders";
             case "Modems - ICs and Modules" -> fileName = "Modems - ICs and Modules";
             case "Modules" -> fileName = "Modules";
             case "Sensor and Detector Interfaces" -> fileName = "Sensor and Detector Interfaces";
@@ -276,7 +277,7 @@ public class DigiKeyAPI3 {
             case "AC DC Converters, Offline Switches" -> fileName = "AC DC Converters, Offline Switches";
             case "Battery Chargers" -> fileName = "Battery Chargers";
             case "Battery Management" -> fileName = "Battery Management";
-            case "Current Regulation/Management" -> fileName = "Current Regulation/Management";
+            case "Current Regulation/Management" -> fileName = "Current Regulation-Management";
             case "DC DC Switching Controllers" -> fileName = "DC DC Switching Controllers";
             case "Display Drivers" -> fileName = "Display Drivers";
             case "Energy Metering" -> fileName = "Energy Metering";
@@ -297,7 +298,7 @@ public class DigiKeyAPI3 {
             case "Special Purpose Regulators" -> fileName = "Special Purpose Regulators";
             case "Supervisors" -> fileName = "Supervisors";
             case "Thermal Management" -> fileName = "Thermal Management";
-            case "V/F and F/V Converters" -> fileName = "V/F and F/V Converters";
+            case "V/F and F/V Converters" -> fileName = "V-F and F-V Converters";
             case "Voltage Reference" -> fileName = "Voltage Reference";
             case "Voltage Regulators - DC DC Switching Regulators" -> fileName = "Voltage Regulators - DC DC Switching Regulators";
             case "Voltage Regulators - Linear + Switching" -> fileName = "Voltage Regulators - Linear + Switching";
@@ -322,8 +323,8 @@ public class DigiKeyAPI3 {
             case "Contactors (Electromechanical)" -> fileName = "Contactors (Electromechanical)";
             case "Contactors (Solid State)" -> fileName = "Contactors (Solid State)";
             case "High Frequency (RF) Relays" -> fileName = "High Frequency (RF) Relays";
-            case "I/O Relay Module Racks" -> fileName = "I/O Relay Module Racks";
-            case "I/O Relay Modules" -> fileName = "I/O Relay Modules";
+            case "I/O Relay Module Racks" -> fileName = "IO Relay Module Racks";
+            case "I/O Relay Modules" -> fileName = "IO Relay Modules";
             case "Power Relays, Over 2 Amps" -> fileName = "Power Relays, Over 2 Amps";
             case "Reed Relays" -> fileName = "Reed Relays";
             case "Relay Sockets" -> fileName = "Relay Sockets";
@@ -417,7 +418,7 @@ public class DigiKeyAPI3 {
 
             // Crystal, Oscillators, Resonators subcategories
             case
-                    "Crystal, Oscillator, Resonator Accessories", "Crystals", "Oscillators", "Pin Configurable/Selectable Oscillators", "Programmable Oscillators",
+                    "Crystal, Oscillator, Resonator Accessories", "Crystals", "Oscillators", "Pin Configurable-Selectable Oscillators", "Programmable Oscillators",
                             "Resonators", "Stand Alone Programmers", "VCOs (Voltage Controlled Oscillators)" -> "Crystals, Oscillators, Resonators/";
 
             // Inductors, Coil, Chokes subcategories
@@ -425,13 +426,13 @@ public class DigiKeyAPI3 {
             case "Adjustable Inductors", "Arrays, Signal Transformers", "Delay Lines", "Fixed Inductors", "Wireless Charging Coils" -> "Inductors, Coils, Chokes/";
 
             // Integrated Circuits (ICs) subcategories
-            case "Audio Special Purpose", "Application Specific Clock/Timing", "Clock Buffers, Drivers", "Clock Generators, PLLs, Frequency Synthesizers", "Clock/Timing Delay Lines",
-                    "IC Batteries", "Programmable Timers and Oscillators", "Real Time Clocks", "ADCs/DACs - Special Purpose", "Analog Front End (AFE)",
+            case "Audio Special Purpose", "Application Specific Clock-Timing", "Clock Buffers, Drivers", "Clock Generators, PLLs, Frequency Synthesizers", "Clock-Timing Delay Lines",
+                    "IC Batteries", "Programmable Timers and Oscillators", "Real Time Clocks", "ADCs-DACs - Special Purpose", "Analog Front End (AFE)",
                     "Analog to Digital Converters (ADC)", "Digital Potentiometers", "Digital to Analog Converters (DAC)", "Touch Screen Controllers",
                     "Application Specific Microcontrollers", "CPLDs (Complex Programmable Logic Devices)", "DSP (Digital Signal Processors)", "FPGAs (Field Programmable Gate Array)", "FPGAs (Field Programmable Gate Array) with Microcontrollers",
                     "Microcontrollers", "Microcontrollers, Microprocessor, FPGA Modules", "Microprocessors", "PLDs (Programmable Logic Device)", "System On Chip (SoC)",
                     "Analog Switches - Special Purpose", "Analog Switches, Multiplexers, Demultiplexers", "CODECS", "Interface Controllers", "Direct Digital Synthesis (DDS)",
-                    "Drivers, Receivers, Transceivers", "Encoders, Decoders, Converters", "Filters - Active", "I/O Expanders",
+                    "Drivers, Receivers, Transceivers", "Encoders, Decoders, Converters", "Filters - Active", "IO Expanders",
                     "Modems - ICs and Modules", "Modules", "Sensor and Detector Interfaces", "Sensor, Capacitive Touch", "Serializers, Deserializers",
                     "Signal Buffers, Repeaters, Splitters", "Signal Terminators", "Interface Specialized", "Telecom", "UARTs (Universal Asynchronous Receiver Transmitter)",
                     "Voice Record and Playback", "Amplifiers", "Analog Multipliers, Dividers", "Comparators", "Video Processing",
@@ -439,11 +440,11 @@ public class DigiKeyAPI3 {
                     "Gates and Inverters - Multi-Function, Configurable", "Latches", "Multivibrators", "Parity Generators and Checkers", "Shift Registers",
                     "Signal Switches, Multiplexers, Decoders", "Specialty Logic", "Translators, Level Shifters", "Universal Bus Functions", "Batteries",
                     "Configuration PROMs for FPGAs", "Memory Controllers", "Memory", "AC DC Converters, Offline Switches", "Battery Chargers",
-                    "Battery Management", "Current Regulation/Management", "DC DC Switching Controllers", "Display Drivers",
+                    "Battery Management", "Current Regulation-Management", "DC DC Switching Controllers", "Display Drivers",
                     "Energy Metering", "Full Half-Bridge (H Bridge) Drivers", "Gate Drivers", "Hot Swap Controllers", "Laser Drivers",
                     "LED Drivers", "Lighting, Ballast Controllers", "Motor Drivers, Controllers", "OR Controllers, Ideal Diodes", "PFC (Power Factor Correction)",
                     "Power Distribution Switches, Load Drivers", "Power Management - Specialized", "Power Over Ethernet (PoE) Controllers", "Power Supply Controllers, Monitors", "RMS to DC Converters",
-                    "Special Purpose Regulators", "Supervisors", "Thermal Management", "V/F and F/V Converters", "Voltage Reference",
+                    "Special Purpose Regulators", "Supervisors", "Thermal Management", "V-F and F-V Converters", "Voltage Reference",
                     "Voltage Regulators - DC DC Switching Regulators", "Voltage Regulators - Linear + Switching",
                     "Voltage Regulators - Linear Regulator Controllers", "Voltage Regulators - Linear, Low Drop Out (LDO) Regulators",
                     "Specialized ICs" -> "Integrated Circuits (ICs)/";
@@ -456,7 +457,7 @@ public class DigiKeyAPI3 {
             // Relays subcategories
             case
                     "Relays Accessories", "Automotive Relays", "Contactors (Electromechanical)", "Contactors (Solid State)", "High Frequency (RF) Relays",
-                            "I/O Relay Module Racks", "I/O Relay Modules", "Power Relays, Over 2 Amps", "Reed Relays", "Relay Sockets",
+                            "IO Relay Module Racks", "IO Relay Modules", "Power Relays, Over 2 Amps", "Reed Relays", "Relay Sockets",
                             "Safety Relays", "Signal Relays, Up to 2 Amps", "Solid State Relays" -> "Relays/";
 
             // Resistor subcategories
@@ -494,12 +495,8 @@ public class DigiKeyAPI3 {
                 // Locating the last response body inputted and get the offset value
                 productIndex = arrayCount(filePath) + 1;
                 tempArray[2] = Integer.toString(productIndex);
-//                    System.out.println(arrayCount(filePath));
                 // update the offset value for new entries
                 offset = (productIndex * 50) - 50;
-
-//                System.out.println("Checking: " + filePath);
-
                 tempArray[1] = Integer.toString(offset);
             }
             else {
@@ -586,6 +583,34 @@ public class DigiKeyAPI3 {
         innerArray = (JSONArray) jsonObject.get("Products");
 
         return innerArray.size();
+    }
+
+    private static void insertArrayLines(String filePath, ArrayList<String> body) throws IOException {
+        // Reading existing content from the file
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        StringBuilder content = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            content.append(line).append(System.lineSeparator());
+        }
+        reader.close();
+
+        // Insert the new line into the second to last position
+        int totalLines = content.toString().split(System.lineSeparator()).length;
+        int insertLineNumber = Math.max(totalLines - 1, 0); // Ensure it's at least 0
+
+        // Insert the new line at the specified line number
+        for (int i = 0; i < body.size(); i++) {
+            content.insert(getPosition(content.toString(), insertLineNumber), body.get(i) + System.lineSeparator());
+
+        }
+
+        // Writing the modified content back to the file
+        try (FileWriter writer = new FileWriter(filePath);
+             BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+            bufferedWriter.write(content.toString());
+        }
     }
 
     private static void insertNewLines(String filePath, String newLine) throws IOException {
@@ -751,7 +776,7 @@ public class DigiKeyAPI3 {
                 ///////////////////////////////////////
 
                 // Reading existing content from the file
-                BufferedReader reader = new BufferedReader(new FileReader("Postman Exports/" + fileFolder + "/" + fileName));
+                BufferedReader reader = new BufferedReader(new FileReader("Postman Exports/" + fileFolder + "/" + fileName + ".json"));
                 StringBuilder content = new StringBuilder();
                 String line;
 
@@ -766,7 +791,7 @@ public class DigiKeyAPI3 {
                 // insertLineNumber will contain the latest numbered file item count
                 // It is contained since it is not a complete file with 25000 items
                 // It will be added to the offset below
-                int insertLineNumber = Math.max(totalLines - 1, 0); // Ensure it's at least 0
+                int insertLineNumber = Math.max((totalLines - 1) * 50, 0); // Ensure it's at least 0
 
                 offset = (filePrefixCount - 1) * 25000 + insertLineNumber;
 
@@ -789,8 +814,11 @@ public class DigiKeyAPI3 {
             int apiCount = 0;
             boolean offsetLoopAdjust = false;
 
+
+            ArrayList<String> responseCollector = new ArrayList<>();
+
+
             do {
-//                System.out.println("OffsetTracker1: " + offsetTracker);
                 String filePath = null;
 
                 // Assigning file Path after checking file status
@@ -800,13 +828,6 @@ public class DigiKeyAPI3 {
                 if (returnedArray[1] == null && filePrefixCount != 0) {
                     offset = 0;
                 }
-//                else {
-//                    // Add + 50 below
-//                    offset = Integer.parseInt(returnedArray[1]) + offsetTracker;
-////                    System.out.println("Offset: " + offset);
-//                    System.out.println("Section 2");
-//
-//                }
 
                 if (returnedArray[2] == null) {
                     productIndex = 1;
@@ -816,6 +837,7 @@ public class DigiKeyAPI3 {
                 }
 
                 // Step 1: Obtain OAuth 2.0 access token
+                clientListUsedUp();
                 String accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
             /*
                 The accessToken above provides a dictionary in the following format:
@@ -853,6 +875,9 @@ public class DigiKeyAPI3 {
                     // When responseBody has no more content, break while loop
                     if (suffix.startsWith("\":[]")) {
                         CategoriesCheckList.categoryComplete(CATEGORYLIST, KEYWORD);
+                        System.out.println("Writing to file.");
+                        insertArrayLines(filePath, responseCollector);
+                        responseCollector.clear();
                         System.out.println(KEYWORD + " file is complete.");
                         System.out.println("Checking next subcategory.");
 
@@ -932,6 +957,8 @@ public class DigiKeyAPI3 {
 
                         System.out.println("\nClient Key used up.");
                         ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
+                        clientListUsedUp();
+                        offset -= limit;
 
                         if (!ClientScanner.clientListComplete(CLIENTLIST)) {
                             System.out.println("\nGetting new Client Key.");
@@ -949,7 +976,7 @@ public class DigiKeyAPI3 {
 //                            break;
                         }
                         else {
-                            apiCount = 1000;
+                            clientListUsedUp();
                         }
 
 
@@ -960,10 +987,11 @@ public class DigiKeyAPI3 {
                             "of tokens from the OAuth endpoint.") &&
                             !responseBody.contains("An error occurred while processing your request.") ||
                     !responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
-//                        System.out.println(indexedResponseBody);
                     }
 
-                    insertNewLines(filePath, indexedResponseBody);
+                    responseCollector.add(indexedResponseBody);
+
+//                    insertNewLines(filePath, indexedResponseBody);
                     productIndex++;
 
                     // Process the current page of results
@@ -971,6 +999,10 @@ public class DigiKeyAPI3 {
                     System.out.println("API Count: " + apiCount);
 
                     if (offset % 25000 == 0 && offset != 0) {
+                        System.out.println("Writing to file.");
+                        insertArrayLines(filePath, responseCollector);
+                        responseCollector.clear();
+
                         fileName = DirectoryFiler.createJSONFileWithPrefix("Postman Exports/" + fileFolder, KEYWORD);
                         filePath = "Postman Exports/" + fileFolder + fileName + ".json";
                         insertTemplate(filePath);
@@ -983,7 +1015,7 @@ public class DigiKeyAPI3 {
                     offset += limit;
                 }
 
-            } while (apiCount < 999);
+            } while (apiCount < 1100);
 
         } catch (Exception e) {
             e.printStackTrace();
