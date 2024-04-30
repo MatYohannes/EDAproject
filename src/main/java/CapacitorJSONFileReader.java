@@ -35,7 +35,8 @@ public class CapacitorJSONFileReader {
 
         String categoryFolder = "Capacitors";
 
-        String directory = "/root/EDAProject/Postman Exports/";
+//        String directory = "/root/EDAProject/Postman Exports/";
+        String directory = "Postman Exports/";
 
         List<String> filesInDirectory = DirectoryFiler.getFileNamesInDirectory(directory + categoryFolder);
 
@@ -66,22 +67,26 @@ public class CapacitorJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "capacitance", "tolerance", "voltageRated", "temperatureCoefficient", "operatingTemperature",
-                    "dieletricMaterial", "termination", "eSR", "lifetimeTemp", "rippleCurrLowFreq",
-                    "rippleCurrHighFreq", "surfaceMLS", "type", "impedance", "height", "manufSizeCode",
-                    "numOfCapacitors", "circuitType", "supplierDevicePackage", "capacitanceRange", "adjustmentType",
-                    "qFreq", "voltageBreakdown", "esl", "currentLeakage", "dissipationFactor",
-                    "accessoryType", "relatedProducts", "fitsFanSize", "deviceSize", "specifications",
-                    "width", "fanAccessoryType", "powerInWatts", "voltagePeakReverseMax", "diodeType",
-                    "kitType", "quantity2", "packagesIncluded", "shape", "usage",
-                    "material", "color", "lengthz", "diameterOutside", "diameterInside",
-                    "resistance", "composition", "currentMax", "features", "ratings",
-                    "applications", "mountingType", "packageCase", "sizeDimension",
-                    "heightSeatedMax", "leadSpacing", "capacitanceVrF", "resistanceIfF", "powerDissipationMax",
-                    "Frequency Tolerance", "Polarization", "Insertion Loss", "DC Resistance (DCR) (Max)", "Frequency Stability",
-                    "Thread Size", "Height (Max)", "Voltage Rating - DC", "Thickness (Max)", "Voltage Rating - AC",
-                    "Frequency", "Failure Rate", "Lead Style", "Current"
+                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
+                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
+                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
+                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
+                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
+                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
+                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
+                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
+                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
+                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
+                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
+                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
+                    "Tolerance", "Quantity", "Termination", "Material",
+                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
+                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
             };
+
+            for (int i = 0; i < header.length; i++) {
+                parametersList.put(header[i], null);
+            }
 
 
             // Variables to store individual capacitor attributes
@@ -249,6 +254,9 @@ public class CapacitorJSONFileReader {
                         String manufacturerProductNumber = temp44.get("ManufacturerProductNumber").toString();
 
                         // Assigning values to global variables
+                        parametersList.put("manId", String.valueOf(manufacturerId));
+                        parametersList.put("manName", String.valueOf(manufacturerName));
+                        parametersList.put("manProductNumber", String.valueOf(manufacturerProductNumber));
                         manId = manufacturerId;
                         manName = manufacturerName;
                         manProductNumber = manufacturerProductNumber;
@@ -313,6 +321,9 @@ public class CapacitorJSONFileReader {
                         // Extracting product status
                         Map productStatus = (Map) temp44.get("ProductStatus");
                         String status = (String) productStatus.get("Status");
+                        parametersList.put("stat", String.valueOf(status));
+
+
                         stat = status;
 
 //                String backOrderNotAllowed = (String) temp44.get("BackOrderNotAllowed");
@@ -339,7 +350,10 @@ public class CapacitorJSONFileReader {
 
                             // Adding parameters to the parameters list
                             parametersList.put(ParameterText, ValueText);
+
+
                         }
+
 
                         // Assigning parameter values to corresponding variables
                         for (Map.Entry<String, String> entry : parametersList.entrySet()) {
@@ -575,26 +589,35 @@ public class CapacitorJSONFileReader {
 
                         // Extracting base product information
                         Map baseProductNumber = (Map) temp44.get("BaseProductNumber");
+                        String baseProductName = "null";
+                        Long baseProductId = (long) 0;
                         if (baseProductNumber == null) {
                             // If no base product information available
-                            String baseProductName = "null";
-                            Long baseProductId = (long) 0;
+
 
                             baseProdName = baseProductName;
                             baseProdId = baseProductId;
                         } else {
                             // Extracting base product attributes
-                            Long baseProductId = (Long) baseProductNumber.get("Id");
+                            baseProductId = (Long) baseProductNumber.get("Id");
 
                             baseProdName = (String) baseProductNumber.get("Name");
                             baseProdId = baseProductId;
 
                         }
+
+                        parametersList.put("baseProdName", String.valueOf(baseProductName));
+                        parametersList.put("baseProdId", String.valueOf(baseProductId));
+
                         // Extracting category information
                         Map category = (Map) temp44.get("Category");
                         Long categoryId = (Long) category.get("CategoryId");
                         Long parentId = (Long) category.get("ParentId");
                         String categoryName = (String) category.get("Name");
+
+                        parametersList.put("productParId", String.valueOf(parentId));
+                        parametersList.put("productParName", String.valueOf(categoryName));
+
 
                         productParId = parentId;
                         productParName = categoryName;
@@ -634,24 +657,36 @@ public class CapacitorJSONFileReader {
 //                String htsusCode = (String) classifications.get("HtsusCode");
 
                         // Adding Product to Array
-                        Object[] row = new Object[]{manId, manName, manProductNumber, quantity, stat,
-                                baseProdId, baseProdName, productParId, productParName,
-                                capacitance, tolerance, voltageRated, temperatureCoefficient, operatingTemperature,
-                                dieletricMaterial, termination, eSR, lifetimeTemp, rippleCurrLowFreq,
-                                rippleCurrHighFreq, surfaceMLS, type, impedance, height, manufSizeCode,
-                                numOfCapacitors, circuitType, supplierDevicePackage, capacitanceRange, adjustmentType,
-                                qFreq, voltageBreakdown, esl, currentLeakage, dissipationFactor,
-                                accessoryType, relatedProducts, fitsFanSize, deviceSize, specifications,
-                                width, fanAccessoryType, powerInWatts, voltagePeakReverseMax, diodeType,
-                                kitType, quantity2, packagesIncluded, shape, usage,
-                                material, color, lengthz, diameterOutside, diameterInside,
-                                resistance, composition, currentMax, features, ratings,
-                                applications, mountingType, packageCase, sizeDimension,
-                                heightSeatedMax, leadSpacing, capacitanceVrF, resistanceIfF, powerDissipationMax,
-                                frequencyTolerance, polarization, insertionLoss, dcResistanceDcrMax, frequencyStability,
-                                threadSize, heightMax, voltageRatingDc, thicknessMax, voltageRatingAc,
-                                frequency, failureRate, leadStyle, current
-                        };
+//                        Object[] row = new Object[]{manId, manName, manProductNumber, quantity, stat,
+//                                baseProdId, baseProdName, productParId, productParName,
+//                                capacitance, tolerance, voltageRated, temperatureCoefficient, operatingTemperature,
+//                                dieletricMaterial, termination, eSR, lifetimeTemp, rippleCurrLowFreq,
+//                                rippleCurrHighFreq, surfaceMLS, type, impedance, height, manufSizeCode,
+//                                numOfCapacitors, circuitType, supplierDevicePackage, capacitanceRange, adjustmentType,
+//                                qFreq, voltageBreakdown, esl, currentLeakage, dissipationFactor,
+//                                accessoryType, relatedProducts, fitsFanSize, deviceSize, specifications,
+//                                width, fanAccessoryType, powerInWatts, voltagePeakReverseMax, diodeType,
+//                                kitType, quantity2, packagesIncluded, shape, usage,
+//                                material, color, lengthz, diameterOutside, diameterInside,
+//                                resistance, composition, currentMax, features, ratings,
+//                                applications, mountingType, packageCase, sizeDimension,
+//                                heightSeatedMax, leadSpacing, capacitanceVrF, resistanceIfF, powerDissipationMax,
+//                                frequencyTolerance, polarization, insertionLoss, dcResistanceDcrMax, frequencyStability,
+//                                threadSize, heightMax, voltageRatingDc, thicknessMax, voltageRatingAc,
+//                                frequency, failureRate, leadStyle, current
+//                        };
+
+                        Object[] row = new Object[header.length];
+
+                        // Create a HashSet to store the header values for faster lookup
+                        Set<String> headerSet = new HashSet<>(Arrays.asList(header));
+
+                        for (Map.Entry<String, String> entry: parametersList.entrySet()) {
+                            if (headerSet.contains(entry.getKey())) {
+                                int index = Arrays.asList(header).indexOf(entry.getKey());
+                                row[index] = entry.getValue();
+                            }
+                        }
                         categoryTable.add(row);
                     }
                 }
@@ -667,19 +702,19 @@ public class CapacitorJSONFileReader {
                     }
                 }
 
-//                // Printing header
-//                for (int j = 0; j < tableColumns; j++) {
-////                System.out.printf("%-40s", header[j]);
-//                }
-////            System.out.println();
-//
-//                // Printing table content
-//                for (Object[] objects : table) {
-//                    for (int j = 0; j < tableColumns; j++) {
-////                    System.out.printf("%-40s", objects[j]);
-//                    }
-////                System.out.println();
-//                }
+                // Printing header
+                for (int j = 0; j < tableColumns; j++) {
+                System.out.printf("%-40s", header[j]);
+                }
+            System.out.println();
+
+                // Printing table content
+                for (Object[] objects : table) {
+                    for (int j = 0; j < tableColumns; j++) {
+                    System.out.printf("%-40s", objects[j]);
+                    }
+                System.out.println();
+                }
 
 
                 // Code below to upload to MYSQL
