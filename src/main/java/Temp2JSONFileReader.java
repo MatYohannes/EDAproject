@@ -44,13 +44,12 @@ public class Temp2JSONFileReader {
         String KEYWORD;
 
         String filePath;
-        HashSet<String> attributes = new HashSet<>();
 
         String baseProductName = "null";
         Long baseProductId = (long) 0;
 
-        String baseProdName = null;
-        Long baseProdId = null;
+        String baseProdName;
+        Long baseProdId;
 
         for (String s : filesInDirectory) {
             KEYWORD = s;
@@ -68,17 +67,32 @@ public class Temp2JSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-
+                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
+                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
+                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
+                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
+                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
+                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
+                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
+                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
+                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
+                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
+                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
+                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
+                    "Tolerance", "Quantity", "Termination", "Material",
+                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
+                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
             };
 
-            for (int i = 0; i < header.length; i++) {
-                parametersList.put(header[i], null);
+
+            for (String value : header) {
+                parametersList.put(value, null);
             }
 
             // JSON Parser for reading the input file
             JSONParser parser = new JSONParser();
 
-            JSONArray products = null;
+            JSONArray products;
 
             try {
                 // Reading JSON file
@@ -104,7 +118,7 @@ public class Temp2JSONFileReader {
                     }
                     JSONObject temp = (JSONObject) a;
 
-                    String productsTempName = "Products" + Integer.toString(productIndexing);
+                    String productsTempName = "Products" + productIndexing;
 
                     JSONArray temp22 = (JSONArray) temp.get(productsTempName);
 
@@ -117,7 +131,7 @@ public class Temp2JSONFileReader {
                             if (productIndexing == 10000) {
                                 break;
                             }
-                            productsTempName = "Products" + Integer.toString(productIndexing);
+                            productsTempName = "Products" + productIndexing;
                             temp22 = (JSONArray) temp.get(productsTempName);
                         } else {
                             nullCheck = false;
@@ -131,7 +145,7 @@ public class Temp2JSONFileReader {
                             if (productIndexing == 0) {
                                 break;
                             }
-                            productsTempName = "Products" + Integer.toString(productIndexing);
+                            productsTempName = "Products" + productIndexing;
                             temp22 = (JSONArray) temp.get(productsTempName);
                         } else {
                             nullCheck = false;
@@ -162,7 +176,6 @@ public class Temp2JSONFileReader {
                         // Iterating through each product variation
                         while (iteratorProductV.hasNext()) {
                             JSONObject temp2 = (JSONObject) iteratorProductV.next();
-//                    String digiKeyProductNumber = temp2.get("DigiKeyProductNumber").toString();
                             Map packageType = (Map) temp2.get("PackageType");
                             if (packageType != null) {
                                 String packageName = packageType.get("Name").toString();
@@ -216,7 +229,6 @@ public class Temp2JSONFileReader {
 
                         // Extracting category information
                         Map category = (Map) temp44.get("Category");
-                        Long categoryId = (Long) category.get("CategoryId");
                         Long parentId = (Long) category.get("ParentId");
                         String categoryName = (String) category.get("Name");
 
@@ -228,7 +240,7 @@ public class Temp2JSONFileReader {
                         Iterator iteratorChildCategories = childCategories.iterator();
 
                         Object[] row = new Object[header.length];
-                        
+
                         // Create a HashSet to store the header values for faster lookup
                         Set<String> headerSet = new HashSet<>(Arrays.asList(header));
 
@@ -248,9 +260,7 @@ public class Temp2JSONFileReader {
                 Object[][] table = new Object[categoryTable.size()][tableColumns];
                 for (int i = 0; i < categoryTable.size(); i++) {
                     Object[] rowData = (Object[]) categoryTable.get(i);
-                    for (int j = 0; j < tableColumns; j++) {
-                        table[i][j] = rowData[j];
-                    }
+                    System.arraycopy(rowData, 0, table[i], 0, tableColumns);
                 }
 
                 // Printing header
@@ -279,9 +289,6 @@ public class Temp2JSONFileReader {
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
-        }
-        for (String str: attributes) {
-            System.out.println(str);
         }
     }
 }
