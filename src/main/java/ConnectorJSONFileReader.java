@@ -35,8 +35,8 @@ public class ConnectorJSONFileReader {
 
         String categoryFolder = "Connectors, Interconnects";
 
-//        String directory = "/root/EDAProject/Postman Exports/";
-        String directory = "Postman Exports/";
+        String directory = "/root/EDAProject/Postman Exports/";
+//        String directory = "Postman Exports/";
 
         List<String> filesInDirectory = DirectoryFiler.getFileNamesInDirectory(directory + categoryFolder);
 
