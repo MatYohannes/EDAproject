@@ -29,11 +29,11 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class InductorJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = "Capacitors";
+        String categoryFolder = "Inductors, Coils, Chokes";
 
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
@@ -68,21 +68,22 @@ public class CapacitorsJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
-                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
-                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
-                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
-                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
-                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
-                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
-                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
-                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
-                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
-                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
-                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
-                    "Tolerance", "Quantity", "Termination", "Material",
-                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
-                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
+                    "Delay to 1st Tap", "Trip Status", "Q @ Freq", "Packages Included", "Current - Output (Max)",
+                    "Ratings", "Voltage - Input (Min)", "Current Saturation - Parallel", "Package / Case", "Number of Taps/Steps",
+                    "For Use With/Related Products", "Available Total Delays", "Efficiency", "Current Rating - Parallel", "Voltage - Supply",
+                    "Control Interface", "Utilized IC / Part", "Embedded", "Material - Core", "Primary Attributes",
+                    "Operating Temperature", "DC Resistance (DCR) - Parallel", "Current - Saturation (Isat)", "Number of Independent Delays", "Voltage - Output 2",
+                    "Voltage - Output 3", "Voltage - Output 4", "Delay Time", "Approval Agency", "Grade",
+                    "Circuit", "Shielding", "Voltage - Output 1", "Size / Dimension", "Mounting Type",
+                    "Number of Coils", "Inductance - Connected In Series", "DC Resistance (DCR)", "Control Features",
+                    "Power (Watts)", "Qualification", "Current Rating - Series", "Standard Number", "DigiKey Programmable",
+                    "Output Type", "Voltage - Input (Max)", "Kit Type", "Height - Seated (Max)", "Current Rating (Amps)",
+                    "Supplier Device Package", "DC Resistance (DCR) - Series", "Tap Increment", "Function", "Inductance",
+                    "Supplied Contents", "Frequency - Self Resonant", "Secondary Attributes", "Style", "Features",
+                    "Height", "RF Type", "Contact Rating @ Voltage", "Inductance Frequency - Test", "Applications",
+                    "Tolerance", "Quantity", "Current Saturation - Series", "Standards", "Number of Outputs",
+                    "Type", "Trip Range", "Inductance Range", "Frequency", "Accessory Type",
+                    "Inductance - Connected In Parallel"
             };
 
             for (int i = 0; i < header.length; i++) {

@@ -29,7 +29,7 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class Temp2JSONFileReader {
 
     public static void main(String[] args) {
 
@@ -68,21 +68,7 @@ public class CapacitorsJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
-                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
-                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
-                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
-                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
-                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
-                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
-                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
-                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
-                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
-                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
-                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
-                    "Tolerance", "Quantity", "Termination", "Material",
-                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
-                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
+
             };
 
             for (int i = 0; i < header.length; i++) {

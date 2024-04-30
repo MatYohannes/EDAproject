@@ -29,11 +29,11 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class RelaysJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = "Capacitors";
+        String categoryFolder = "Relays";
 
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
@@ -68,21 +68,42 @@ public class CapacitorsJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
-                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
-                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
-                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
-                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
-                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
-                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
-                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
-                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
-                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
-                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
-                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
-                    "Tolerance", "Quantity", "Termination", "Material",
-                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
-                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
+                    "Trip Status","Platform","Switching Voltage","Count Rate","Size",
+                    "Housing Material","Controller Type","Contact Finish Thickness - Mating","Contact Type","Voltage - Rated",
+                    "Light Source","Auxiliary Outputs and Type","For Use With/Related Products","Operate Time","On-State Resistance (Max)",
+                    "Turn Off Time","Expandable","Compatible Tools","Input Range","Operating Mode",
+                    "Utilized IC / Part","Time Format","Coil Type","Embedded","Primary Attributes",
+                    "Contact Rating (Current)","Termination Style","Approval Agency","Communications","Slotted/Unslotted",
+                    "Contact Finish Thickness","Circuit","Nozzle Opening","Current - Supply","Must Release Voltage",
+                    "Number of Positions or Pins (Grid)","Coil Insulation","Thickness","Insulation Material","Qualification",
+                    "Contents","Approval Agency Marking","Current","Control / Drive Type","Shape",
+                    "Ingress Protection","Output Type","Response Time","Current Rating (Amps)","Current - Input",
+                    "Sensing Method","Wire Gauge","Power - Output","Diameter - Outside","Modulation or Protocol",
+                    "Current Rating (Per Contact)","Specifications","Supplied Contents","Turn On Time","Motor Type",
+                    "Contact Material","Connector Type","Data Rate (Max)","Must Operate Voltage","Style",
+                    "Distance - Control To Sensor (Max)","Cable Length","Pitch - Mating","Voltage - Supply (Vcc/Vdd)","Width",
+                    "Voltage - Input","Contact Finish - Mating","Usage","Number of Positions","Safety Outputs and Type",
+                    "Control Method","Panel Cutout Dimensions","Switch Type","Number of I/O","Load - Max Switching",
+                    "Pin or Socket","Contact Form","Seal Rating","Contact Finish Thickness - Post","Type",
+                    "Sensitivity","Number of Outputs and Type","Length","Trip Range","Coil Voltage",
+                    "Material - Housing & Prism","Temperature Range","Frequency","Interface","Number of Motors",
+                    "Program Memory Type","Air Flow","Voltage Rating","Sensing Distance","Contact Finish",
+                    "Load Type","Current - Output (Max)","Relay Type","Package / Case","Display Type",
+                    "Number of Channels","Technology","Voltage - Supply","Approved Countries","Release Time",
+                    "Reset","Amplifier Type","Adjustment Type","Timing Initiate Method","Operating Temperature",
+                    "Reel Capacity","Contact Material - Post","Color","Delay Time","Grade",
+                    "Voltage - Load","Measuring Type","Thread Size","Mounting Type","Connection Method",
+                    "Lamp Wattage","Memory Size","Safety Category","Pitch","Contact Material - Mating",
+                    "Process Side Connection","Positions / Poles","Contact Termination","Current - Output / Channel","Controller Series",
+                    "Load Current","DigiKey Programmable","Core Processor","Cable Type","Coil Current",
+                    "Current - Output","Output Configuration","Current - Peak Output","Switch Actuation Level","Supplier Device Package",
+                    "Includes","Pitch - Post","Function","Control Side Cable Retainer","Power - Rated",
+                    "Measuring Range","Voltage - Output","Voltage","Features","Height",
+                    "Contact Rating @ Voltage","Display Characters - Height","Input Type","Tool Type","Number of Rows",
+                    "Applications","Diameter - Inside","RAM Size","Number of Characters Per Row","Material",
+                    "Row Spacing","Termination","Ratio - Input:Output","Fastening Type","Rds On (Typ)",
+                    "Number of Outputs","Fault Protection","Number of Inputs and Type","Contact Finish - Post","Plating",
+                    "Cable Diameter","Accessory Type","Timing Adjustment Method","Control Side Connection"
             };
 
             for (int i = 0; i < header.length; i++) {

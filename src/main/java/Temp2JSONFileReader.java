@@ -29,7 +29,7 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class Temp2JSONFileReader {
 
     public static void main(String[] args) {
 
@@ -44,13 +44,12 @@ public class CapacitorsJSONFileReader {
         String KEYWORD;
 
         String filePath;
-        HashSet<String> attributes = new HashSet<>();
 
         String baseProductName = "null";
         Long baseProductId = (long) 0;
 
-        String baseProdName = null;
-        Long baseProdId = null;
+        String baseProdName;
+        Long baseProdId;
 
         for (String s : filesInDirectory) {
             KEYWORD = s;
@@ -85,14 +84,15 @@ public class CapacitorsJSONFileReader {
                     "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
             };
 
-            for (int i = 0; i < header.length; i++) {
-                parametersList.put(header[i], null);
+
+            for (String value : header) {
+                parametersList.put(value, null);
             }
 
             // JSON Parser for reading the input file
             JSONParser parser = new JSONParser();
 
-            JSONArray products = null;
+            JSONArray products;
 
             try {
                 // Reading JSON file
@@ -118,7 +118,7 @@ public class CapacitorsJSONFileReader {
                     }
                     JSONObject temp = (JSONObject) a;
 
-                    String productsTempName = "Products" + Integer.toString(productIndexing);
+                    String productsTempName = "Products" + productIndexing;
 
                     JSONArray temp22 = (JSONArray) temp.get(productsTempName);
 
@@ -131,7 +131,7 @@ public class CapacitorsJSONFileReader {
                             if (productIndexing == 10000) {
                                 break;
                             }
-                            productsTempName = "Products" + Integer.toString(productIndexing);
+                            productsTempName = "Products" + productIndexing;
                             temp22 = (JSONArray) temp.get(productsTempName);
                         } else {
                             nullCheck = false;
@@ -145,7 +145,7 @@ public class CapacitorsJSONFileReader {
                             if (productIndexing == 0) {
                                 break;
                             }
-                            productsTempName = "Products" + Integer.toString(productIndexing);
+                            productsTempName = "Products" + productIndexing;
                             temp22 = (JSONArray) temp.get(productsTempName);
                         } else {
                             nullCheck = false;
@@ -176,7 +176,6 @@ public class CapacitorsJSONFileReader {
                         // Iterating through each product variation
                         while (iteratorProductV.hasNext()) {
                             JSONObject temp2 = (JSONObject) iteratorProductV.next();
-//                    String digiKeyProductNumber = temp2.get("DigiKeyProductNumber").toString();
                             Map packageType = (Map) temp2.get("PackageType");
                             if (packageType != null) {
                                 String packageName = packageType.get("Name").toString();
@@ -230,7 +229,6 @@ public class CapacitorsJSONFileReader {
 
                         // Extracting category information
                         Map category = (Map) temp44.get("Category");
-                        Long categoryId = (Long) category.get("CategoryId");
                         Long parentId = (Long) category.get("ParentId");
                         String categoryName = (String) category.get("Name");
 
@@ -242,7 +240,7 @@ public class CapacitorsJSONFileReader {
                         Iterator iteratorChildCategories = childCategories.iterator();
 
                         Object[] row = new Object[header.length];
-                        
+
                         // Create a HashSet to store the header values for faster lookup
                         Set<String> headerSet = new HashSet<>(Arrays.asList(header));
 
@@ -262,9 +260,7 @@ public class CapacitorsJSONFileReader {
                 Object[][] table = new Object[categoryTable.size()][tableColumns];
                 for (int i = 0; i < categoryTable.size(); i++) {
                     Object[] rowData = (Object[]) categoryTable.get(i);
-                    for (int j = 0; j < tableColumns; j++) {
-                        table[i][j] = rowData[j];
-                    }
+                    System.arraycopy(rowData, 0, table[i], 0, tableColumns);
                 }
 
                 // Printing header
@@ -293,9 +289,6 @@ public class CapacitorsJSONFileReader {
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
-        }
-        for (String str: attributes) {
-            System.out.println(str);
         }
     }
 }

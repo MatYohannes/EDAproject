@@ -29,11 +29,11 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class PotentiometerJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = "Capacitors";
+        String categoryFolder = "Potentiometers, Variable Resistors";
 
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
@@ -68,21 +68,33 @@ public class CapacitorsJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
-                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
-                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
-                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
-                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
-                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
-                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
-                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
-                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
-                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
-                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
-                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
-                    "Tolerance", "Quantity", "Termination", "Material",
-                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
-                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
+                    "Serial Interfaces","Actuator Diameter","Platform","Configuration","Built in Switch",
+                    "Light Source","Voltage - Threshold","Noise - 10Hz to 10kHz","AC Voltage - Input","For Use With/Related Products",
+                    "Compatible Tools","Utilized IC / Part","Embedded","Sensing Range","Primary Attributes",
+                    "Voltage - Output 6","Test Condition","Voltage - Output 2","Voltage - Output 3","Voltage - Output 4",
+                    "Termination Style","Voltage - Output 5","Approval Agency","Nozzle Opening","Voltage - Output 1",
+                    "Size / Dimension","Current - Supply","Qualification","Contents","Approval Agency Marking",
+                    "Ingress Protection","Output Type","Response Time","Number of Taps","Sensing Method",
+                    "Specifications","Supplied Contents","Output","Resistive Material","Cable Length",
+                    "Voltage Dropout (Max)","Voltage - Supply (Vcc/Vdd)","Diameter","Voltage - Input","Number of Gangs",
+                    "Synchronous Rectifier","Actuator Type","Switch Type","Voltage - Output (Max)","Current - Output 1",
+                    "Type","Current - Cathode","Travel Range","Number of Characters","Length",
+                    "Temperature Range","Number of Circuits","Resistance - Wiper (Ohms) (Typ)","Interface","Polarization",
+                    "Noise - 0.1Hz to 10Hz","Air Flow","Reset Timeout","Sensing Distance","Temperature Coefficient (Typ)",
+                    "Number of Regulators","Number of Turns","Load Type","Memory Type","Current - Output (Max)",
+                    "Voltage - Input (Min)","DC Voltage - Input (Min)","Package / Case","Technology","Efficiency",
+                    "Voltage - Supply","Approved Countries","Reset","Adjustment Type","Shaft Size",
+                    "Operating Temperature","Fader Type","PSRR","Color","Voltage - Isolation","Grade",
+                    "Voltage - Load","Topology","Mounting Type","Reference Type","Connection Method",
+                    "Resistance","Power (Watts)","Control Features","Output Phases","Standard Number","Current - Output / Channel",
+                    "Taper","DigiKey Programmable","DC Voltage - Input (Max)","Bushing Thread","Voltage - Input (Max)",
+                    "Kit Type","Current - Output","Output Configuration","Current - Supply (Max)","Actuator Length",
+                    "Current - Peak Output","Temperature Coefficient","Supplier Device Package","Includes","Function",
+                    "Power - Rated","Frequency - Switching","Voltage - Output","Voltage","Voltage - Output (Min/Fixed)",
+                    "Resistance (Ohms)","Features","Axis","Input Type","Tool Type","Current - Quiescent (Iq)",
+                    "Applications","Tolerance","Quantity","Termination","Ratio - Input:Output","Rds On (Typ)",
+                    "Rotation","Clock Sync","Number of Outputs","Number of Voltages Monitored","Duty Cycle (Max)",
+                    "Fault Protection","Protection Features","Accessory Type","Rotation Angle"
             };
 
             for (int i = 0; i < header.length; i++) {

@@ -29,11 +29,11 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class CapacitorsJSONFileReader {
+public class CrystalJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = "Capacitors";
+        String categoryFolder = "Crystals, Oscillators, Resonators";
 
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
@@ -68,21 +68,72 @@ public class CapacitorsJSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
-                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
-                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
-                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
-                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
-                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
-                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
-                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
-                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
-                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
-                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
-                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
-                    "Tolerance", "Quantity", "Termination", "Material",
-                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
-                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
+                    "Frequency - Output 2", "Cable Opening", "Frequency - Output 3", "Frequency Tolerance", "With False Start Bit Detection",
+                    "Frequency - Output 1", "Insulation Height", "Configuration", "Frequency - Output 4", "Housing Material",
+                    "Size", "Voltage - Primary", "Frequency Stability", "Data Interface", "Contact Finish Thickness - Mating",
+                    "Shell Size, MIL", "Fan Type", "Gender", "Material Flammability Rating", "Header Orientation",
+                    "Current - UL", "Regulator Topology", "For Use With/Related Products", "Number of Inputs", "Base Resonator",
+                    "Mating Orientation", "Utilized IC / Part", "Time Format", "Embedded", "Material - Body",
+                    "Sensing Range", "Shell Size, Connector Layout", "Primary Attributes", "Insertion Loss", "Number of Positions/Contacts",
+                    "Circuit", "Orientation", "Number of Positions or Pins (Grid)", "Insulation Material", "Illumination Voltage (Nominal)",
+                    "Contact Size", "Qualification", "Switch Function", "Insulation Color", "Contact Length - Post",
+                    "Dimming", "Filter Type", "Mated Stacking Heights", "Impedance", "Frequency - Max",
+                    "Ingress Protection", "Conversion Type", "Charge Current - Max", "Output Type", "Height - Seated (Max)",
+                    "Absolute Pull Range (APR)", "Current Rating (Amps)", "Actuator Length, Right Angle", "Shell Finish", "Signal Lines",
+                    "Shell Size - Insert", "Terminal Size", "Specifications", "Output", "Motor Type",
+                    "Battery Chemistry", "Stacking Direction", "Data Rate (Max)", "Pitch - Mating", "Protocol",
+                    "Voltage - Input", "Contact Length - Mating", "Voltage - Supply, Battery", "Pushing (MHz/V)", "Output Alarm",
+                    "Contact Finish - Mating", "Level, Class", "Voltage - Supply, Digital", "Sensing Temperature", "Digits or Characters",
+                    "Number of Positions", "Tab Direction", "Locking Feature", "Length", "Board Type",
+                    "Frequency", "Number of Circuits", "Shield Termination", "Interface", "Washable",
+                    "Noise", "Packages Included", "Contact Finish", "Load Type", "FFC, FCB Thickness",
+                    "Number of Positions/Bay/Row", "Transistor Type", "Display Type", "Voltage - Supply", "Wire Gauge or Range - AWG",
+                    "Wire Termination", "Architecture", "Frequency - Transition", "Battery Pack Voltage", "Air Flow - Low",
+                    "Color", "Logic Type", "For Measuring", "Voltage - Load", "Reference Type",
+                    "Weight", "Power (Watts)", "Row Spacing - Mating", "Contact Timing", "Outputs and Type",
+                    "Contact Material - Mating", "Phase Noise Typ (dBc/Hz)", "Center Contact Material", "Current - Output", "Programmable Type",
+                    "Current - Supply (Max)", "Current - Peak Output", "Fuel Type", "Screw Size", "Connector/Contact Type",
+                    "Weight (Pounds)", "Industry Recognized Mating Diameter", "Voltage - Start Up", "Bandwidth", "Features",
+                    "RF Type", "Contact Rating @ Voltage", "Wire Gauge or Range - mm²", "Illumination Type, Color", "Mating Length/Depth",
+                    "Current - Transmitting", "Applications", "Positions Per Level", "Static Pressure", "Bearing Type",
+                    "Material", "Ratio - Input:Output", "Fastening Type", "Rds On (Typ)", "Current - IEC",
+                    "Mounting Feature", "Number of Cores per Jack", "Contact Shape", "Cable Group", "Fault Protection",
+                    "With IrDA Encoder/Decoder", "Voltage - UL", "Divider/Multiplier", "Number of Poles", "Accessory Type",
+                    "Shrouding", "Voltage - Auxiliary", "Shell Finish Thickness", "Platform", "Center Gender",
+                    "Current - Output Source/Sink", "Contact Type", "Count", "Voltage - Rated", "Tuning Voltage (VDC)",
+                    "Current - Charging", "Voltage - Collector Emitter Breakdown (Max)", "Number of Levels", "2nd Harmonic, Typ (dBc)", "Icc Max",
+                    "Capacity", "Sensor Type", "Width (Inches)", "Voltage Rating - AC", "Plug Wire Entry",
+                    "Operating Mode", "Illumination", "Number of Bits", "Output Isolation", "Card Type",
+                    "Programmable Features", "Sampling Rate (Per Second)", "Power (dBm)", "Current - Collector (Ic) (Max)", "Termination Style",
+                    "Number of Cells", "Approval Agency", "Contact Finish Thickness", "Terminal Type", "Shielding",
+                    "Size / Dimension", "Current - Supply", "Adapter Type", "Contents", "Current - Timekeeping (Max)",
+                    "Duty Cycle", "Hole Diameter", "Material - Insulation", "Current", "Adapter Series",
+                    "With Modem Control", "Chipset Manufacturer", "Spread Spectrum Bandwidth", "Number of A/D Converters", "Wire Gauge",
+                    "Depth", "Power - Output", "Modulation or Protocol", "Frequency - Center", "Date Format",
+                    "Backset Spacing", "Number of Ports", "Supplied Contents", "Ratio - S/H:ADC", "Connector Type",
+                    "Contact Material", "Style", "Voltage - Supply (Vcc/Vdd)", "Width", "Diameter",
+                    "FIFO's", "Main Purpose", "Actuator Level", "Actuator Type", "LED Color",
+                    "Flange Feature", "Outline", "Differential - Input:Output", "Contact Finish Thickness - Post", "Type",
+                    "Voltage Rating - DC", "Sensitivity", "Power - Max", "Housing Color", "Noise Figure (dB Typ @ f)",
+                    "Number of Positions Loaded", "Frequency Stability (Total)", "DC Current Gain (hFE) (Min) @ Ic, Vce", "Air Flow - High", "Flat Flex Type",
+                    "Air Flow - Medium", "Center Contact Plating", "Air Flow", "Package Accepted", "Voltage Rating",
+                    "Voltage - Supply, Analog", "Ratings", "Input", "Package / Case", "Number of Channels",
+                    "Actuator Orientation", "Operating Force", "Technology", "Current - Receiving", "Number of Pins",
+                    "Voltage - IEC", "Load Capacitance", "Operating Temperature", "Footprint", "Cable End Type",
+                    "Contact Material - Post", "Voltage - Isolation", "Grade", "Topology", "Mounting Type",
+                    "Voltage - Breakdown", "ESR (Equivalent Series Resistance)", "Antenna Connector", "Control Features", "Memory Size",
+                    "Available Frequency Range", "Connector Style", "Pitch", "Output Fan", "Ripple",
+                    "Shell Material", "Overall Contact Length", "Contact Termination", "Current - Output / Channel", "Gain",
+                    "Inductance @ Frequency", "DigiKey Programmable", "Core Processor", "Frequency Range", "Cable Type",
+                    "Shell Material, Finish", "Kit Type", "Read Out", "Output Configuration", "Height Above Board",
+                    "Actuator Length", "Supplier Device Package", "RPM", "Internal Switch(s)", "Contact Mating Finish",
+                    "Convert To (Adapter End)", "Includes", "Pitch - Post", "Card Thickness", "Function",
+                    "PLL", "Accuracy", "Kit Contents", "Frequency - Switching", "Voltage - Supply (Max)",
+                    "Horsepower", "Secondary Attributes", "Voltage", "Voltage - Output", "Supply Voltage",
+                    "Height", "Length (Inches)", "Convert From (Adapter End)", "Primary Material", "Input Type",
+                    "Tool Type", "Number of Rows", "With Auto Flow Control", "Actuator Height off PCB, Vertical", "Quantity",
+                    "Termination", "Row Spacing", "Intended Chipset", "Height (Max)", "Actual Diameter",
+                    "Contact Finish - Post", "Plating", "Capacitance", "Actuator Material"
             };
 
             for (int i = 0; i < header.length; i++) {
