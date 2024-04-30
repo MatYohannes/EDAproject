@@ -33,7 +33,7 @@ public class InductorJSONFileReader {
 
     public static void main(String[] args) {
 
-        String categoryFolder = "Connectors, Interconnects";
+        String categoryFolder = "Inductors, Coils, Chokes";
 
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
