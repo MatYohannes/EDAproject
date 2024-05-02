@@ -1,13 +1,14 @@
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 
 public class JDBC {
     private static final String USERNAME = "edadb";
-    private static final String PASSWORD = ""; // 3d@db
-    private static final String IPADDRESS = ""; //130.166.160.20
+    private static final String PASSWORD = "3d@db"; // 3d@db
+    private static final String IPADDRESS = "130.166.160.20"; //130.166.160.20
     private static final int PORT = 3306;
     private static final String DATABASENAME = "edadb";
     private static final String URL = "jdbc:mysql://" + IPADDRESS + ":" + PORT + "/" + DATABASENAME;
@@ -30,6 +31,10 @@ public class JDBC {
         System.out.println("Database Connection Initialized.");
     }
 
+    public Connection Connection() {
+        return connection;
+    }
+
     /**
      * closes Java DataBase connection
      */
@@ -50,33 +55,33 @@ public class JDBC {
     public void insertMembership(Object[][] table) throws SQLException {
         String command = "INSERT INTO `edadb`.`membership` (`custom_id`, `category_id`, `manufacturer`," +
                 " `manufacturer_part_num`) VALUES (?, ?, ?, ?);";
+        System.out.println("Inserting into Membership SQL Table.");
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Object[] row: table) {
                 addstmt.setObject(1, row[0]);
                 addstmt.setObject(2, row[1]);
                 addstmt.setObject(3, row[2]);
                 addstmt.setObject(4, row[3]);
+                addstmt.executeUpdate();
             }
-
-            addstmt.executeUpdate();
-            System.out.println("Insertion to Membership SQL table.");
+            System.out.println("Insertion to Membership SQL table complete.");
         } catch (Exception err) {
             System.out.println("An error has occurred when inserting to Membership sql table.");
             err.printStackTrace();
         }
     }
 
-    public void insertCharacteristics(Object[][] table) throws SQLException {
+    public void insertCharacteristics(List<Characteristics> table) throws SQLException {
         String command = "INSERT INTO `edadb`.`characteristics` (`custom_id`, `attribute_name`, `value`) VALUES (?, ?, ?);";
+        System.out.println("Inserting into Characteristics SQL Table.");
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
-            for (Object[] row: table) {
-                addstmt.setObject(1, row[0]);
-                addstmt.setObject(2, row[1]);
-                addstmt.setObject(3, row[2]);
+            for (Characteristics row: table) {
+                addstmt.setObject(1, row.getCustomId());
+                addstmt.setObject(2, row.getAttributes());
+                addstmt.setObject(3, row.getValue());
+                addstmt.executeUpdate();
             }
-
-            addstmt.executeUpdate();
-            System.out.println("Insertion to Characteristics SQL table.");
+            System.out.println("Insertion to Characteristics SQL table complete.");
         } catch (Exception err) {
             System.out.println("An error has occurred when inserting to Characteristics sql table.");
             err.printStackTrace();

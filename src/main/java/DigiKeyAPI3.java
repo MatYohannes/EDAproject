@@ -1015,7 +1015,7 @@ public class DigiKeyAPI3 {
                     offset += limit;
                 }
 
-            } while (apiCount < 1100);
+            } while (apiCount < 10000);
 
         } catch (Exception e) {
             e.printStackTrace();
