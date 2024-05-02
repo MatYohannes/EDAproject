@@ -5,6 +5,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 /*
@@ -29,7 +31,7 @@ import java.util.*;
     and stands ready for the incorporation of additional details.
  */
 
-public class Temp2JSONFileReader {
+public class CapacitorsJSONFileReader {
 
     public static void main(String[] args) {
 
@@ -44,8 +46,6 @@ public class Temp2JSONFileReader {
         String KEYWORD;
 
         String filePath;
-        HashSet<String> attributes = new HashSet<>();
-
         String baseProductName = "null";
         Long baseProductId = (long) 0;
 
@@ -68,8 +68,27 @@ public class Temp2JSONFileReader {
             // Array to store header values
             String[] header = {"manId","manName","manProductNumber","quantity","stat",
                     "baseProdId","baseProdName", "productParId","productParName",
-
+                    "Frequency Tolerance", "Polarization", "Dielectric Material", "Voltage - Peak Reverse (Max)", "Manufacturer Size Code",
+                    "Q @ Freq", "Diode Type", "Packages Included", "Frequency Stability", "Lead Spacing",
+                    "Current - Max", "Voltage - Rated", "Resistance @ If, F", "Ratings", "Package / Case",
+                    "For Use With/Related Products", "Capacitance Range", "Voltage Rating - AC", "Failure Rate", "Fan Accessory Type",
+                    "Lead Style", "Adjustment Type", "Operating Temperature", "Insertion Loss", "Capacitance @ Vr, F",
+                    "Color", "Fits Fan Size", "Thread Size", "Mounting Type", "Size / Dimension",
+                    "Voltage - Breakdown", "Dissipation Factor", "ESR (Equivalent Series Resistance)", "Lifetime @ Temp.", "Resistance",
+                    "Power (Watts)", "Ripple Current @ High Frequency", "ESL (Equivalent Series Inductance)", "Impedance", "Current",
+                    "Shape", "Height - Seated (Max)", "Kit Type", "Surface Mount Land Size", "Temperature Coefficient",
+                    "Number of Capacitors", "Ripple Current @ Low Frequency", "Supplier Device Package", "Diameter - Outside", "Power Dissipation (Max)",
+                    "Specifications", "Features", "Height", "Width", "DC Resistance (DCR) (Max)",
+                    "Composition", "Usage", "Applications", "Diameter - Inside", "Device Size",
+                    "Tolerance", "Quantity", "Termination", "Material",
+                    "Height (Max)", "Type", "Voltage Rating - DC", "Thickness (Max)", "Current - Leakage",
+                    "Length", "Capacitance", "Frequency", "Circuit Type", "Accessory Type"
             };
+
+            List<String> headerList = new ArrayList<>();
+            for (String item : header) {
+                headerList.add(item);
+            }
 
             for (int i = 0; i < header.length; i++) {
                 parametersList.put(header[i], null);
@@ -254,34 +273,53 @@ public class Temp2JSONFileReader {
                 }
 
                 // Printing header
-                for (int j = 0; j < tableColumns; j++) {
-                System.out.printf("%-40s", header[j]);
-                }
-            System.out.println();
+//                for (int j = 0; j < tableColumns; j++) {
+//                System.out.printf("%-40s", header[j]);
+//                }
+//            System.out.println();
+//
+//                // Printing table content
+//                for (Object[] objects : table) {
+//                    for (int j = 0; j < tableColumns; j++) {
+//                    System.out.printf("%-40s", objects[j]);
+//                    }
+//                System.out.println();
+//                }
 
-                // Printing table content
-                for (Object[] objects : table) {
-                    for (int j = 0; j < tableColumns; j++) {
-                    System.out.printf("%-40s", objects[j]);
-                    }
-                System.out.println();
-                }
+                JDBC dbConnector = new JDBC();
+                Connection connection = dbConnector.Connection();
+
+                Object[][] customTable = membershipTable.createCustomTable(table, connection);
+
+                List<String> membershipHeaders = Arrays.asList("custom_id", "category_id", "manufacturer", "manufacturer_part_num");
+
+                List<String> characteristicsHeaders = Arrays.asList("custom_id", "attribute_name", "value");
+
+                // Print Characteristic's TABLE with header
+                // Print header
+//                for (String label : characteristicsHeaders) {
+//                    System.out.printf("%-40s", label);
+//                }
+//                System.out.println();
+//
+//                // Print data
+//                for (Characteristics entry : characterTable) {
+//                    System.out.printf("%-40s %-40s %-40s\n", entry.getCustomId(), entry.getAttributes(), entry.getValue());
+//                }
 
 
                 // Code below to upload to MYSQL
-                // catch clause is added "java.text.ParseException" when uncommented
+                // catch clause is added "java.text.ParseException" and "SQLException" when uncommented
 
-//            JDBC dbConnector = new JDBC();
-//            dbConnector.insertMembership(table);
-//            dbConnector.insertCharacteristics(table);
-//            dbConnector.closeConnection();
 
-            } catch (IOException | ParseException e) {
+            dbConnector.insertMembership(customTable);
+                List<Characteristics> characterTable = characteristics2Table.createCustomTable(table, membershipHeaders, headerList, connection);
+
+                dbConnector.insertCharacteristics(characterTable);
+
+            } catch (IOException | ParseException | java.text.ParseException | SQLException e) {
                 e.printStackTrace();
             }
-        }
-        for (String str: attributes) {
-            System.out.println(str);
         }
     }
 }
