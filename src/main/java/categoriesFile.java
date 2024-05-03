@@ -120,7 +120,6 @@ public class categoriesFile {
             }
 
             //Printing out JSONArray list
-
             // Create Mutable List to insert Objects.
             List<Object> tableList = new ArrayList<>();
 

@@ -8,8 +8,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * This class represents a utility for printing and processing category data stored in a map.
+ */
+
 public class categoriesTable {
 
+    /**
+     * Prints a table of category data stored in a map.
+     *
+     * @param map The map containing category data, where the key is the category ID and the value is an array
+     *            containing category name and parent ID.
+     */
     public static void printTable(Map<Long, Object[]> map) {
         // Sort the map entries based on the "CategoryID"
         Map<Long, Object[]> sortedMap = new TreeMap<>(map);
@@ -49,14 +59,17 @@ public class categoriesTable {
         }
     }
 
+    /**
+     * Reads category data from a JSON file, processes it, and prints the resulting table.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         Map<Long, Object[]> table = new HashMap<>();
-
 
         // Create a JSON parser to parse the input file
         JSONParser parser = new JSONParser();
         try {
-
             // Parsing the JSON file
             Object obj = parser.parse(new FileReader("Postman Exports/categories.json"));
             JSONObject jsonObject = (JSONObject) obj;
@@ -130,8 +143,6 @@ public class categoriesTable {
 //            dbConnector.insertCategories(table);
 //            dbConnector.closeConnection();
 
-
-
             } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -139,10 +150,5 @@ public class categoriesTable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//        catch (java.text.ParseException e) {
-//            e.printStackTrace();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
     }
 }

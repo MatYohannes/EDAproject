@@ -60,7 +60,7 @@ public class CapacitorsJSONFileReader {
 
 
             // List to store each row of the capacitor table
-            List<Object> categoryTable = new ArrayList<>();
+            List<Object[]> categoryTable = new ArrayList<>();
 
             // Map to store parameters for each capacitor
             Map<String, String> parametersList = new LinkedHashMap<>();
@@ -161,7 +161,6 @@ public class CapacitorsJSONFileReader {
 
                     while (temp33.hasNext()) {
                         JSONObject temp44 = (JSONObject) temp33.next();
-//                String description = temp.get("Description").toString();
 
                         // Extracting manufacturer information
                         Map manufacturer = (Map) temp44.get("Manufacturer");
@@ -181,7 +180,6 @@ public class CapacitorsJSONFileReader {
                         // Iterating through each product variation
                         while (iteratorProductV.hasNext()) {
                             JSONObject temp2 = (JSONObject) iteratorProductV.next();
-//                    String digiKeyProductNumber = temp2.get("DigiKeyProductNumber").toString();
                             Map packageType = (Map) temp2.get("PackageType");
                             if (packageType != null) {
                                 String packageName = packageType.get("Name").toString();
@@ -263,14 +261,16 @@ public class CapacitorsJSONFileReader {
 
                 int tableColumns = header.length;
 
+
                 // Converting list to a 2D array for easy printing
-                Object[][] table = new Object[categoryTable.size()][tableColumns];
-                for (int i = 0; i < categoryTable.size(); i++) {
-                    Object[] rowData = (Object[]) categoryTable.get(i);
-                    for (int j = 0; j < tableColumns; j++) {
-                        table[i][j] = rowData[j];
-                    }
-                }
+
+//                Object[][] table = new Object[categoryTable.size()][tableColumns];
+//                for (int i = 0; i < categoryTable.size(); i++) {
+//                    Object[] rowData = (Object[]) categoryTable.get(i);
+//                    for (int j = 0; j < tableColumns; j++) {
+//                        table[i][j] = rowData[j];
+//                    }
+//                }
 
                 // Printing header
 //                for (int j = 0; j < tableColumns; j++) {
@@ -289,11 +289,14 @@ public class CapacitorsJSONFileReader {
                 JDBC dbConnector = new JDBC();
                 Connection connection = dbConnector.Connection();
 
-                Object[][] customTable = membershipTable.createCustomTable(table, connection);
+                List<Object[]> customTable = membershipTable.createCustomTable(categoryTable, connection);
 
                 List<String> membershipHeaders = Arrays.asList("custom_id", "category_id", "manufacturer", "manufacturer_part_num");
 
                 List<String> characteristicsHeaders = Arrays.asList("custom_id", "attribute_name", "value");
+
+            dbConnector.insertMembership(customTable);
+                List<Characteristics> characterTable = characteristics2Table.createCustomTable(categoryTable, membershipHeaders, headerList, connection);
 
                 // Print Characteristic's TABLE with header
                 // Print header
@@ -306,14 +309,6 @@ public class CapacitorsJSONFileReader {
 //                for (Characteristics entry : characterTable) {
 //                    System.out.printf("%-40s %-40s %-40s\n", entry.getCustomId(), entry.getAttributes(), entry.getValue());
 //                }
-
-
-                // Code below to upload to MYSQL
-                // catch clause is added "java.text.ParseException" and "SQLException" when uncommented
-
-
-            dbConnector.insertMembership(customTable);
-                List<Characteristics> characterTable = characteristics2Table.createCustomTable(table, membershipHeaders, headerList, connection);
 
                 dbConnector.insertCharacteristics(characterTable);
 

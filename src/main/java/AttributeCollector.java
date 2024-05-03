@@ -2,7 +2,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -12,7 +11,7 @@ public class AttributeCollector {
     public static void main(String[] args) {
 
 // Category file is passed as an inline argument
-        String categoryFolder = "Capacitors";
+        String categoryFolder = args[0];
 
         // Directory on server where files are found
 //        String directory = "/root/EDAProject/Postman Exports/";
@@ -31,15 +30,11 @@ public class AttributeCollector {
             filePath = directory + categoryFolder + "/" + KEYWORD;
 
 //            System.out.println("File read: " + KEYWORD);
-
             // Map to store parameters for each capacitor
             Map<String, String> parametersList = new LinkedHashMap<>();
 
-
-
             // JSON Parser for reading the input file
             JSONParser parser = new JSONParser();
-
             JSONArray products;
 
             try {
@@ -102,12 +97,10 @@ public class AttributeCollector {
 
                             // Extracting parameter attributes
                             String ParameterText = (String) temp3.get("ParameterText");
-                            String ValueText = (String) temp3.get("ValueText");
 
                             // Adding parameters to the parameters list
-                            parametersList.put(ParameterText, ValueText);
+                            parametersList.put(ParameterText, null);
                         }
-                        // Assigning parameter values to corresponding variables
                         for (Map.Entry<String, String> entry : parametersList.entrySet()) {
                             attributes.add(entry.getKey());
                         }
