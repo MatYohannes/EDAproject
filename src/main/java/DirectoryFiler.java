@@ -13,6 +13,14 @@ import java.util.List;
 
 
 public class DirectoryFiler {
+
+    /**
+     * Counts the number of files in a directory that start with a given prefix.
+     *
+     * @param directoryPath The path of the directory to search.
+     * @param prefix        The prefix to match file names against.
+     * @return The number of files that match the prefix.
+     */
     public static int fileCounter(String directoryPath, String prefix) {
         int count = 0;
 
@@ -31,6 +39,13 @@ public class DirectoryFiler {
         return count;
     }
 
+    /**
+     * Creates a JSON file containing the names of files in a directory that start with a given prefix.
+     *
+     * @param directoryPath The path of the directory to search.
+     * @param prefix        The prefix to match file names against.
+     * @return The name of the created JSON file.
+     */
     public static String createJSONFileWithPrefix(String directoryPath, String prefix) {
         int fileCount = 1;
         JSONArray jsonArray = new JSONArray();
@@ -52,7 +67,7 @@ public class DirectoryFiler {
             // Create new JSON file with the concatenated prefix and file count
             jsonFileName = prefix + " " + fileCount + ".json";
             try (FileWriter fileWriter = new FileWriter(directoryPath+ "/" + jsonFileName)) {
-//                jsonArray.write(fileWriter);
+                jsonArray.write(fileWriter);
             }
 
             System.out.println("JSON file created: " + jsonFileName);
@@ -62,6 +77,12 @@ public class DirectoryFiler {
         return jsonFileName.substring(0,jsonFileName.length() - 5);
     }
 
+    /**
+     * Retrieves the names of JSON files in a directory.
+     *
+     * @param directoryPath The path of the directory to search.
+     * @return A list of names of JSON files in the directory.
+     */
     public static List<String> getFileNamesInDirectory(String directoryPath) {
         List<String> matchingFileNames = new ArrayList<>();
         File directory = new File(directoryPath);

@@ -1,18 +1,35 @@
-import java.io.FileNotFoundException;
 import java.sql.*;
-import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class contains a static method createCustomTable that takes an original table
+ * and a database connection as input parameters and returns a custom table
+ * based on the original one. The method retrieves the highest custom ID from the
+ * membership table in the database, increments it, and then creates custom rows
+ * by iterating through the original table.
+ */
 public class membershipTable {
-    public static Object[][] createCustomTable(Object[][] originalTable, Connection connection) throws FileNotFoundException, ParseException, SQLException {
-        int rows = originalTable.length;
-        Object[][] customTable = new Object[rows][4];
+
+    /**
+     * Creates a custom membership table based on the original table.
+     *
+     * @param originalTable The original table from which to create the custom table.
+     * @param connection    The database connection.
+     * @return A list of Object arrays representing the custom table.
+     * @throws SQLException If a SQL error occurs during the execution of the command.
+     */
+    public static List<Object[]> createCustomTable(List<Object[]> originalTable, Connection connection) throws SQLException {
+        List<Object[]> customTable = new ArrayList<>();
         int customID = 0;
 
-
+        // SQL command to get the highest custom ID from the membership table
         String command = "SELECT custom_id FROM edadb.membership ORDER BY custom_id DESC LIMIT 1;";
+
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(command);
 
+            // Retrieve the highest custom ID from the result set
             if (resultSet.next()) {
                 int previousCount = resultSet.getInt("custom_id");
                 if (previousCount != 0) {
@@ -23,12 +40,14 @@ public class membershipTable {
         // incrementing to either set to 1 or to read the table length then add 1
         customID++;
 
-        for (int i = 0; i < rows; i++) {
-            // Assuming the first column is "manID", second is "manProductNumber", and third is "productParName"
-            customTable[i][0] = customID;  // Custom ID
-            customTable[i][1] = originalTable[i][0]; // manID
-            customTable[i][2] = originalTable[i][1]; // manufacture
-            customTable[i][3] = originalTable[i][2]; // manProductNumber
+        // Iterate through the original table and create custom rows
+        for (Object[] row : originalTable) {
+            Object[] customRow = new Object[4];
+            customRow[0] = customID; // Custom ID
+            customRow[1] = row[0]; // manID
+            customRow[2] = row[1]; // manufacture
+            customRow[3] = row[2]; // manProductNumber
+            customTable.add(customRow);
             customID++;
         }
         return customTable;

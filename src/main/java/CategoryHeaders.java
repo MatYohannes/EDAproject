@@ -1,8 +1,18 @@
+/**
+ * The CategoryHeaders class provides a method for selecting header names based on a given category.
+ */
+
 public class CategoryHeaders {
 
+    /**
+     * Selects and returns an array of header names based on the given category.
+     *
+     * @param category The category for which headers are to be selected.
+     * @return An array of header names specific to the selected category.
+     */
     public static String[] selectCategory(String category) {
 
-        String[] header = new String[0];
+        String[] header = new String[0]; // Initialize an empty array for headers
 
         switch (category) {
             case "Capacitors" -> header = new String[]{"manId", "manName", "manProductNumber", "quantity", "stat",

@@ -19,7 +19,6 @@ import java.util.Arrays;
 public class DigiKeyAPI3 {
 
     // OAuth 2.0 authorization endpoints
-    //private static final String AUTH_URL = "https://api.digikey.com/v1/oauth2/authorize"; // Not needed
     private static final String ACCESS_TOKEN_URL = "https://api.digikey.com/v1/oauth2/token";
 
     // API endpoint
@@ -27,6 +26,12 @@ public class DigiKeyAPI3 {
     private static final String CLIENTLIST = "ClientList.txt";
     private static final String CATEGORYLIST = "CategoriesList.txt";
 
+    /**
+     * Selects the appropriate file name based on the provided keyword.
+     *
+     * @param keyword The keyword used to determine the file name.
+     * @return The selected file name.
+     */
     private static String selectingFileName(String keyword) {
         String fileName;
 
@@ -378,6 +383,12 @@ public class DigiKeyAPI3 {
         return fileName;
     }
 
+    /**
+     * Selects the appropriate file folder based on the provided keyword.
+     *
+     * @param keyword The keyword used to determine the file folder.
+     * @return The selected file folder.
+     */
     private static String selectingFileFolder(String keyword) {
 
         String fileFolder = switch (keyword) {
@@ -476,9 +487,20 @@ public class DigiKeyAPI3 {
         return fileFolder;
     }
 
+    /**
+     * Checks the existence of a file and performs actions accordingly.
+     * If the file exists, it updates the offset and product index.
+     * If the file does not exist, it creates a new file using a template.
+     *
+     * @param fileName   The name of the file to be checked.
+     * @param fileFolder The folder where the file is located.
+     * @param offset     The current offset value.
+     * @param keyword    The keyword for the file content.
+     * @return An array containing file-related information: [filePath, offset, productIndex].
+     */
     private static String[] checkingFile(String fileName, String fileFolder, int offset, String keyword) {
 
-        int productIndex = 1;
+        int productIndex;
 
         // index 0 is filePath
         // index 1 is offset
@@ -511,6 +533,10 @@ public class DigiKeyAPI3 {
         return tempArray;
     }
 
+    /**
+     * Resets the Client List by replacing "O" with "X" for all lines if all lines end with "O".
+     * Otherwise, prints a message indicating open Client IDs and Client Secrets.
+     */
     public static void clientListUsedUp() {
         // Define the file name
         String fileName = "ClientList.txt";
@@ -558,6 +584,12 @@ public class DigiKeyAPI3 {
         }
     }
 
+    /**
+     * Checks if each line in the specified file ends with "O".
+     *
+     * @param filename The name of the file to be checked.
+     * @return True if all lines end with "O", otherwise false.
+     */
     public static boolean categoryListComplete(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -575,6 +607,14 @@ public class DigiKeyAPI3 {
         }
     }
 
+    /**
+     * Counts the number of elements in a JSON array stored in a file.
+     *
+     * @param filePath The path of the file containing the JSON array.
+     * @return The number of elements in the JSON array.
+     * @throws IOException    If an I/O error occurs.
+     * @throws ParseException If there is an error parsing the JSON content.
+     */
     public static int arrayCount(String filePath) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONArray innerArray;
@@ -585,6 +625,13 @@ public class DigiKeyAPI3 {
         return innerArray.size();
     }
 
+    /**
+     * Inserts an array of lines at the end of a file.
+     *
+     * @param filePath The path to the file.
+     * @param body     The array of lines to be inserted.
+     * @throws IOException If an I/O error occurs.
+     */
     private static void insertArrayLines(String filePath, ArrayList<String> body) throws IOException {
         // Reading existing content from the file
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -596,14 +643,9 @@ public class DigiKeyAPI3 {
         }
         reader.close();
 
-        // Insert the new line into the second to last position
-        int totalLines = content.toString().split(System.lineSeparator()).length;
-        int insertLineNumber = Math.max(totalLines - 1, 0); // Ensure it's at least 0
-
-        // Insert the new line at the specified line number
-        for (int i = 0; i < body.size(); i++) {
-            content.insert(getPosition(content.toString(), insertLineNumber), body.get(i) + System.lineSeparator());
-
+        // Append the lines from the body ArrayList to the end of the content
+        for (String lineToAdd : body) {
+            content.append(lineToAdd).append(System.lineSeparator());
         }
 
         // Writing the modified content back to the file
@@ -613,6 +655,13 @@ public class DigiKeyAPI3 {
         }
     }
 
+    /**
+     * Inserts a new line into a file at the second to last position.
+     *
+     * @param filePath The path to the file.
+     * @param newLine  The new line to be inserted.
+     * @throws IOException If an I/O error occurs.
+     */
     private static void insertNewLines(String filePath, String newLine) throws IOException {
         // Reading existing content from the file
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -638,18 +687,38 @@ public class DigiKeyAPI3 {
         }
     }
 
+    /**
+     * Calculates the position in the content string to insert a new line at a given line number.
+     *
+     * @param content    The content string in which the position is to be calculated.
+     * @param lineNumber The line number at which the new line should be inserted.
+     * @return The position in the content string to insert the new line.
+     */
     private static int getPosition(String content, int lineNumber) {
         // Calculate the position to insert the new line
+        // Initialize the position to 0
         int position = 0;
+
+        // Iterate through the content to find the position of the line separator for the specified line number
         for (int i = 0; i < lineNumber; i++) {
+            // Find the index of the line separator in the content starting from the current position
             position = content.indexOf(System.lineSeparator(), position) + 1;
+
+            // If the line separator is not found, break out of the loop
             if (position == 0) {
                 break; // Break if the line separator is not found
             }
         }
+        // Return the calculated position
         return position;
     }
 
+    /**
+     * Inserts a template into a file.
+     *
+     * @param filePath The path to the file.
+     * @throws IOException If an I/O error occurs.
+     */
     private static void insertTemplate(String filePath) throws IOException {
         // Inserting template
         String template = "{\"Products\":[\n\n] }";
@@ -658,6 +727,14 @@ public class DigiKeyAPI3 {
         writer.close();
     }
 
+    /**
+     * Obtains an access token from an API using client credentials.
+     *
+     * @param clientId     The client ID.
+     * @param clientSecret The client secret.
+     * @return The access token.
+     * @throws Exception If an error occurs while obtaining the access token.
+     */
     private static String getAccessToken(String clientId, String clientSecret) throws Exception {
         // Create HTTP client
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -689,6 +766,18 @@ public class DigiKeyAPI3 {
         return accessToken;
     }
 
+    /**
+     * Sends a POST request to an API.
+     *
+     * @param apiUrl     The API URL.
+     * @param accessToken The access token.
+     * @param offset      The offset.
+     * @param limit       The limit.
+     * @param keyword     The keyword.
+     * @param clientID    The client ID.
+     * @return The response body.
+     * @throws Exception If an error occurs while sending the request.
+     */
     private static String sendPostRequest(String apiUrl, String accessToken, int offset, int limit, String keyword, String clientID) throws Exception {
         // Create HTTP client
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -713,6 +802,13 @@ public class DigiKeyAPI3 {
         return responseBody;
     }
 
+    /**
+     * The main method that orchestrates the process of retrieving data from an API based on provided keywords.
+     *
+     * <p>This method controls the flow of data retrieval, including handling file operations,
+     * API requests, and error conditions.</p>
+     *
+     */
     public static void main(String[] args) {
         try {
             /*
@@ -729,7 +825,6 @@ public class DigiKeyAPI3 {
                 System.exit(0); // Terminate the program with status code 0 (indicating successful termination)
             }
 
-
             // Checking if client list is exhausted, method below resets the "ClientList.txt" file
             // else print out status and continue to the next code
             clientListUsedUp();
@@ -740,8 +835,6 @@ public class DigiKeyAPI3 {
             String CLIENT_SECRET = clientKey[1];
             System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
 
-
-
             // CategoriesCheckList reads CategoriesList.txt for the next category to pull
             String KEYWORD = CategoriesCheckList.findCategory(CATEGORYLIST);
             System.out.println("Pulling from subcategory: " + KEYWORD);
@@ -749,7 +842,7 @@ public class DigiKeyAPI3 {
             // Assigning file folder with KEYWORD match
             String fileFolder = selectingFileFolder(KEYWORD);
 
-            String fileName = null;
+            String fileName;
 
             /*
                 - Check the folder to see if fileName exists
@@ -771,10 +864,6 @@ public class DigiKeyAPI3 {
                 filePrefixCount = DirectoryFiler.fileCounter("Postman Exports/" + fileFolder, KEYWORD);
                 fileName = selectingFileName(KEYWORD) + " " + filePrefixCount;
 
-
-                ////////////////////////////////////////
-                ///////////////////////////////////////
-
                 // Reading existing content from the file
                 BufferedReader reader = new BufferedReader(new FileReader("Postman Exports/" + fileFolder + "/" + fileName + ".json"));
                 StringBuilder content = new StringBuilder();
@@ -795,31 +884,21 @@ public class DigiKeyAPI3 {
 
                 offset = (filePrefixCount - 1) * 25000 + insertLineNumber;
 
-                ////////////////////////////////////////
-                ///////////////////////////////////////
-
-
             }
             else {
                 // Assigning file name with KEYWORD match
                 fileName = selectingFileName(KEYWORD);
             }
 
-
-
-
-
             // Assigning to the correct parent category
             int productIndex;
             int apiCount = 0;
             boolean offsetLoopAdjust = false;
 
-
             ArrayList<String> responseCollector = new ArrayList<>();
 
-
             do {
-                String filePath = null;
+                String filePath;
 
                 // Assigning file Path after checking file status
 
@@ -851,9 +930,7 @@ public class DigiKeyAPI3 {
                 // The variable below extracts the access_token value
                 String newAccessToken = accessToken.substring(43, 71);
 
-
                 while (true) {
-
                     // offsetLoopAdjust is used to loop out of the comparison using MODULE against the offset.
                     // With the offsetLoopAdjust, we make sure that the program is not stuck on the offset, to
                     // prevent creating a new file, setting the offset to the offset limit, and being stuck in an infinite loop
@@ -861,9 +938,6 @@ public class DigiKeyAPI3 {
                         offset += 50;
                         offsetLoopAdjust = false;
                     }
-                    // Send API requests with current offset
-//                    System.out.println("Used Offset: " + offset);
-//                    System.out.println("OffsetTracker2: " + offsetTracker);
                     String responseBody = sendPostRequest(API_URL, newAccessToken, offset, limit, KEYWORD, CLIENT_ID);
 
                     apiCount++;
@@ -895,9 +969,6 @@ public class DigiKeyAPI3 {
 
                         // Assigning file folder with KEYWORD match
                         fileFolder = selectingFileFolder(KEYWORD);
-
-                        // Assigning to the correct parent category
-//                        productIndex = 1;
 
                         // Assigning file Path after checking file status
                         String[] returnedArray2 = checkingFile(fileName, fileFolder, offset, KEYWORD);
@@ -932,6 +1003,28 @@ public class DigiKeyAPI3 {
                         System.out.println("An error occurred while processing your request.");
                         System.out.println("Re-requesting response body.");
                         offset -= limit;
+                    }
+                    else if (responseBody.contains("BurstLimit exceeded.")) {
+                        System.out.println("BurstLimit exceeded. Please try again after the number of seconds in the Retry-After header");
+                        Thread.sleep(5000);
+                        ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
+                        clientListUsedUp();
+                        offset -= limit;
+
+                        if (!ClientScanner.clientListComplete(CLIENTLIST)) {
+                            System.out.println("\nGetting new Client Key.");
+
+                            clientListUsedUp();
+
+                            clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+                            CLIENT_ID = clientKey[0];
+                            CLIENT_SECRET = clientKey[1];
+
+                            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+                            accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+                            newAccessToken = accessToken.substring(43, 71);
+                            apiCount = 0;
+                        }
                     }
                     else if (responseBody.contains("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.")) {
                         System.out.println("Bearer token is expired. Please use your refresh token to obtain a new Bearer token, or acquire a new set of tokens from the OAuth endpoint.");
@@ -973,25 +1066,12 @@ public class DigiKeyAPI3 {
                             accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
                             newAccessToken = accessToken.substring(43, 71);
                             apiCount = 0;
-//                            break;
                         }
                         else {
                             clientListUsedUp();
                         }
-
-
                     }
-                    if (!responseBody.contains("Description") && !responseBody.contains("Internal Server Error") &&
-                            !responseBody.contains("Bad Gateway") && !responseBody.contains("Bearer token is expired." +
-                            " Please use your refresh token to obtain a new Bearer token, or acquire a new set " +
-                            "of tokens from the OAuth endpoint.") &&
-                            !responseBody.contains("An error occurred while processing your request.") ||
-                    !responseBody.contains("clientId used to get Bearer token doesnot match the X-DIGIKEY-Client-Id")) {
-                    }
-
                     responseCollector.add(indexedResponseBody);
-
-//                    insertNewLines(filePath, indexedResponseBody);
                     productIndex++;
 
                     // Process the current page of results
@@ -1007,20 +1087,14 @@ public class DigiKeyAPI3 {
                         filePath = "Postman Exports/" + fileFolder + fileName + ".json";
                         insertTemplate(filePath);
                         offsetLoopAdjust = true;
-
                         break;
                     }
-
                     // Increment offset for the next page
                     offset += limit;
                 }
-
-            } while (apiCount < 10000);
-
+            } while (apiCount < 1200);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 }

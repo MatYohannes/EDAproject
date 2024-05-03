@@ -2,79 +2,76 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
-/*
-    Code Explanation
-        The provided Java code reads information from a JSON file containing data about
-    capacitors and processes it to create a formatted table. The code utilizes the
-    JSON simple library to parse the JSON file, extracting details such as
-    manufacturer information, product variations, and parameters for each capacitor.
-        It then organizes this information into a table structure, including headers
-    and rows, where each row represents a capacitor and its attributes. The code
-    handles various data types, such as Long, Double, and String, and uses a
-    switch statement to map parameter values to specific attributes.
-        Additionally, comments have been added throughout the code to explain its
-    functionality, variable assignments, and data extraction processes.
-    The resulting table is printed to the console, presenting the capacitor
-    data in a readable format.
-
-    Addition Comment
-    The code incorporates commented-out lines that contain information presently
-    considered nonessential by the client. Should the client express a desire
-    to append supplementary information, the code has been meticulously organized
-    and stands ready for the incorporation of additional details.
+/**
+ * This class reads JSON files containing product information,
+ * processes the data, and inserts it into a database. The category is passed as an inline argument.
+ * It iterates through each file in a given directory, extracts relevant information, maps it to
+ * appropriate headers, and then inserts it into the database tables using JDBC.
  */
 
 public class JSONFileReader {
 
+    /**
+     * Main method to read JSON files, process data, and insert into a database.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
 
-        // Category file is passed my inline argument
+        // Category file is passed as an inline argument
         String categoryFolder = args[0];
 
+        // Directory on server where files are found
         String directory = "/root/EDAProject/Postman Exports/";
 //        String directory = "Postman Exports/";
 
+        // DirectoryFiler: provides methods for working with directories and files
+        // getFileNamesInDirectory: Retrieves the names of JSON files in a directory.
         List<String> filesInDirectory = DirectoryFiler.getFileNamesInDirectory(directory + categoryFolder);
 
         System.out.println("Directory size: " + filesInDirectory.size());
         String KEYWORD;
-
         String filePath;
         String baseProductName = "null";
         Long baseProductId = (long) 0;
-
         String baseProdName;
         Long baseProdId;
 
+        // Iterating through directory
         for (String s : filesInDirectory) {
             KEYWORD = s;
+            // Creating file path
             filePath = directory + categoryFolder + "/" + KEYWORD;
 
             System.out.println("File read: " + KEYWORD);
 
-
-            // List to store each row of the capacitor table
+            // List to store each item per row
             List<Object[]> categoryTable = new ArrayList<>();
 
-            // Map to store parameters for each capacitor
+            // Map to store parameters for each item
             Map<String, String> parametersList = new LinkedHashMap<>();
 
             // Array to store header values
             String[] header;
+
+            // CategoryHeaders: provides a method for selecting header names based on a given category.
+            // seelctCatagory: selects and returns an array of header names based on the given category.
             header = CategoryHeaders.selectCategory(categoryFolder);
 
+            // Converting String[] to List<String>
             List<String> headerList = new ArrayList<>();
             for (String item : header) {
                 headerList.add(item);
             }
 
+            // Inserting item attribute names into parametersList with null as paired value
+            // null will be replaced by appropriate value
             for (String value : header) {
                 parametersList.put(value, null);
             }
@@ -82,6 +79,8 @@ public class JSONFileReader {
             // JSON Parser for reading the input file
             JSONParser parser = new JSONParser();
 
+            // Structure of json file is as such:
+            // JSONObject called "Products" contains multiple JSONArrays which are label "Products" + #
             JSONArray products;
 
             try {
@@ -89,27 +88,29 @@ public class JSONFileReader {
                 Object obj = parser.parse(new FileReader(filePath));
                 JSONObject jsonObject = (JSONObject) obj;
 
-                // Getting the array of products
+                // Getting the JSONArrays of products
 
                 products = (JSONArray) jsonObject.get("Products");
                 Iterator iteratorProducts = products.iterator();
 
                 int productIndexing = 0;
 
-                // Iterating through each product
+                // Iterating through each JSONArray
                 while (iteratorProducts.hasNext()) {
                     Object a = iteratorProducts.next();
                     String b = a.toString().substring(0, 1);
                     // Checking to see if there is an error value that starts with a number is in file.
                     // If so, skip it.
                     if (b.matches(".*\\d+.*")) {
-//                        System.out.println("ERRORS");
                         break;
                     }
                     JSONObject temp = (JSONObject) a;
 
+                    // Reading and storing the Products with assigned number
+                    // Starting with number 0
                     String productsTempName = "Products" + productIndexing;
 
+                    // Getting the Products# if present
                     JSONArray temp22 = (JSONArray) temp.get(productsTempName);
 
                     boolean nullCheck = true;
@@ -118,6 +119,7 @@ public class JSONFileReader {
                     do {
                         if (temp22 == null) {
                             productIndexing++;
+                            // productIndex set to 10,000 since number will never been assigned
                             if (productIndexing == 10000) {
                                 break;
                             }
@@ -244,8 +246,6 @@ public class JSONFileReader {
                     }
                 }
 
-
-
                 // Converting list to a 2D array for easy printing
 //                int tableColumns = header.length;
 
@@ -271,14 +271,24 @@ public class JSONFileReader {
 //                System.out.println();
 //                }
 
+                //JDBC (Java Database Connectivity): class for interacting with a MySQL database
                 JDBC dbConnector = new JDBC();
+                // Establishing connection with server
                 Connection connection = dbConnector.Connection();
 
+                // membershipTable: class provides a method to create a custom membership table based on an original table.
+                // createCustomTable: creates a custom membership table based on the original table.
                 List<Object[]> customTable = membershipTable.createCustomTable(categoryTable, connection);
 
+                // Column names of the membership sql table
                 List<String> membershipHeaders = Arrays.asList("custom_id", "category_id", "manufacturer", "manufacturer_part_num");
 
-            dbConnector.insertMembership(customTable);
+                // Inserts data into the 'membership' table.
+                // Column names : { custom_id, category_id, manufacturer, manufacturer_part_num }
+                dbConnector.insertMembership(customTable);
+
+                // characteristics2Table: provides a method to create a custom characteristics table based on original tables.
+                // Creates a custom characteristics table based on original tables.
                 List<Characteristics> characterTable = characteristics2Table.createCustomTable(categoryTable, membershipHeaders, headerList, connection);
 
                 // Print Characteristic's TABLE with header
@@ -293,6 +303,8 @@ public class JSONFileReader {
 //                    System.out.printf("%-40s %-40s %-40s\n", entry.getCustomId(), entry.getAttributes(), entry.getValue());
 //                }
 
+                // Inserts data into the 'characteristics' table.
+                // Column names : { custom_id, attribute_name, value }
                 dbConnector.insertCharacteristics(characterTable);
 
             } catch (IOException | ParseException | java.text.ParseException | SQLException e) {
