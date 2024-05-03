@@ -11,11 +11,11 @@ import java.util.Map;
  */
 
 public class JDBC {
-    private static final String USERNAME = "edadb";
-    private static final String PASSWORD = "3d@db"; // // Password for database access
-    private static final String IPADDRESS = "130.166.160.20"; // IP address of the database server
+    private static final String USERNAME = "";
+    private static final String PASSWORD = ""; // // Password for database access
+    private static final String IPADDRESS = ""; // IP address of the database server
     private static final int PORT = 3306; // Port number for database connection
-    private static final String DATABASES = "edadb"; // Name of the database
+    private static final String DATABASES = ""; // Name of the database
     private static final String URL = "jdbc:mysql://" + IPADDRESS + ":" + PORT + "/" + DATABASES; // JDBC URL
     public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver"; // JDBC driver class name
 
