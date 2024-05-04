@@ -44,37 +44,41 @@ public class characteristics2Table {
             secondTableIndexMap.put(originalHeaders.get(i), i);
         }
 
-        // Generate the third table
-        String value;
-        String attribute;
+        // Query to retrieve custom IDs for all manufacturer part IDs from membership table
+        Map<String, Integer> customIdMap = new HashMap<>();
+        String command = "SELECT manufacturer_part_num, custom_id FROM edadb.membership WHERE manufacturer_part_num IN (";
+        for (Object[] originalRow : originalTable) {
+            String manufacturerPartID = (String) originalRow[2];
+            command += "\"" + manufacturerPartID + "\",";
+        }
+        // Remove the last comma and close the SQL statement
+        command = command.substring(0, command.length() - 1) + ")";
 
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(command);
+            while (resultSet.next()) {
+                String manufacturerPartID = resultSet.getString("manufacturer_part_num");
+                int customID = resultSet.getInt("custom_id");
+                customIdMap.put(manufacturerPartID, customID);
+            }
+        }
+
+        // Generate the third table
         for (Object[] originalRow : originalTable) {
             for (int col = 9; col < originalRow.length; col++) {
-                if (originalRow[col] != null && !originalRow[col].toString().equals("") &&
+                if (originalRow[col] != null && !originalRow[col].toString().isEmpty() &&
                         !originalRow[col].toString().equals("0") && !originalRow[col].toString().equals("-")) {
 
-                    value = originalRow[col].toString();
-                    attribute = originalHeaders.get(col);
-                    String manufacturerPartID = originalRow[2].toString();
-
-                    int customID = 0;
-
-                    // Query to retrieve custom ID based on manufacturer part ID from membership table
-
-                    String command = "SELECT custom_id FROM edadb.membership WHERE manufacturer_part_num=" + "\"" + manufacturerPartID + "\"";
-                    try (Statement statement = connection.createStatement()) {
-                        ResultSet resultSet = statement.executeQuery(command);
-                        if (resultSet.next()) {
-                            int idNumber = resultSet.getInt("custom_id");
-                            if (idNumber != 0) {
-                                customID = idNumber;
-                                Characteristics character = new Characteristics();
-                                character.setCustomId(customID);
-                                character.setAttributes(attribute);
-                                character.setValue(value);
-                                finalTable.add(character);
-                            }
-                        }
+                    String value = originalRow[col].toString();
+                    String attribute = originalHeaders.get(col);
+                    String manufacturerPartID = (String) originalRow[2];
+                    int customID = customIdMap.getOrDefault(manufacturerPartID, 0);
+                    if (customID != 0) {
+                        Characteristics character = new Characteristics();
+                        character.setCustomId(customID);
+                        character.setAttributes(attribute);
+                        character.setValue(value);
+                        finalTable.add(character);
                     }
                 }
             }

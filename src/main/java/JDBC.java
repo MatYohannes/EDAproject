@@ -102,10 +102,17 @@ public class JDBC {
         System.out.println("Inserting into Characteristics SQL Table.");
         try (PreparedStatement addstmt = connection.prepareStatement(command)) {
             for (Characteristics row: table) {
-                addstmt.setObject(1, row.getCustomId());
-                addstmt.setObject(2, row.getAttributes());
-                addstmt.setObject(3, row.getValue());
-                addstmt.executeUpdate();
+                try {
+                    addstmt.setObject(1, row.getCustomId());
+                    addstmt.setObject(2, row.getAttributes());
+                    addstmt.setObject(3, row.getValue());
+                    addstmt.executeUpdate();
+
+                } catch (SQLIntegrityConstraintViolationException e) {
+                    // Ignore duplicate entry and continue to the next row
+                    System.out.println("Duplicate entry. Ignoring row and continuing to next row.");
+                }
+
             }
             System.out.println("Insertion to Characteristics SQL table complete.");
         } catch (Exception err) {

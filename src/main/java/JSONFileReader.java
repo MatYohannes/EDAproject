@@ -25,7 +25,8 @@ public class JSONFileReader {
     public static void main(String[] args) {
 
         // Category file is passed as an inline argument
-        String categoryFolder = args[0];
+        String categoryFolder = args[0]; // Category name is passed, must mactch DigiKey category name.
+        String sqlUploadChoice = args[1]; // for sql uploading choices are membership/member or characteristic/character
 
         // Directory on server where files are found
         String directory = "/root/EDAProject/Postman Exports/";
@@ -283,13 +284,24 @@ public class JSONFileReader {
                 // Column names of the membership sql table
                 List<String> membershipHeaders = Arrays.asList("custom_id", "category_id", "manufacturer", "manufacturer_part_num");
 
-                // Inserts data into the 'membership' table.
-                // Column names : { custom_id, category_id, manufacturer, manufacturer_part_num }
-                dbConnector.insertMembership(customTable);
+                List<Characteristics> characterTable;
+                if (sqlUploadChoice.toLowerCase().strip().equals("membership") ||
+                        sqlUploadChoice.toLowerCase().strip().equals("member") ||
+                sqlUploadChoice.toLowerCase().strip().equals("m"))
+                {
+                    // Inserts data into the 'membership' table.
+                    // Column names : { custom_id, category_id, manufacturer, manufacturer_part_num }
+                    dbConnector.insertMembership(customTable);
 
-                // characteristics2Table: provides a method to create a custom characteristics table based on original tables.
-                // Creates a custom characteristics table based on original tables.
-                List<Characteristics> characterTable = characteristics2Table.createCustomTable(categoryTable, membershipHeaders, headerList, connection);
+                }
+                else if (sqlUploadChoice.toLowerCase().strip().equals("characteristics") ||
+                        sqlUploadChoice.toLowerCase().strip().equals("character") ||
+                        sqlUploadChoice.toLowerCase().strip().equals("c")) {
+                    // characteristics2Table: provides a method to create a custom characteristics table based on original tables.
+                    // Creates a custom characteristics table based on original tables.
+                    characterTable = characteristics2Table.createCustomTable(categoryTable, membershipHeaders, headerList, connection);
+                    dbConnector.insertCharacteristics(characterTable);
+                }
 
                 // Print Characteristic's TABLE with header
                 // Print header
@@ -302,10 +314,12 @@ public class JSONFileReader {
 //                for (Characteristics entry : characterTable) {
 //                    System.out.printf("%-40s %-40s %-40s\n", entry.getCustomId(), entry.getAttributes(), entry.getValue());
 //                }
+                
+                
 
                 // Inserts data into the 'characteristics' table.
                 // Column names : { custom_id, attribute_name, value }
-                dbConnector.insertCharacteristics(characterTable);
+
 
             } catch (IOException | ParseException | java.text.ParseException | SQLException e) {
                 e.printStackTrace();

@@ -1092,7 +1092,7 @@ public class DigiKeyAPI3 {
                     // Increment offset for the next page
                     offset += limit;
                 }
-            } while (apiCount < 1200);
+            } while (apiCount < 1500);
         } catch (Exception e) {
             e.printStackTrace();
         }
