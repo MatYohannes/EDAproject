@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This code essentially goes through a collection of JSON files, extracts certain attribute values from them, and prints
+ * out a list of unique attributes found across all files.
+ */
 public class AttributeCollector {
 
     public static void main(String[] args) {

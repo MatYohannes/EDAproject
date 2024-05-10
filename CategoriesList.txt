@@ -1,10 +1,10 @@
 Capacitor Accessories | O
 Aluminum - Polymer Capacitors | O
-Aluminum Electrolytic Capacitors | X
+Aluminum Electrolytic Capacitors | O
 Capacitor Networks, Arrays | O
-Ceramic Capacitors | OO
+Ceramic Capacitors | O
 Electric Double Layer Capacitors (EDLC), Supercapacitors | O
-Film Capacitors | OO
+Film Capacitors | O
 Mica and PTFE Capacitors | O
 Niobium Oxide Capacitors | O
 Silicon Capacitors | O
@@ -40,13 +40,13 @@ Card Edge Connector Accessories | O
 Card Edge Connector Adapters | O
 Card Edge Connector Contacts | O
 Card Edge Connector Housings | O
-Edgeboard Connectors | OO
+Edgeboard Connectors | O
 Backshells and Cable Clamps | O
 Circular Connector Accessories | O
 Circular Connector Adapters | O
-Circular Connector Assemblies | OO
-Circular Connector Contacts | OO
-Circular Connector Housings | OO
+Circular Connector Assemblies | O
+Circular Connector Contacts | O
+Circular Connector Housings | O
 Coaxial Connector (RF) Accessories | O
 Coaxial Connector (RF) Adapters | O
 Coaxial Connector (RF) Assemblies | O
@@ -88,7 +88,7 @@ PC Card Sockets | O
 PC Cards - Adapters | O
 Modular Connector Accessories | O
 Modular Connector Adapters | O
-Modular Connector Jacks | Issue O
+Modular Connector Jacks | O
 Modular Connector Jacks With Magnetics | O
 Modular Connector Plug Housings | O
 Modular Connector Plugs | O
@@ -99,16 +99,16 @@ Photovoltaic (Solar Panel) Connector Assemblies | O
 Photovoltaic (Solar Panel) Connector Contacts | O
 Pluggable Connector Accessories | O
 Pluggable Connector Assemblies | O
-Arrays, Edge Type, Mezzanine (Board to Board) | Issue O
+Arrays, Edge Type, Mezzanine (Board to Board) | O
 Board In, Direct Wire to Board | O
-Board Spacers, Stackers (Board to Board) | OO
-Free Hanging, Panel Mount | Issue O
-Headers, Male Pins | OO
-Headers, Receptacles, Female Sockets | OO
+Board Spacers, Stackers (Board to Board) | Issue O
+Free Hanging, Panel Mount | O
+Headers, Male Pins | O
+Headers, Receptacles, Female Sockets | O
 Headers, Specialty Pin | O
 Rectangular Connector Accessories | O
 Rectangular Connector Adapters | O
-Rectangular Connector Contacts | Issue O
+Rectangular Connector Contacts | O
 Rectangular Connector Housings | O
 Spring Loaded | O
 IC Sockets | O
@@ -119,203 +119,203 @@ Solid State Lighting Connector Assemblies | O
 Solid State Lighting Connector Contacts | O
 Barrier Blocks | O
 Din Rail, Channel | O
-Headers, Plugs and Sockets | Issue O
+Headers, Plugs and Sockets | O
 Interface Modules | O
-Panel Mount | Issue O
+Panel Mount | O
 Power Distribution | O
 Terminal Blocks Specialized | O
 Terminal Block Accessories | O
 Terminal Block Adapters | O
-Terminal Block Contacts | X
-Wire to Board | X
-Terminal Junction Systems | X
-Terminal Strips and Turret Boards | X
-Barrel, Bullet Connectors | X
-Foil Connectors | X
-Housings, Boots | X
-Knife Connectors | X
-Lugs | X
-Magnetic Wire Connectors | X
-PC Pin Receptacles, Socket Connectors | X
-PC Pin, Single Post Connectors | X
-Quick Connects, Quick Disconnect Connectors | X
-Ring Connectors | X
-Screw Connectors | X
-Solder Lug Connectors | X
-Spade Connectors | X
-Specialized Connectors | X
-Terminal Accessories | X
-Terminal Adapters | X
-Turret Connectors | X
-Wire Pin Connectors | X
-Wire Splice Connectors | X
-Wire to Board Connectors | X
-USB, DVI, HDMI Connector Accessories | X
-USB, DVI, HDMI Connector Adapters | X
-USB, DVI, HDMI Connector Assemblies | X
-Crystal, Oscillator, Resonator Accessories | X
-Crystals | X
-Oscillators | X
-Pin Configurable/Selectable Oscillators | X
-Programmable Oscillators | X
+Terminal Block Contacts | O
+Wire to Board | O
+Terminal Junction Systems | O
+Terminal Strips and Turret Boards | O
+Barrel, Bullet Connectors | O
+Foil Connectors | O
+Housings, Boots | O
+Knife Connectors | O
+Lugs | O
+Magnetic Wire Connectors | O
+PC Pin Receptacles, Socket Connectors | O
+PC Pin, Single Post Connectors | O
+Quick Connects, Quick Disconnect Connectors | O
+Ring Connectors | O
+Screw Connectors | O
+Solder Lug Connectors | O
+Spade Connectors | O
+Specialized Connectors | O
+Terminal Accessories | O
+Terminal Adapters | O
+Turret Connectors | O
+Wire Pin Connectors | O
+Wire Splice Connectors | O
+Wire to Board Connectors | O
+USB, DVI, HDMI Connector Accessories | O
+USB, DVI, HDMI Connector Adapters | O
+USB, DVI, HDMI Connector Assemblies | O
+Crystal, Oscillator, Resonator Accessories | O
+Crystals | O
+Oscillators | O
+Pin Configurable/Selectable Oscillators | O
+Programmable Oscillators | O
 Resonators | X
 Stand Alone Programmers | X
-VCOs (Voltage Controlled Oscillators) | X
+VCOs (Voltage Controlled Oscillators) | O
 Adjustable Inductors | X
 Arrays, Signal Transformers | X
 Delay Lines | X
 Fixed Inductors | X
 Wireless Charging Coils | X
-Audio Special Purpose | X
-Application Specific Clock/Timing | X
-Clock Buffers, Drivers | X
-Clock Generators, PLLs, Frequency Synthesizers | X
-Clock/Timing Delay Lines | X
-IC Batteries | X
-Programmable Timers and Oscillators | X
-Real Time Clocks | X
-ADCs/DACs - Special Purpose | X
-Analog Front End (AFE) | X
-Analog to Digital Converters (ADC) | X
-Digital Potentiometers | X
-Digital to Analog Converters (DAC) | X
-Touch Screen Controllers | X
-Application Specific Microcontrollers | X
-CPLDs (Complex Programmable Logic Devices) | X
-DSP (Digital Signal Processors) | X
-FPGAs (Field Programmable Gate Array) | X
-FPGAs (Field Programmable Gate Array) with Microcontrollers | X
-Microcontrollers | X
-Microcontrollers, Microprocessor, FPGA Modules | X
-Microprocessors | X
-PLDs (Programmable Logic Device) | X
-System On Chip (SoC) | X
-Analog Switches - Special Purpose | X
-Analog Switches, Multiplexers, Demultiplexers | X
-CODECS | X
-Interface Controllers | X
-Direct Digital Synthesis (DDS) | X
-Drivers, Receivers, Transceivers | X
-Encoders, Decoders, Converters | X
-Filters - Active | X
-I/O Expanders | X
-Modems - ICs and Modules | X
-Modules | X
-Sensor and Detector Interfaces | X
-Sensor, Capacitive Touch | X
-Serializers, Deserializers | X
-Signal Buffers, Repeaters, Splitters | X
-Signal Terminators | X
-Interface Specialized | X
-Telecom | X
-UARTs (Universal Asynchronous Receiver Transmitter) | X
-Voice Record and Playback | X
-Amplifiers | X
-Analog Multipliers, Dividers | X
-Comparators | X
-Video Processing | X
-Buffers, Drivers, Receivers, Transceivers | X
-Counters, Dividers | X
-FIFOs Memory | X
-Flip Flops | X
-Gates and Inverters | X
-Gates and Inverters - Multi-Function, Configurable | X
-Latches | X
-Multivibrators | X
-Parity Generators and Checkers | X
-Shift Registers | X
-Signal Switches, Multiplexers, Decoders | X
-Specialty Logic | X
-Translators, Level Shifters | X
-Universal Bus Functions | X
-Batteries | X
-Configuration PROMs for FPGAs | X
-Memory Controllers | X
-Memory | X
-AC DC Converters, Offline Switches | X
-Battery Chargers | X
-Battery Management | X
-Current Regulation/Management | X
-DC DC Switching Controllers | X
-Display Drivers | X
-Energy Metering | X
-Full Half-Bridge (H Bridge) Drivers | X
-Gate Drivers | X
-Hot Swap Controllers | X
-Laser Drivers | X
-LED Drivers | X
-Lighting, Ballast Controllers | X
-Motor Drivers, Controllers | X
-OR Controllers, Ideal Diodes | X
-PFC (Power Factor Correction) | X
+Audio Special Purpose | O
+Application Specific Clock/Timing | O
+Clock Buffers, Drivers | O
+Clock Generators, PLLs, Frequency Synthesizers | O
+Clock/Timing Delay Lines | O
+IC Batteries | O
+Programmable Timers and Oscillators | O
+Real Time Clocks | O
+ADCs/DACs - Special Purpose | O
+Analog Front End (AFE) | O
+Analog to Digital Converters (ADC) | O
+Digital Potentiometers | O
+Digital to Analog Converters (DAC) | O
+Touch Screen Controllers | O
+Application Specific Microcontrollers | O
+CPLDs (Complex Programmable Logic Devices) | O
+DSP (Digital Signal Processors) | O
+FPGAs (Field Programmable Gate Array) | O
+FPGAs (Field Programmable Gate Array) with Microcontrollers | O
+Microcontrollers | O
+Microcontrollers, Microprocessor, FPGA Modules | O
+Microprocessors | O
+PLDs (Programmable Logic Device) | O
+System On Chip (SoC) | O
+Analog Switches - Special Purpose | O
+Analog Switches, Multiplexers, Demultiplexers | O
+CODECS | O
+Interface Controllers | O
+Direct Digital Synthesis (DDS) | O
+Drivers, Receivers, Transceivers | O
+Encoders, Decoders, Converters | O
+Filters - Active | O
+I/O Expanders | O
+Modems - ICs and Modules | O
+Modules | O
+Sensor and Detector Interfaces | O
+Sensor, Capacitive Touch | O
+Serializers, Deserializers | O
+Signal Buffers, Repeaters, Splitters | O
+Signal Terminators | O
+Interface Specialized | O
+Telecom | O
+UARTs (Universal Asynchronous Receiver Transmitter) | O
+Voice Record and Playback | O
+Amplifiers | O
+Analog Multipliers, Dividers | O
+Comparators | O
+Video Processing | O
+Buffers, Drivers, Receivers, Transceivers | O
+Counters, Dividers | O
+FIFOs Memory | O
+Flip Flops | O
+Gates and Inverters | O
+Gates and Inverters - Multi-Function, Configurable | O
+Latches | O
+Multivibrators | O
+Parity Generators and Checkers | O
+Shift Registers | O
+Signal Switches, Multiplexers, Decoders | O
+Specialty Logic | O
+Translators, Level Shifters | O
+Universal Bus Functions | O
+Batteries | O
+Configuration PROMs for FPGAs | O
+Memory Controllers | O
+Memory | O
+AC DC Converters, Offline Switches | O
+Battery Chargers | O
+Battery Management | O
+Current Regulation/Management | O
+DC DC Switching Controllers | O
+Display Drivers | O
+Energy Metering | O
+Full Half-Bridge (H Bridge) Drivers | O
+Gate Drivers | O
+Hot Swap Controllers | O
+Laser Drivers | O
+LED Drivers | O
+Lighting, Ballast Controllers | O
+Motor Drivers, Controllers | O
+OR Controllers, Ideal Diodes | O
+PFC (Power Factor Correction) | O
 Power Distribution Switches, Load Drivers | O
-Power Management - Specialized | X
-Power Over Ethernet (PoE) Controllers | X
-Power Supply Controllers, Monitors | X
-RMS to DC Converters | X
-Special Purpose Regulators | X
-Supervisors | X
-Thermal Management | X
-V/F and F/V Converters | X
-Voltage Reference | X
-Voltage Regulators - DC DC Switching Regulators | X
-Voltage Regulators - Linear + Switching | X
-Voltage Regulators - Linear Regulator Controllers | X
-Voltage Regulators - Linear, Low Drop Out (LDO) Regulators | X
-Specialized ICs | X
-Potentiometers, Variable Resistors Accessories | X
-Adjustable Power Resistor | X
-Joystick Potentiometers | X
-Rotary Potentiometers, Rheostats | X
-Scale Dials | X
-Slide Potentiometers | X
-Thumbwheel Potentiometers | X
-Trimmer Potentiometers | X
-Value Display Potentiometers | X
-Relays Accessories | X
-Automotive Relays | X
-Contactors (Electromechanical) | X
-Contactors (Solid State) | X
-High Frequency (RF) Relays | X
-I/O Relay Module Racks | X
-I/O Relay Modules | X
+Power Management - Specialized | O
+Power Over Ethernet (PoE) Controllers | O
+Power Supply Controllers, Monitors | O
+RMS to DC Converters | O
+Special Purpose Regulators | O
+Supervisors | O
+Thermal Management | O
+V/F and F/V Converters | O
+Voltage Reference | O
+Voltage Regulators - DC DC Switching Regulators | O
+Voltage Regulators - Linear + Switching | O
+Voltage Regulators - Linear Regulator Controllers | O
+Voltage Regulators - Linear, Low Drop Out (LDO) Regulators | O
+Specialized ICs | O
+Potentiometers, Variable Resistors Accessories | O
+Adjustable Power Resistor | O
+Joystick Potentiometers | O
+Rotary Potentiometers, Rheostats | O
+Scale Dials | O
+Slide Potentiometers | O
+Thumbwheel Potentiometers | O
+Trimmer Potentiometers | O
+Value Display Potentiometers | O
+Relays Accessories | O
+Automotive Relays | O
+Contactors (Electromechanical) | O
+Contactors (Solid State) | O
+High Frequency (RF) Relays | O
+I/O Relay Module Racks | O
+I/O Relay Modules | O
 Power Relays, Over 2 Amps | X
-Reed Relays | X
-Relay Sockets | X
-Safety Relays | X
-Signal Relays, Up to 2 Amps | X
-Solid State Relays | X
-Resistors Accessories | X
-Chassis Mount Resistors | X
-Chip Resistor - Surface Mount | OO
-Precision Trimmed Resistors | X
-Resistor Networks, Arrays | X
-Specialized Resistors | X
-Through Hole Resistors | OO
-Switches Accessories | X
-Accessories - Boots, Seals | X
-Accessories - Caps | X
-Cable Pull Switches | X
-Configurable Switch Bodies | X
-Configurable Switch Contact Blocks | X
-Configurable Switch Illumination Sources | X
-Configurable Switch Lens | X
-DIP Switches | X
-Disconnect Switch Components | X
-Emergency Stop (E-Stop) Switches | X
-Interlock Switches | X
-Keylock Switches | X
-Keypad Switches | X
-Limit Switches | X
-Magnetic, Reed Switches | X
-Navigation Switches, Joystick | X
-Programmable Display Switches | X
-Pushbutton Switches | OO
-Pushbutton Switches - Hall Effect | X
-Rocker Switches | X
-Rotary Switches | X
-Selector Switches | X
-Slide Switches | X
-Tactile Switches | X
-Thumbwheel Switches | X
-Toggle Switches | X
+Reed Relays | O
+Relay Sockets | O
+Safety Relays | O
+Signal Relays, Up to 2 Amps | O
+Solid State Relays | O
+Resistors Accessories | O
+Chassis Mount Resistors | O
+Chip Resistor - Surface Mount | O
+Precision Trimmed Resistors | O
+Resistor Networks, Arrays | O
+Specialized Resistors | O
+Through Hole Resistors | O
+Switches Accessories | O
+Accessories - Boots, Seals | O
+Accessories - Caps | O
+Cable Pull Switches | O
+Configurable Switch Bodies | O
+Configurable Switch Contact Blocks | O
+Configurable Switch Illumination Sources | O
+Configurable Switch Lens | O
+DIP Switches | O
+Disconnect Switch Components | O
+Emergency Stop (E-Stop) Switches | O
+Interlock Switches | O
+Keylock Switches | O
+Keypad Switches | O
+Limit Switches | O
+Magnetic, Reed Switches | O
+Navigation Switches, Joystick | O
+Programmable Display Switches | O
+Pushbutton Switches | O
+Pushbutton Switches - Hall Effect | O
+Rocker Switches | O
+Rotary Switches | O
+Selector Switches | O
+Slide Switches | O
+Tactile Switches | O
+Thumbwheel Switches | O
+Toggle Switches | O

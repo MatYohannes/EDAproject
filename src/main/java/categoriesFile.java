@@ -4,12 +4,12 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 /*
-        The provided Java code (splittingJson) reads information from a JSON file named "categories.json" and organizes
-    the data into a table structure representing a hierarchy of categories. The JSON file contains a list of
-    categories, each with a unique identifier (CategoryId), a reference to its parent category (ParentId),
-    a name (Name), and the number of products within the category (ProductCount). The code processes this
-    hierarchical data, creating three separate JSONArrays (parentsList, childrenList, and grandChildrenList) to
-    store information about parent, child, and grandchild categories, respectively.
+        The provided Java code reads information from a JSON file named "categories.json" which obtained by API
+    pull from DigiKey, and organizes     the data into a table structure representing a hierarchy of categories.
+     The JSON file contains a list of categories, each with a unique identifier (CategoryId), a reference to its
+      parent category (ParentId), a name (Name), and the number of products within the category (ProductCount).
+       The code processes this hierarchical data, creating three separate JSONArrays (parentsList, childrenList,
+        and grandChildrenList) to store information about parent, child, and grandchild categories, respectively.
         It then iterates through these arrays, constructs a new list (tableList) containing rows with parent,
     child, and grandchild names, and finally displays the resulting table with three columns: parent category,
     child category, and grandchild category. The table represents the hierarchical structure of categories,

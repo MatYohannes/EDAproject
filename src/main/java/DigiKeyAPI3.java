@@ -639,19 +639,28 @@ public class DigiKeyAPI3 {
         String line;
 
         while ((line = reader.readLine()) != null) {
-            content.append(line).append(System.lineSeparator());
+            int index = line.indexOf("[");
+            if (index != -1) {
+                content.append(line, 0, index + 1); // Append up to and including the first '[' character
+                content.append(System.lineSeparator()); // Add a new line
+                for (String lineToAdd : body) {
+                    content.append(lineToAdd).append(System.lineSeparator());
+                }
+                content.append(line.substring(index + 1)); // Append the rest of the line after '['
+            } else {
+                content.append(line).append(System.lineSeparator());
+            }
         }
         reader.close();
-
-        // Append the lines from the body ArrayList to the end of the content
-        for (String lineToAdd : body) {
-            content.append(lineToAdd).append(System.lineSeparator());
-        }
 
         // Writing the modified content back to the file
         try (FileWriter writer = new FileWriter(filePath);
              BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
-            bufferedWriter.write(content.toString());
+            String[] lines = content.toString().split(System.lineSeparator()); // Split content into lines
+            for (String linez : lines) {
+                bufferedWriter.write(linez); // Write each line
+                bufferedWriter.newLine(); // Add a new line separator
+            }
         }
     }
 
@@ -1004,7 +1013,7 @@ public class DigiKeyAPI3 {
                         System.out.println("Re-requesting response body.");
                         offset -= limit;
                     }
-                    else if (responseBody.contains("BurstLimit exceeded.")) {
+                    else if (responseBody.contains("BurstLimit exceeded.") || responseBody.contains("Daily Ratelimit exceeded.")) {
                         System.out.println("BurstLimit exceeded. Please try again after the number of seconds in the Retry-After header");
                         Thread.sleep(5000);
                         ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
@@ -1034,6 +1043,28 @@ public class DigiKeyAPI3 {
 
                         System.out.println("Re-requesting response body.");
                         offset -= limit;
+                    }
+                    else if (responseBody.contains("Daily Ratelimit exceeded")) {
+
+                        ClientScanner.clientUsed(CLIENTLIST, CLIENT_ID);
+                        clientListUsedUp();
+                        offset -= limit;
+
+                        if (!ClientScanner.clientListComplete(CLIENTLIST)) {
+                            System.out.println("\nGetting new Client Key.");
+
+                            clientListUsedUp();
+
+                            clientKey = ClientScanner.findFreeClient(CLIENTLIST);
+                            CLIENT_ID = clientKey[0];
+                            CLIENT_SECRET = clientKey[1];
+
+                            System.out.println("Client ID and Secret:" + Arrays.toString(clientKey));
+                            accessToken = getAccessToken(CLIENT_ID, CLIENT_SECRET);
+                            newAccessToken = accessToken.substring(43, 71);
+                            apiCount = 0;
+                        }
+
                     }
                     else if (responseBody.contains("Bad Gateway")) {
                         System.out.println("Bad Gateway");
@@ -1092,7 +1123,7 @@ public class DigiKeyAPI3 {
                     // Increment offset for the next page
                     offset += limit;
                 }
-            } while (apiCount < 1500);
+            } while (apiCount < 3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
